@@ -6,49 +6,47 @@ import { MenuItem } from './core/internal-models/menu-item';
 import { CustomApiService } from './core/services/ganymede.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+    @ViewChild(MatSidenav)
+    sidenav!: MatSidenav;
 
-  identity: AuthenticatedInstitutionDto;
-  menuItems: MenuItem[];
+    identity: AuthenticatedInstitutionDto;
+    menuItems: MenuItem[];
 
-  constructor(private customApi: CustomApiService) {}
+    constructor(private customApi: CustomApiService) {}
 
-  ngOnInit(): void {
-    this.loadIdentity();
+    ngOnInit(): void {
+        this.loadIdentity();
 
-    this.menuItems = [
-      {
-        icon: 'fa-home',
-        label: 'Home',
-        route: '',
-      },
-      {
-        icon: 'fa-users',
-        label: 'Customers',
-        route: 'customer',
-      },
-      {
-        icon: 'fa-money-check-alt',
-        label: 'Tokenization',
-        route: 'tokenization',
-      },
-    ];
-  }
+        this.menuItems = [
+            {
+                icon: 'fa-home',
+                label: 'Home',
+                route: '',
+            },
+            {
+                icon: 'fa-users',
+                label: 'Customers',
+                route: 'customer',
+            },
+            {
+                icon: 'fa-money-check-alt',
+                label: 'Tokenization',
+                route: 'tokenization',
+            },
+        ];
+    }
 
-  ngAfterViewInit() {
-    this.sidenav.mode = 'over';
-    this.sidenav.close();
-  }
+    ngAfterViewInit() {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+    }
 
-  private loadIdentity() {
-    this.customApi
-      .getStatusGetAuth()
-      .subscribe((response) => (this.identity = response.data));
-  }
+    private loadIdentity() {
+        this.customApi.getStatusGetAuth().subscribe((response) => (this.identity = response.data));
+    }
 }

@@ -2,12 +2,7 @@
   <div class="row">
     <div class="col-12">
       <app-header title="Create Issuer Wallet Seed" icon="fa-seedling">
-        <button
-          mat-mini-fab
-          color="primary"
-          matTooltip="Submit"
-          (click)="submit()"
-        >
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()">
           <app-fa-icon icon="fa-save"></app-fa-icon>
         </button>
       </app-header>
@@ -21,29 +16,14 @@
             <div class="w-100">
               <mat-form-field appearance="standard" class="pd-x10">
                 <mat-label>Name</mat-label>
-                <input
-                  matInput
-                  required
-                  type="text"
-                  placeholder="ABC Seed"
-                  [(ngModel)]="model.name"
-                  name="name"
-                />
+                <input matInput required type="text" placeholder="ABC Seed" [(ngModel)]="model.name" name="name" />
               </mat-form-field>
             </div>
             <div class="w-100">
               <mat-form-field appearance="standard" class="pd-x10">
                 <mat-label>Passphrase</mat-label>
-                <input
-                  matInput
-                  required
-                  type="password"
-                  [(ngModel)]="model.credentials.passphrase"
-                  name="passphrase"
-                />
-                <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{
-                  passphraseMessage
-                }}</mat-hint>
+                <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
+                <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{ passphraseMessage }}</mat-hint>
               </mat-form-field>
             </div>
           </form>

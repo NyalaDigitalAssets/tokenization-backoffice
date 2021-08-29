@@ -1,7 +1,9 @@
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AssetTypeUtilityService } from 'src/app/core/services/asset-types-utility.service';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
 import {
   AssetTypes,
@@ -23,6 +25,8 @@ interface Balance {
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
+  @ViewChild('qrTpl') qrTpl: TemplateRef<any>;
+
   tokenizedAssetColumns: string[] = [
     'name',
     'unitName',
@@ -30,7 +34,7 @@ export class ListComponent implements OnInit {
     'decimals',
   ];
   balanceColumns: string[] = ['amount', 'unitName'];
-
+  publicAddress: string;
   issuerWalletSeeds: IssuerWalletSeedDto[];
   AssetTypes = AssetTypes;
   IssuerWalletRoles = IssuerWalletRoles;
@@ -38,7 +42,8 @@ export class ListComponent implements OnInit {
   constructor(
     private customApi: CustomApiService,
     private router: Router,
-    private assetTypeUtility: AssetTypeUtilityService
+    private assetTypeUtility: AssetTypeUtilityService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +105,16 @@ export class ListComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  showAddressQrCode(wallet: IssuerWalletDto) {}
+  showAddressQrCode(wallet: IssuerWalletDto) {
+    this.publicAddress = wallet.publicAddress;
+    this.dialog.open(ModalComponent, {
+      data: {
+        component: this.qrTpl,
+        showClose: true,
+      },
+      disableClose: false,
+    });
+  }
 
   sendTokens(wallet: IIssuerWalletDto) {}
 

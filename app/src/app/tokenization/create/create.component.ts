@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {
-  CreateIssuerWalletSeedDto,
-  SimpleAccessCredentialsDto,
-} from '../../core/models';
+import { CreateIssuerWalletSeedDto, SimpleAccessCredentialsDto } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -19,8 +16,7 @@ export class CreateComponent implements OnInit {
   constructor(private customApi: CustomApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.model.credentials =
-      this.model.credentials || new SimpleAccessCredentialsDto();
+    this.model.credentials = this.model.credentials || new SimpleAccessCredentialsDto();
   }
 
   submit() {

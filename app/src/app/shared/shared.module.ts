@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,14 +20,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { QrCodeModule } from 'ng-qrcode';
 
 import { CopyClipboardDirective } from './copy-clipboard.directive';
 import { FaIconComponent } from './fa-icon/fa-icon.component';
 import { HeaderComponent } from './header/header.component';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
-import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
+import { ModalComponent } from './modal/modal.component';
 
 const MAT_MODULES = [
   MatIconModule,
@@ -48,6 +51,7 @@ const MAT_MODULES = [
   MatTabsModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatDialogModule,
 ];
 
 const EXPORTS = [
@@ -57,6 +61,7 @@ const EXPORTS = [
   SvgIconComponent,
   LoadingScreenComponent,
   CopyClipboardDirective,
+  ModalComponent,
 ];
 
 @NgModule({
@@ -68,8 +73,9 @@ const EXPORTS = [
     SvgIconComponent,
     LoadingScreenComponent,
     CopyClipboardDirective,
+    ModalComponent,
   ],
-  imports: [CommonModule, FormsModule, ...MAT_MODULES],
-  exports: [FormsModule, ...EXPORTS, ...MAT_MODULES],
+  imports: [CommonModule, FormsModule, QrCodeModule, ...MAT_MODULES],
+  exports: [FormsModule, ...EXPORTS, QrCodeModule, ...MAT_MODULES],
 })
 export class SharedModule {}

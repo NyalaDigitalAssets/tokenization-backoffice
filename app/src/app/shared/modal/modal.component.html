@@ -1,0 +1,12 @@
+<ng-container *ngIf="data.showClose">
+    <div class="modal__close ta-r">
+        <button mat-mini-fab color="primary" (click)="dismiss()">
+            <app-fa-icon icon="fa-times"></app-fa-icon>
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="data.component">
+    <div class="modal__body">
+        <ng-container *ngTemplateOutlet="data.component"></ng-container>
+    </div>
+</ng-container>
