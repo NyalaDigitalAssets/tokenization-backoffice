@@ -1,0 +1,78 @@
+<div class="container mg-t10">
+    <div class="row">
+        <div class="col-12">
+            <app-header title="Wallets" icon="fa-wallet" >
+                <div *ngIf="wallets?.data">
+                    <button mat-fab color="primary" (click)="lockWallet(true)" *ngIf="!isLocked" [disabled]="disableLock">
+                        <mat-icon fontSet="fa" fontIcon="fa-lock"></mat-icon>
+                    </button>
+                    <button mat-fab color="primary" (click)="lockWallet(false)" *ngIf="isLocked" [disabled]="disableLock">
+                        <mat-icon fontSet="fa" fontIcon="fa-unlock"></mat-icon>
+                    </button>
+                </div>
+            </app-header>
+        </div>
+    </div>
+    <div class="row mg-t10">
+        <div class="col-12">
+            <table mat-table [dataSource]="wallets?.data" multiTemplateDataRows class="mat-elevation-z8 w-100">
+                <ng-container matColumnDef="assetType">
+                    <th mat-header-cell *matHeaderCellDef>Asset</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="asset-icon">
+                            <mat-icon [svgIcon]="getIcon(element.assetType)"></mat-icon>
+                            <span> {{ element.assetType }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="publicAddress">
+                    <th mat-header-cell *matHeaderCellDef>Address</th>
+                    <td mat-cell *matCellDef="let element">{{ element.publicAddress }}</td>
+                </ng-container>
+                <ng-container matColumnDef="nativeBalance">
+                    <th mat-header-cell *matHeaderCellDef>Balance</th>
+                    <td mat-cell *matCellDef="let element">{{ element.balance?.nativeBalance }}</td>
+                </ng-container>
+                <ng-container matColumnDef="lockstatus">
+                    <th mat-header-cell *matHeaderCellDef>Lock Status</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon fontSet="fa" fontIcon="fa-{{ element.seedLockStatus ? 'lock' : 'unlock' }}"></mat-icon>
+                    </td>
+                </ng-container>
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="element-detail w-100" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                            <mat-card class="w-100">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <small>Non-Native Balances</small>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <table mat-table [dataSource]="element?.balance?.nonNativeBalances | keyvalue" class="mat-elevation-z8 w-100">
+                                        <ng-container matColumnDef="token">
+                                            <th mat-header-cell *matHeaderCellDef> Token </th>
+                                            <td mat-cell *matCellDef="let item"> {{item.key}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="balance">
+                                            <th mat-header-cell *matHeaderCellDef> Balance </th>
+                                            <td mat-cell *matCellDef="let item"> {{item.value}} </td>
+                                        </ng-container>
+                                        
+                                        <tr mat-header-row *matHeaderRowDef="innerTableColums"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: innerTableColums;"></tr>
+                                    </table>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row" [class.expanded-row]="expandedElement === element"(click)="expandedElement = expandedElement === element ? null : element"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+            </table>
+        </div>
+    </div>
+</div>

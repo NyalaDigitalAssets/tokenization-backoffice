@@ -1,0 +1,34 @@
+@import "../../../assets/scss/colors";
+
+.seed-content {
+  div {
+    button {
+      margin-right: 10px !important;
+    }
+  }
+}
+
+.issuer-wallet {
+  height: 450px;
+
+  .address {
+    width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &.address-m {
+      @media (max-width: 767px) {
+        width: 150px;
+      }
+    }
+  }
+
+  mat-chip {
+    cursor: pointer;
+  }
+
+  mat-tab, mat-tab-body {
+    max-height: 295px;
+  }
+}

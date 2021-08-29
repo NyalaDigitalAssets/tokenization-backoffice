@@ -1,0 +1,27 @@
+<div class="menu">
+  <app-menu-item
+    *ngFor="let item of items"
+    [item]="item"
+    (navigated)="emitNavigated()"
+  ></app-menu-item>
+  <mat-divider></mat-divider>
+  <mat-card class="identity-card" *ngIf="identity">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <app-fa-icon class="fa-3x" icon="fa-building"></app-fa-icon>
+      </div>
+      <mat-card-title>{{ identity.institutionName }}</mat-card-title>
+      <mat-card-subtitle>{{ identity.userName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <hr />
+      <mat-list>
+        <div mat-subheader>Product Access</div>
+        <mat-list-item *ngFor="let product of identity.productAccess">
+          <app-fa-icon mat-list-icon icon="fa-check-square"></app-fa-icon>
+          <div mat-line>{{ Products[product] }}</div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

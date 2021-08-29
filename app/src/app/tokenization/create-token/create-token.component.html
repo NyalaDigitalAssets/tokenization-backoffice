@@ -1,0 +1,170 @@
+<div class="container mg-t10">
+  <div class="row">
+    <div class="col-12">
+      <app-header title="Create Token" icon="fa-coins">
+        <button
+          mat-mini-fab
+          color="primary"
+          matTooltip="Submit"
+          (click)="submit()"
+        >
+          <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+      </app-header>
+    </div>
+  </div>
+  <div class="row mg-y5">
+    <div class="col-12">
+      <mat-card *ngIf="model && formReady">
+        <mat-card-header class="ai-c">
+          <div mat-card-avatar>
+            <app-fa-icon class="fa-2x" icon="fa-wallet"></app-fa-icon>
+          </div>
+          <mat-card-title>
+            <small>Wallets to use</small>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Issuer Wallet</mat-label>
+              <mat-select
+                [(ngModel)]="issuerWalletId"
+                name="issuerWalletId"
+                required
+              >
+                <mat-option
+                  *ngFor="let wallet of getIssuerWallets()"
+                  [value]="wallet.id"
+                >
+                  {{ wallet.name }}
+                </mat-option>
+              </mat-select></mat-form-field
+            >
+          </div>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Distributor Wallet</mat-label>
+              <mat-select
+                [(ngModel)]="model.distributorWalletId"
+                [disabled]="!issuerWalletId"
+                name="distributorWalletId"
+              >
+                <mat-option
+                  *ngFor="let wallet of getDistributorWallets()"
+                  [value]="wallet.id"
+                >
+                  {{ wallet.name }}
+                </mat-option>
+              </mat-select></mat-form-field
+            >
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row mg-y5">
+    <div class="col-12">
+      <mat-card *ngIf="model && formReady">
+        <mat-card-header class="ai-c">
+          <div mat-card-avatar>
+            <app-fa-icon class="fa-2x" icon="fa-coins"></app-fa-icon>
+          </div>
+          <mat-card-title>
+            <small>Token details</small>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                required
+                type="text"
+                [(ngModel)]="model.name"
+                name="name"
+                placeholder="Bitcoin"
+              />             
+            </mat-form-field>
+          </div>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Unitname</mat-label>
+              <input
+                matInput
+                required
+                type="text"
+                [(ngModel)]="model.unitName"
+                name="unitName"
+                placeholder="BTC"
+                maxlength="12"
+              />             
+            </mat-form-field>
+          </div>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Total supply</mat-label>
+              <input
+                matInput
+                required
+                type="number"
+                [(ngModel)]="model.totalSupply"
+                name="totalSupply"
+                placeholder="BTC"
+                min="1"
+                max="922337203685"
+              />             
+            </mat-form-field>
+          </div>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Decimals</mat-label>
+              <input
+                matInput
+                required
+                type="number"
+                [(ngModel)]="model.decimals"
+                name="totalSupply"
+                placeholder="0"
+                min="0"
+                max="7"
+              />             
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row mg-y5">
+    <div class="col-12">
+      <mat-card *ngIf="model && formReady">
+        <mat-card-header class="ai-c">
+          <div mat-card-avatar>
+            <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+          </div>
+          <mat-card-title>
+            <small>Credentials</small>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="w-100">
+            <mat-form-field appearance="standard" class="pd-x10">
+              <mat-label>Passphrase</mat-label>
+              <input
+                matInput
+                required
+                type="password"
+                [(ngModel)]="model.credentials.passphrase"
+                name="passphrase"
+              />
+              <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{
+                passphraseMessage
+              }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
