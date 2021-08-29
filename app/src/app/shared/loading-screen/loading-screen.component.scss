@@ -1,7 +1,9 @@
+@import '../../../assets/scss/colors';
+
 .loading-screen-wrapper {
   z-index: 100000;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.8);
   width: 100%;
   height: 100%;
   display: block;
@@ -18,7 +20,7 @@ svg {
   display: none;
 }
 
-$bolb-color: #475158;
+$bolb-color: $prm;
 
 // Loader
 .blobs {

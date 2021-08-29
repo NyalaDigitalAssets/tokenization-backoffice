@@ -12,11 +12,6 @@ import { LoadingService } from './loading.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  activeRequests: number = 0;
-  /**
-   * URLs for which the loading screen should not be enabled
-   */
-  skippUrls = ['api/external/v1/status/auth'];
   constructor(private loadingService: LoadingService) {}
 
   intercept(
@@ -25,27 +20,21 @@ export class LoadingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let displayLoadingScreen = true;
 
-    for (const skippUrl of this.skippUrls) {
-      if (new RegExp(skippUrl).test(request.url)) {
-        displayLoadingScreen = false;
-        break;
-      }
+    if (!request.url.startsWith('/api')) {
+      displayLoadingScreen = false;
     }
 
     if (displayLoadingScreen) {
-      if (this.activeRequests === 0) {
-        this.loadingService.startLoading();
-      }
-      this.activeRequests++;
+      this.loadingService.startLoading();
 
-      return next.handle(request).pipe(delay(1500)).pipe(
-        finalize(() => {
-          this.activeRequests--;
-          if (this.activeRequests === 0) {
+      return next
+        .handle(request)
+        .pipe(delay(1000))
+        .pipe(
+          finalize(() => {
             this.loadingService.stopLoading();
-          }
-        })
-      );
+          })
+        );
     } else {
       return next.handle(request);
     }
