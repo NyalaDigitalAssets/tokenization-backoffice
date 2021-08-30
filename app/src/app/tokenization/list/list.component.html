@@ -32,7 +32,7 @@
                         <h2>Issuer wallets ({{ issuerWalletSeed.wallets.length }})</h2>
                         <mat-grid-list cols="2">
                             <mat-grid-tile *ngFor="let wallet of issuerWalletSeed.wallets">
-                                <app-issuer-wallet [wallet]="wallet" (showQrCodeClicked)="showAddressQrCode($event)"></app-issuer-wallet>
+                                <app-issuer-wallet class="w-90" [wallet]="wallet" (showQrCodeClicked)="showAddressQrCode($event)"></app-issuer-wallet>
                             </mat-grid-tile>
                         </mat-grid-list>
                     </ng-container>

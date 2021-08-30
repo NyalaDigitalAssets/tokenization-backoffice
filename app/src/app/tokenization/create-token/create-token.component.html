@@ -24,7 +24,7 @@
                     </mat-select></mat-form-field
                 >
             </div>
-            <div class="w-100">
+            <div *ngIf="issuerWalletId" class="animate__animated animate__flipInX w-100">
                 <mat-form-field appearance="standard" class="pd-x10">
                     <mat-label>Distributor Wallet</mat-label>
                     <mat-select [(ngModel)]="model.distributorWalletId" [disabled]="!issuerWalletId" name="distributorWalletId">
