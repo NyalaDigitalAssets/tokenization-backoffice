@@ -4,16 +4,102 @@
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
     </app-header>
-    <!-- <mat-card class="mg-t10" >
+    <mat-card class="mg-t10">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-coins"></app-fa-icon>
             </div>
             <mat-card-title>
-                <small>Token: {{  }}</small>
+                <small>Token details</small>
             </mat-card-title>
         </mat-card-header>
-        <mat-card-content>           
+        <mat-card-content>
+            <table class="w-100" mat-table [dataSource]="tokenDetails">
+                <ng-container matColumnDef="key">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <strong>{{ element.key | uppercase }}</strong>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="value">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tokenDetailsColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: tokenDetailsColumns"></tr>
+            </table>
         </mat-card-content>
-    </mat-card>     -->
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-exchange-alt"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Transfers</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="tokenizedAsset.transfers && tokenizedAsset.transfers.length > 0">
+                <table class="w-100" mat-table [dataSource]="tokenizedAsset.transfers">
+                    <ng-container matColumnDef="created">
+                        <th mat-header-cell *matHeaderCellDef>Created</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.created | date: 'dd.MM.yyyy HH:mm:ss' }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="txId">
+                        <th mat-header-cell *matHeaderCellDef>TxId</th>
+                        <td mat-cell *matCellDef="let element">
+                            <a (click)="showInBlockchainExplorer(element.txId)">{{ element.txId }}</a>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fromAddress">
+                        <th mat-header-cell *matHeaderCellDef>From</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.fromAddress }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="toAddress">
+                        <th mat-header-cell *matHeaderCellDef>To</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.toAddress }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef>Amount</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.amount | number: '1.1-12' }}
+                            {{ tokenizedAsset.unitName }}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="transferColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: transferColumns"></tr>
+                </table>
+            </div>
+            <div *ngIf="!tokenizedAsset.transfers || tokenizedAsset.transfers.length === 0">
+                <p>No Transactions have been executed!</p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Opt-Ins</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>TODO</p>
+        </mat-card-content>
+    </mat-card>
 </div>
