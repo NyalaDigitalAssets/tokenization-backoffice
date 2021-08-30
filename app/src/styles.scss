@@ -171,6 +171,10 @@ $base-gap: 5;
   text-align: right;
 }
 
+.ta-c {
+  text-align: center;
+}
+
 @for $i from 1 through 10 {
   .w-#{$i}0 {
     width: #{(10 * $i)}+ "%" !important;

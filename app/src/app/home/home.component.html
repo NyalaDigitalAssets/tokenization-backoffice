@@ -1,26 +1,47 @@
 <div class="container mg-t10">
-  <div class="row">
-    <div class="col-12">
-      <app-header
-        title="Home"
-        icon="fa-home"
-        content="Suspendisse eget libero id mauris interdum finibus eu eu ipsum.
-      Donec ex dui, lobortis et pellentesque a, porttitor et arcu. Donec
-      feugiat sem massa, sit amet congue orci imperdiet vel. Etiam
-      volutpat tellus mi, nec blandit est dignissim in. Vestibulum non
-      nunc finibus, posuere est in, sodales massa. Nunc rhoncus odio vitae
-      ipsum hendrerit suscipit. Vestibulum ante ipsum primis in faucibus
-      orci luctus et ultrices posuere cubilia curae; Maecenas ultrices
-      tellus in felis faucibus tincidunt. Quisque ac consequat quam. Sed
-      quam elit, euismod in malesuada vel, consectetur at metus. Nullam
-      sagittis interdum laoreet. In ac urna vel quam consequat finibus.
-      Donec sed est non augue consectetur varius. Nunc dictum leo id
-      faucibus semper. Nullam ligula ligula, viverra ac libero vel, luctus
-      bibendum lorem."
-      ></app-header>
+    <div class="row">
+        <div class="col-12">
+            <app-header title="Home" icon="fa-home" [content]="headerContent"></app-header>
+        </div>
     </div>
-  </div>
-  <div class="row mg-t10">
-    <div class="col-12"></div>
-  </div>
+    <div class="row mg-y5">
+        <div class="col-12">
+            <mat-card>
+                <mat-card-header class="ai-c">
+                    <div mat-card-avatar>
+                        <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+                    </div>
+                    <mat-card-title>
+                        <small>API Credentials</small>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>API credentials have been provided by setting the following environment variables:</p>
+                    <ul>
+                        <li>URL</li>
+                        <li>API_KEY</li>
+                        <li>API_SECRET</li>
+                    </ul>
+                    <p>Checkout our examples on github: <a target="_blank" href="https://github.com/BloxxonAG/ganymede-backoffice/blob/main/docker-compose.yml">docker-compose.yml</a></p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mg-y5">
+        <div class="col-12">
+            <mat-card>
+                <mat-card-header class="ai-c">
+                    <div mat-card-avatar>
+                        <app-fa-icon class="fa-2x" icon="fa-globe"></app-fa-icon>
+                    </div>
+                    <mat-card-title>
+                        <small>Internet Access</small>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Please make sure the container has access to the internet.</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
 </div>

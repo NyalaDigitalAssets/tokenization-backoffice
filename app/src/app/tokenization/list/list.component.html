@@ -135,6 +135,7 @@
 
 <ng-template #qrTpl>
   <div class="ta-c">
-    <qr-code [value]="publicAddress" size="300" errorCorrectionLevel="M"></qr-code>
+    <qr-code [value]="publicAddress" size="400" errorCorrectionLevel="H"></qr-code>
+    <p>{{ publicAddress }}</p>
   </div>
 </ng-template>
