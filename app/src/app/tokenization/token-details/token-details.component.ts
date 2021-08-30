@@ -64,7 +64,7 @@ export class TokenDetailsComponent implements OnInit {
     }
 
     private getTokenDetails(tokenizedAsset: TokenizedAssetDetailsDto): KeyValue[] {
-        const relevantProps = ['assetId', 'name', 'unitName', 'totalSupply', 'decimals', 'url'];
+        const relevantProps = ['assetId', 'name', 'unitName', 'totalSupply', 'decimals', 'metaData', 'url'];
         const details: KeyValue[] = [];
 
         for (const prop in this.tokenizedAsset) {
