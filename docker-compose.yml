@@ -1,0 +1,11 @@
+version: '3'
+services:
+  ganymede-backoffice:
+    image: ganymede-backoffice
+    container_name: ganymede-backoffice
+    environment:
+      - URL=https://api.ganymede-url
+      - API_KEY=<<api-key>>
+      - API_SECRET=<<api-secret>>   
+    ports:
+      - 4000:4000    
