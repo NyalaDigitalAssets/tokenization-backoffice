@@ -1,17 +1,26 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { TokenizationRoutingModule } from './tokenization-routing.module';
-import { ListComponent } from './list/list.component';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
-import { CreateComponent } from './create/create.component';
-import { FormsModule } from '@angular/forms';
-import { DeriveWalletComponent } from './derive-wallet/derive-wallet.component';
 import { CreateTokenComponent } from './create-token/create-token.component';
+import { CreateComponent } from './create/create.component';
+import { DeriveWalletComponent } from './derive-wallet/derive-wallet.component';
+import { IssuerWalletComponent } from './issuer-wallet/issuer-wallet.component';
+import { ListComponent } from './list/list.component';
+import { TokenDetailsComponent } from './token-details/token-details.component';
+import { TokenizationRoutingModule } from './tokenization-routing.module';
 
 @NgModule({
-  declarations: [ListComponent, CreateComponent, DeriveWalletComponent, CreateTokenComponent],
-  imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
+    declarations: [
+        ListComponent,
+        CreateComponent,
+        DeriveWalletComponent,
+        CreateTokenComponent,
+        IssuerWalletComponent,
+        TokenDetailsComponent,
+    ],
+    imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
 })
 export class TokenizationModule {}

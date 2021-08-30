@@ -1,47 +1,35 @@
-<div class="container mg-t10">
-    <div class="row">
-        <div class="col-12">
-            <app-header title="Home" icon="fa-home" [content]="headerContent"></app-header>
-        </div>
-    </div>
-    <div class="row mg-y5">
-        <div class="col-12">
-            <mat-card>
-                <mat-card-header class="ai-c">
-                    <div mat-card-avatar>
-                        <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
-                    </div>
-                    <mat-card-title>
-                        <small>API Credentials</small>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <p>API credentials have been provided by setting the following environment variables:</p>
-                    <ul>
-                        <li>URL</li>
-                        <li>API_KEY</li>
-                        <li>API_SECRET</li>
-                    </ul>
-                    <p>Checkout our examples on github: <a target="_blank" href="https://github.com/BloxxonAG/ganymede-backoffice/blob/main/docker-compose.yml">docker-compose.yml</a></p>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
-    <div class="row mg-y5">
-        <div class="col-12">
-            <mat-card>
-                <mat-card-header class="ai-c">
-                    <div mat-card-avatar>
-                        <app-fa-icon class="fa-2x" icon="fa-globe"></app-fa-icon>
-                    </div>
-                    <mat-card-title>
-                        <small>Internet Access</small>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <p>Please make sure the container has access to the internet.</p>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+<div class="mg-t10">
+    <app-header title="Home" icon="fa-home" [content]="headerContent"></app-header>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>API Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>API credentials have been provided by setting the following environment variables:</p>
+            <ul>
+                <li>URL</li>
+                <li>API_KEY</li>
+                <li>API_SECRET</li>
+            </ul>
+            <p>Checkout our examples on github: <a target="_blank" href="https://github.com/BloxxonAG/ganymede-backoffice/blob/main/docker-compose.yml">docker-compose.yml</a></p>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-globe"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Internet Access</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Please make sure the container has access to the internet.</p>
+        </mat-card-content>
+    </mat-card>
 </div>

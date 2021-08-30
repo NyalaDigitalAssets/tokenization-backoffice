@@ -1,0 +1,24 @@
+.issuer-wallet {
+    height: 450px;
+  
+    .address {
+      width: 250px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+  
+      &.address-m {
+        @media (max-width: 767px) {
+          width: 150px;
+        }
+      }
+    }
+  
+    mat-chip {
+      cursor: pointer;
+    }
+  
+    .info-tab {
+      max-height: 295px;
+    }
+  }
