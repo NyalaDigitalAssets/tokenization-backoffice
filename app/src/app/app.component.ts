@@ -14,6 +14,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
 
+    loadingIdentity: boolean;
     identity: AuthenticatedInstitutionDto;
     menuItems: MenuItem[];
 
@@ -47,6 +48,11 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
 
     private loadIdentity() {
-        this.customApi.getStatusGetAuth().subscribe((response) => (this.identity = response.data));
+        this.loadingIdentity = true;
+        this.customApi.getStatusGetAuth().subscribe(
+            (response) => (this.identity = response.data),
+            () => {},
+            () => (this.loadingIdentity = false)
+        );
     }
 }

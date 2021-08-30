@@ -8,7 +8,7 @@
   </mat-card-header>
   <mat-card-content>
     <hr />
-    <p *ngIf="content">{{ content }}</p>
+    <p *ngIf="content" [innerHTML]="content"></p>
   </mat-card-content>
   <mat-card-actions>
     <div class="mg-b2 mg-x2">
