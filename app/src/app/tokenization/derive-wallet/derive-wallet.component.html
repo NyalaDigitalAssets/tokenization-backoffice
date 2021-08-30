@@ -1,76 +1,64 @@
-<div class="container mg-t10">
-    <div class="row">
-        <div class="col-12">
-            <app-header title="Derive new issuer wallet" icon="fa-seedling">
-                <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()">
-                    <app-fa-icon icon="fa-save"></app-fa-icon>
-                </button>
-            </app-header>
-        </div>
-    </div>
-    <div class="row mg-y5" *ngIf="model">
-        <div class="col-12">
-            <mat-card>
-                <mat-card-header class="ai-c">
-                    <div mat-card-avatar>
-                        <app-fa-icon class="fa-2x" icon="fa-wallet"></app-fa-icon>
-                    </div>
-                    <mat-card-title>
-                        <small>New wallet details</small>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <div class="w-100">
-                        <mat-form-field appearance="standard" class="pd-x10">
-                            <mat-label>AssetType</mat-label>
-                            <mat-select [(ngModel)]="model.assetType" name="assetType">
-                                <mat-option *ngFor="let assetType of allowedAssetTypes" [value]="assetType">
-                                    {{ AssetTypes[assetType] }}
-                                </mat-option>
-                            </mat-select></mat-form-field
-                        >
-                    </div>
-                    <div class="w-100">
-                        <mat-form-field appearance="standard" class="pd-x10">
-                            <mat-label>Role</mat-label>
-                            <mat-select [(ngModel)]="model.role" name="role">
-                                <mat-option *ngFor="let role of [1, 2]" [value]="role">
-                                    {{ IssuerWalletRoles[role] }}
-                                </mat-option>
-                            </mat-select></mat-form-field
-                        >
-                    </div>
-                    <div class="w-100">
-                        <mat-form-field appearance="standard" class="pd-x10">
-                            <mat-label>Account Index</mat-label>
-                            <input matInput required type="number" placeholder="1" [(ngModel)]="model.accountIndex" name="accountIndex" />
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
-    <div class="row mg-y5" *ngIf="model">
-      <div class="col-12">
-          <mat-card>
-              <mat-card-header class="ai-c">
-                <div mat-card-avatar>
-                  <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
-                </div>
-                <mat-card-title>
-                  <small>Credentials</small>
-                </mat-card-title>
-              </mat-card-header>
-              <mat-card-content>                  
-                  <div class="w-100">
-                      <mat-form-field appearance="standard" class="pd-x10">
-                          <mat-label>Passphrase</mat-label>
-                          <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
-                          <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{ passphraseMessage }}</mat-hint>
-                      </mat-form-field>
-                  </div>
-              </mat-card-content>
-          </mat-card>
-      </div>
-  </div>
+<div class="mg-t10">
+    <app-header title="Derive new issuer wallet" icon="fa-seedling">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()">
+            <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+    </app-header>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-wallet"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>New wallet details</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>AssetType</mat-label>
+                    <mat-select [(ngModel)]="model.assetType" name="assetType">
+                        <mat-option *ngFor="let assetType of allowedAssetTypes" [value]="assetType">
+                            {{ AssetTypes[assetType] }}
+                        </mat-option>
+                    </mat-select></mat-form-field
+                >
+            </div>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Role</mat-label>
+                    <mat-select [(ngModel)]="model.role" name="role">
+                        <mat-option *ngFor="let role of [1, 2]" [value]="role">
+                            {{ IssuerWalletRoles[role] }}
+                        </mat-option>
+                    </mat-select></mat-form-field
+                >
+            </div>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Account Index</mat-label>
+                    <input matInput required type="number" placeholder="1" [(ngModel)]="model.accountIndex" name="accountIndex" />
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Passphrase</mat-label>
+                    <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
+                    <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{ passphraseMessage }}</mat-hint>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, OperatorFunction } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -9,6 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 export class ApiService {
     constructor(
         private http: HttpClient,
+        private snackBar: MatSnackBar,
     ) { }
 
     get<TResponse>(url: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<TResponse> {
@@ -126,6 +128,13 @@ export class ApiService {
                 errorMessage = 'Server error.';
             }
             console.error(errorMessage);
+            this.snackBar.open(errorMessage, 'OK', {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'bottom',
+                politeness: 'polite',
+              });
+
             return null;
         });
     }

@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -28,8 +29,8 @@ import { HeaderComponent } from './header/header.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
-import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { ModalComponent } from './modal/modal.component';
+import { SvgIconComponent } from './svg-icon/svg-icon.component';
 
 const MAT_MODULES = [
   MatIconModule,
@@ -52,6 +53,7 @@ const MAT_MODULES = [
   MatSelectModule,
   MatSnackBarModule,
   MatDialogModule,
+  MatGridListModule,
 ];
 
 const EXPORTS = [
