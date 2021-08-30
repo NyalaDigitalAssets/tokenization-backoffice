@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { IssuerWalletDto, IssuerWalletRoles } from '../../core/models';
+import { IssuerWalletDto, IssuerWalletRoles, TokenizedAssetDto } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
 
 interface Balance {
@@ -17,11 +18,11 @@ export class IssuerWalletComponent implements OnInit {
     @Input() wallet: IssuerWalletDto;
     @Output() showQrCodeClicked = new EventEmitter<string>();
 
-    tokenizedAssetColumns: string[] = ['name', 'unitName', 'totalSupply', 'decimals'];
+    tokenizedAssetColumns: string[] = ['name', 'unitName', 'totalSupply', 'decimals', 'action'];
     balanceColumns: string[] = ['amount', 'unitName'];
     IssuerWalletRoles = IssuerWalletRoles;
 
-    constructor(private assetTypeUtility: AssetTypeUtilityService) {}
+    constructor(private assetTypeUtility: AssetTypeUtilityService, private router: Router) {}
 
     ngOnInit(): void {}
 
@@ -40,7 +41,16 @@ export class IssuerWalletComponent implements OnInit {
         this.showQrCodeClicked.emit(this.wallet.publicAddress);
     }
 
-    sendTokens() {}
+    showToken(token: TokenizedAssetDto) {
+        this.router.navigate([
+            'tokenization',
+            this.wallet.issuerWalletSeedId,
+            'issuer-wallets',
+            this.wallet.id,
+            'tokens',
+            token.id,
+        ]);
+    }
 
     getBalances(): Balance[] {
         const balances: Balance[] = [];

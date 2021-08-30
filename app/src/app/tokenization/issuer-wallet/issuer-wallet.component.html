@@ -22,9 +22,6 @@
             <mat-chip selected color="accent" (click)="goToBlockchainExplorer()">
                 <app-fa-icon icon="fa-search"></app-fa-icon>
             </mat-chip>
-            <mat-chip selected color="accent" (click)="sendTokens()">
-                <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
-            </mat-chip>
         </mat-chip-list>
         <mat-tab-group class="mg-t4">
             <mat-tab label="Balance">
@@ -49,7 +46,7 @@
                     </table>
                 </div>
             </mat-tab>
-            <mat-tab label="Tokens">
+            <mat-tab *ngIf="wallet.role === IssuerWalletRoles.Issuer" label="Tokens">
                 <div class="info-tab">
                     <table class="w-100" mat-table [dataSource]="wallet.tokenizedAssets">
                         <ng-container matColumnDef="name">
@@ -77,6 +74,16 @@
                             <th mat-header-cell *matHeaderCellDef>Decimals</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.decimals }}
+                            </td>
+                        </ng-container>
+
+                        
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td class="va-b" mat-cell *matCellDef="let element">                               
+                                <button type="button" mat-icon-button (click)="showToken(element)">
+                                    <app-fa-icon icon="fa-chevron-circle-right"></app-fa-icon>
+                                </button>
                             </td>
                         </ng-container>
 

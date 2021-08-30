@@ -1,1 +1,19 @@
-<p>token-details works!</p>
+<div class="mg-t10" *ngIf="tokenizedAsset">
+    <app-header title="Token: {{ tokenizedAsset.name }}" icon="fa-coins">
+        <button mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">
+            <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
+        </button>
+    </app-header>
+    <!-- <mat-card class="mg-t10" >
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-coins"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Token: {{  }}</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>           
+        </mat-card-content>
+    </mat-card>     -->
+</div>
