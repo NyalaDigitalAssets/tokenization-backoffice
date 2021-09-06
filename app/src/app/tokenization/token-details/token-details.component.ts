@@ -18,7 +18,7 @@ interface KeyValue {
 export class TokenDetailsComponent implements OnInit {
     tokenDetailsColumns = ['key', 'value'];
     transferColumns = ['created', 'txId', 'fromAddress', 'toAddress', 'amount'];
-    optInColumns = [];
+    optInColumns = ['txId', 'confirmed', 'actions'];
 
     issuerWalletSeedId: string;
     issuerWalletId: string;

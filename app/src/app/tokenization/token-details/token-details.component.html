@@ -35,6 +35,57 @@
     <mat-card class="mg-t10">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Opt-Ins</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="tokenizedAsset.optIns && tokenizedAsset.optIns.length > 0">
+                <table class="w-100" mat-table [dataSource]="tokenizedAsset.optIns">
+                    <ng-container matColumnDef="txId">
+                        <th mat-header-cell *matHeaderCellDef>TxId</th>
+                        <td mat-cell *matCellDef="let element">
+                            <a class="link" (click)="showInBlockchainExplorer(element.txId)">{{ element.txId }}</a>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="confirmed">
+                        <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element">{{ element.confirmed | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+                            <span *ngIf="!element"></span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td class="ta-r" mat-cell *matCellDef="let element">
+                            <button matTooltip="Approve opt-in" mat-icon-button type="button">
+                                <app-fa-icon class="clr-scs" icon="fa-check-circle"></app-fa-icon>
+                            </button>
+                            <button matTooltip="Decline opt-in" mat-icon-button type="button">
+                                <app-fa-icon class="clr-dgr" icon="fa-times-circle"></app-fa-icon>
+                            </button>
+                            <button matTooltip="Show Retail Wallet" mat-icon-button type="button">
+                                <app-fa-icon icon="fa-wallet"></app-fa-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="optInColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: optInColumns"></tr>
+                </table>
+            </div>
+            <div *ngIf="!tokenizedAsset.optIns || tokenizedAsset.optIns.length === 0">
+                <p>No opt-in have been requested!</p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-exchange-alt"></app-fa-icon>
             </div>
             <mat-card-title>
@@ -87,19 +138,6 @@
             <div *ngIf="!tokenizedAsset.transfers || tokenizedAsset.transfers.length === 0">
                 <p>No Transactions have been executed!</p>
             </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card class="mg-t10">
-        <mat-card-header class="ai-c">
-            <div mat-card-avatar>
-                <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon>
-            </div>
-            <mat-card-title>
-                <small>Opt-Ins</small>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <p>TODO</p>
         </mat-card-content>
     </mat-card>
 </div>

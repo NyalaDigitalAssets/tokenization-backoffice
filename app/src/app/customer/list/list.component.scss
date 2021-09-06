@@ -14,15 +14,3 @@ mat-card-actions {
 .search-form {
   width: 200px;
 }
-.customer-details-link {
-  color: rgba(0, 0, 0, 0.87);
-  text-decoration: none;
-
-  &:hover{
-    color: rgb(105 90 90);
-    text-decoration: underline;
-  }
-  &:active, &:visited{
-    columns: rgba(0, 0, 0, 0.87);
-  }
-}
