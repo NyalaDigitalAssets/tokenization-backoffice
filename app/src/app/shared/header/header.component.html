@@ -1,18 +1,19 @@
 <mat-card class="header">
-  <mat-card-header class="ai-c">
-    <div mat-card-avatar *ngIf="icon">
-      <app-fa-icon class="fa-2x" [icon]="icon"></app-fa-icon>
-    </div>
-    <mat-card-title>{{ title }}</mat-card-title>
-    <mat-card-subtitle *ngIf="subTitle">{{ subTitle }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <hr />
-    <p *ngIf="content" [innerHTML]="content"></p>
-  </mat-card-content>
-  <mat-card-actions>
-    <div class="mg-b2 mg-x2">
-      <ng-content></ng-content>
-    </div>
-  </mat-card-actions>
+    <mat-card-header class="ai-c">
+        <div mat-card-avatar *ngIf="icon">
+            <app-fa-icon class="fa-2x" [icon]="icon"></app-fa-icon>
+        </div>
+        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-subtitle *ngIf="subTitle">{{ subTitle }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <hr />
+        <p *ngIf="content" [innerHTML]="content"></p>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="mg-b2 mg-x2">
+            <button mat-mini-fab color="accent" matTooltip="Back" type="button" (click)="goBack()"><app-fa-icon icon="fa-long-arrow-alt-left"></app-fa-icon></button>
+            <ng-content></ng-content>
+        </div>
+    </mat-card-actions>
 </mat-card>

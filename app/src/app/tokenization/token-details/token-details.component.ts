@@ -48,7 +48,17 @@ export class TokenDetailsComponent implements OnInit {
         window.open(url, '_blank');
     }
 
-    sendTokens() {}
+    sendTokens() {
+        this.router.navigate([
+            'tokenization',
+            this.issuerWalletSeedId,
+            'issuer-wallets',
+            this.issuerWalletId,
+            'tokens',
+            this.tokenizedAssetId,
+            'transfer',
+        ]);
+    }
 
     private loadTokenDetails() {
         this.customApi
@@ -64,7 +74,15 @@ export class TokenDetailsComponent implements OnInit {
     }
 
     private getTokenDetails(tokenizedAsset: TokenizedAssetDetailsDto): KeyValue[] {
-        const relevantProps = ['assetId', 'name', 'unitName', 'totalSupply', 'decimals', 'metaData', 'url'];
+        const relevantProps = [
+            'assetId',
+            'name',
+            'unitName',
+            'totalSupply',
+            'decimals',
+            'metaData',
+            'url',
+        ];
         const details: KeyValue[] = [];
 
         for (const prop in this.tokenizedAsset) {

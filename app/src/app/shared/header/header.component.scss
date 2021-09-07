@@ -1,8 +1,6 @@
 mat-card-actions {
-  div {
-    button {
-      margin-left: 10px;
-      margin-right: 10px;
+    .mat-mini-fab {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
     }
-  }
 }
