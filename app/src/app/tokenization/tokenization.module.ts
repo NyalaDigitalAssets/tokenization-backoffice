@@ -11,6 +11,7 @@ import { IssuerWalletComponent } from './issuer-wallet/issuer-wallet.component';
 import { ListComponent } from './list/list.component';
 import { TokenDetailsComponent } from './token-details/token-details.component';
 import { TokenizationRoutingModule } from './tokenization-routing.module';
+import { LockIssuerWalletComponent } from './lock-issuer-wallet/lock-issuer-wallet.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { TokenizationRoutingModule } from './tokenization-routing.module';
         CreateTokenComponent,
         IssuerWalletComponent,
         TokenDetailsComponent,
+        LockIssuerWalletComponent,
     ],
     imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
 })

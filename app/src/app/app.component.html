@@ -5,10 +5,10 @@
     </button>
     <strong class="mg-l2">Ganymede Backoffice</strong>
     <span class="spacer"></span>
-    <div *ngIf="!loadingIdentity && identity" class="animate__animated animate__shakeY" matTooltip="API authentication successful!">
+    <div *ngIf="!loadingIdentity && identity" class="animate__animated animate__fadeIn" matTooltip="API authentication successful!">
         <app-fa-icon icon="fa-link"></app-fa-icon>
     </div>
-    <div *ngIf="!loadingIdentity && !identity" class="animate__animated animate__shakeX" matTooltip="API authentication failed!">
+    <div *ngIf="!loadingIdentity && !identity" class="animate__animated animate__fadeIn" matTooltip="API authentication failed!">
         <app-fa-icon class="clr-dgr" icon="fa-link"></app-fa-icon>
     </div>
 </mat-toolbar>

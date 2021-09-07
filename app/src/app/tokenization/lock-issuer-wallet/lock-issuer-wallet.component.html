@@ -1,0 +1,41 @@
+<div class="mg-t10">
+    <app-header title="Lock Issuer Wallet" icon="fa-lock">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()">
+            <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+    </app-header>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <div class="animate__animated animate__repeat-3 animate__heartBeat"><app-fa-icon class="clr-dgr fa-2x" icon="fa-exclamation-triangle"></app-fa-icon></div>
+            </div>
+            <mat-card-title>
+                <small class="clr-dgr">Warning</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <p>By performing this operation, you will not be able to issue new tokens anymore.</p>
+                <p><strong>Locking a wallet is an irreversable operation!</strong></p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Passphrase</mat-label>
+                    <input matInput required type="password" [(ngModel)]="passphrase" name="passphrase" />
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

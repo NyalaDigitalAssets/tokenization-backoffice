@@ -22,6 +22,9 @@
             <mat-chip selected color="accent" (click)="goToBlockchainExplorer()">
                 <app-fa-icon icon="fa-search"></app-fa-icon>
             </mat-chip>
+            <mat-chip selected color="warn" (click)="goToAccountLocking()">
+                <app-fa-icon icon="fa-lock"></app-fa-icon>
+            </mat-chip>
         </mat-chip-list>
         <mat-tab-group class="mg-t4">
             <mat-tab *ngIf="wallet.role === IssuerWalletRoles.Issuer" label="Tokens">

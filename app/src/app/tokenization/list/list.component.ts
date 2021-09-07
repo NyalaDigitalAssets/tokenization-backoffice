@@ -59,7 +59,7 @@ export class ListComponent implements OnInit {
 
     sendTokens(wallet: IIssuerWalletDto) {}
 
-    private loadIssuerWalletSeeds() {
+    loadIssuerWalletSeeds() {
         this.customApi.getIssuerWalletGetIssuerWalletSeeds().subscribe((response) => {
             this.issuerWalletSeeds = (response.data || []).sort((a, b) =>
                 a.createdDt < b.createdDt ? 1 : -1

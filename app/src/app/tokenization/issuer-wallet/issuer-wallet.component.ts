@@ -37,6 +37,16 @@ export class IssuerWalletComponent implements OnInit {
         window.open(url, '_blank');
     }
 
+    goToAccountLocking() {
+        this.router.navigate([
+            'tokenization',
+            this.wallet.issuerWalletSeedId,
+            'issuer-wallets',
+            this.wallet.id,
+            'lock',
+        ]);
+    }
+
     showAddressQrCode() {
         this.showQrCodeClicked.emit(this.wallet.publicAddress);
     }
