@@ -61,7 +61,9 @@ export class ListComponent implements OnInit {
 
     private loadIssuerWalletSeeds() {
         this.customApi.getIssuerWalletGetIssuerWalletSeeds().subscribe((response) => {
-            this.issuerWalletSeeds = response.data;
+            this.issuerWalletSeeds = (response.data || []).sort((a, b) =>
+                a.createdDt < b.createdDt ? 1 : -1
+            );
         });
     }
 }
