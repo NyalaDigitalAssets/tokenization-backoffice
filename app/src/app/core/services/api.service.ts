@@ -122,12 +122,34 @@ export class ApiService {
     private errorHandler<TResponse>(showLoading: boolean): OperatorFunction<TResponse, any> {
         return catchError<TResponse, any>((errorResponse) => {
             let errorMessage = '';
+            let errors = null;
             if (errorResponse && errorResponse.error && errorResponse.error.errorMessageCodes) {
                 errorResponse.error.errorMessageCodes.map((m) => (errorMessage += m + '\r\n'));
-            } else {
-                errorMessage = 'Server error.';
             }
-            console.error(errorMessage);
+            else if(errorResponse &&  errorResponse.statusText && errorResponse.error && errorResponse.error.status){
+                errorMessage = errorResponse.statusText;
+                if(errorResponse.error.title){
+                    errorMessage += ' - ' + errorResponse.error.title;}
+                if(errorResponse.error.errors){
+                    errors = errorResponse.error.errors;
+                }
+            } 
+            else {
+                errorMessage = 'Server error.';
+                if(errorResponse.status && errorResponse.statusText){
+                    errorMessage = errorResponse.statusText + " ("+errorResponse.status+")"
+                }
+                if(errorResponse.error){
+                    errors = errorResponse.error;
+                }
+            }
+            
+            if(errors){
+                console.error(errorMessage, "Error details: ", errors);
+            }else{
+                console.error(errorMessage);
+            }
+
             this.snackBar.open(errorMessage, 'OK', {
                 duration: 5000,
                 horizontalPosition: 'center',
