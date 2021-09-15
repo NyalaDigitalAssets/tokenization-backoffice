@@ -15,6 +15,8 @@ export interface ITokenizedAssetOptInDto {
     txId?: string;
     fee?: string;
     confirmed?: Date;
+    customerId?: string;
+    retailWalletId?: string;
 }
 
 
@@ -23,6 +25,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
     txId: string;
     fee: string;
     confirmed: Date;
+    customerId: string;
+    retailWalletId: string;
 
     /**
      * constructor
@@ -48,6 +52,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
             this.txId = rawValues.txId;
             this.fee = rawValues.fee;
             this.confirmed = rawValues.confirmed;
+            this.customerId = rawValues.customerId;
+            this.retailWalletId = rawValues.retailWalletId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -60,6 +66,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
                 txId: new FormControl(this.txId),
                 fee: new FormControl(this.fee),
                 confirmed: new FormControl(this.confirmed),
+                customerId: new FormControl(this.customerId),
+                retailWalletId: new FormControl(this.retailWalletId),
             });
         }
         return this._formGroup;
@@ -73,6 +81,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
         this.$formGroup.controls['txId'].setValue(this.txId);
         this.$formGroup.controls['fee'].setValue(this.fee);
         this.$formGroup.controls['confirmed'].setValue(this.confirmed);
+        this.$formGroup.controls['customerId'].setValue(this.customerId);
+        this.$formGroup.controls['retailWalletId'].setValue(this.retailWalletId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

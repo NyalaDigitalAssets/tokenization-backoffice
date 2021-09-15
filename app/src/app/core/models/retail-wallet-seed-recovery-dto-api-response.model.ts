@@ -9,23 +9,17 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
-import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
-import { IssuerWalletRoles } from './enums';
+import { RetailWalletSeedRecoveryDto } from './retail-wallet-seed-recovery-dto.model';
 
-export interface IDeriveIssuerWalletFromSeedDto {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials?: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export interface IRetailWalletSeedRecoveryDtoApiResponse {
+    errorMessageCodes?: Array<string>;
+    data?: RetailWalletSeedRecoveryDto;
 }
 
 
-export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveIssuerWalletFromSeedDto  {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export class RetailWalletSeedRecoveryDtoApiResponse extends BaseModel implements IRetailWalletSeedRecoveryDtoApiResponse  {
+    errorMessageCodes: Array<string>;
+    data: RetailWalletSeedRecoveryDto;
 
     /**
      * constructor
@@ -34,7 +28,8 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.credentials = new SimpleAccessCredentialsDto(); 
+        this.errorMessageCodes = new Array<string>(); 
+        this.data = new RetailWalletSeedRecoveryDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -48,10 +43,8 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.assetType = rawValues.assetType;
-            this.accountIndex = rawValues.accountIndex;
-            this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
-            this.role = rawValues.role;
+            this.fillModelArray<string>(this, 'errorMessageCodes', rawValues.errorMessageCodes, useFormGroupValuesToModel);
+            this.data.setValues(rawValues.data, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -60,11 +53,11 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                assetType: new FormControl(this.assetType, [Validators.required, enumValidator(AssetTypes), ]),
-                accountIndex: new FormControl(this.accountIndex, [Validators.required, minValueValidator(0), maxValueValidator(1024), ]),
-                credentials: this.credentials.$formGroup,
-                role: new FormControl(this.role, [Validators.required, enumValidator(IssuerWalletRoles), ]),
+                errorMessageCodes: new FormArray([]),
+                data: this.data.$formGroup,
             });
+            // generate FormArray control elements
+            this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
         }
         return this._formGroup;
     }
@@ -73,10 +66,8 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
-        this.$formGroup.controls['accountIndex'].setValue(this.accountIndex);
-        this.credentials.setFormGroupValues();
-        this.$formGroup.controls['role'].setValue(this.role);
+        this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
+        this.data.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

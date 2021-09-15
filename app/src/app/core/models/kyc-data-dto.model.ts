@@ -10,21 +10,23 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { KycAddressDto } from './kyc-address-dto.model';
+import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
 
 export interface IKycDataDto {
     title?: string;
-    firstname?: string;
-    lastname?: string;
-    placeOfBirth?: string;
-    dateOfBirth?: Date;
-    address?: KycAddressDto;
-    email?: string;
-    nonPepPerson?: boolean;
-    highCorruptionIndex?: boolean;
-    nonSanctionedCountry?: boolean;
-    nonUsTaxPerson?: boolean;
-    identVerified?: boolean;
-    eulaAgreed?: boolean;
+    firstname: string;
+    lastname: string;
+    placeOfBirth: string;
+    dateOfBirth: Date;
+    address: KycAddressDto;
+    email: string;
+    nonPepPerson: boolean;
+    highCorruptionIndex: boolean;
+    nonSanctionedCountry: boolean;
+    nonUsTaxPerson: boolean;
+    identVerified: boolean;
+    eulaAgreed: boolean;
+    company?: CustomerCompanyDetailDto;
 }
 
 
@@ -42,6 +44,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     nonUsTaxPerson: boolean;
     identVerified: boolean;
     eulaAgreed: boolean;
+    company: CustomerCompanyDetailDto;
 
     /**
      * constructor
@@ -51,6 +54,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
         this.address = new KycAddressDto(); 
+        this.company = new CustomerCompanyDetailDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -77,6 +81,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
             this.nonUsTaxPerson = rawValues.nonUsTaxPerson;
             this.identVerified = rawValues.identVerified;
             this.eulaAgreed = rawValues.eulaAgreed;
+            this.company.setValues(rawValues.company, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -85,19 +90,20 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                title: new FormControl(this.title),
-                firstname: new FormControl(this.firstname),
-                lastname: new FormControl(this.lastname),
-                placeOfBirth: new FormControl(this.placeOfBirth),
-                dateOfBirth: new FormControl(this.dateOfBirth),
+                title: new FormControl(this.title, [Validators.minLength(0), Validators.maxLength(64), ]),
+                firstname: new FormControl(this.firstname, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
+                lastname: new FormControl(this.lastname, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
+                placeOfBirth: new FormControl(this.placeOfBirth, [Validators.required, Validators.minLength(0), Validators.maxLength(100), ]),
+                dateOfBirth: new FormControl(this.dateOfBirth, [Validators.required, ]),
                 address: this.address.$formGroup,
-                email: new FormControl(this.email),
-                nonPepPerson: new FormControl(this.nonPepPerson),
-                highCorruptionIndex: new FormControl(this.highCorruptionIndex),
-                nonSanctionedCountry: new FormControl(this.nonSanctionedCountry),
-                nonUsTaxPerson: new FormControl(this.nonUsTaxPerson),
-                identVerified: new FormControl(this.identVerified),
-                eulaAgreed: new FormControl(this.eulaAgreed),
+                email: new FormControl(this.email, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
+                nonPepPerson: new FormControl(this.nonPepPerson, [Validators.required, ]),
+                highCorruptionIndex: new FormControl(this.highCorruptionIndex, [Validators.required, ]),
+                nonSanctionedCountry: new FormControl(this.nonSanctionedCountry, [Validators.required, ]),
+                nonUsTaxPerson: new FormControl(this.nonUsTaxPerson, [Validators.required, ]),
+                identVerified: new FormControl(this.identVerified, [Validators.required, ]),
+                eulaAgreed: new FormControl(this.eulaAgreed, [Validators.required, ]),
+                company: this.company.$formGroup,
             });
         }
         return this._formGroup;
@@ -120,6 +126,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
         this.$formGroup.controls['nonUsTaxPerson'].setValue(this.nonUsTaxPerson);
         this.$formGroup.controls['identVerified'].setValue(this.identVerified);
         this.$formGroup.controls['eulaAgreed'].setValue(this.eulaAgreed);
+        this.company.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

@@ -12,8 +12,8 @@ import { SubTypeFactory } from './sub-type-factory';
 import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
 export interface IRetailWalletOptInDto {
-    tokenizedAssetId?: string;
-    credentials?: SimpleAccessCredentialsDto;
+    tokenizedAssetId: string;
+    credentials: SimpleAccessCredentialsDto;
 }
 
 
@@ -52,7 +52,7 @@ export class RetailWalletOptInDto extends BaseModel implements IRetailWalletOptI
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                tokenizedAssetId: new FormControl(this.tokenizedAssetId),
+                tokenizedAssetId: new FormControl(this.tokenizedAssetId, [Validators.required, ]),
                 credentials: this.credentials.$formGroup,
             });
         }

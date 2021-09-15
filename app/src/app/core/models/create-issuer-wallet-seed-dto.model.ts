@@ -12,7 +12,7 @@ import { SubTypeFactory } from './sub-type-factory';
 import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
 export interface ICreateIssuerWalletSeedDto {
-    name?: string;
+    name: string;
     credentials?: SimpleAccessCredentialsDto;
 }
 
@@ -52,7 +52,7 @@ export class CreateIssuerWalletSeedDto extends BaseModel implements ICreateIssue
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                name: new FormControl(this.name),
+                name: new FormControl(this.name, [Validators.required, ]),
                 credentials: this.credentials.$formGroup,
             });
         }

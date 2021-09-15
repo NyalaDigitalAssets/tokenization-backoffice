@@ -11,11 +11,11 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 export interface IKycAddressDto {
-    street?: string;
-    streetNo?: string;
-    postalCode?: string;
-    town?: string;
-    countryCodeIso2?: string;
+    street: string;
+    streetNo: string;
+    postalCode: string;
+    town: string;
+    countryCodeIso2: string;
 }
 
 
@@ -59,11 +59,11 @@ export class KycAddressDto extends BaseModel implements IKycAddressDto  {
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                street: new FormControl(this.street),
-                streetNo: new FormControl(this.streetNo),
-                postalCode: new FormControl(this.postalCode),
-                town: new FormControl(this.town),
-                countryCodeIso2: new FormControl(this.countryCodeIso2),
+                street: new FormControl(this.street, [Validators.required, Validators.maxLength(100), ]),
+                streetNo: new FormControl(this.streetNo, [Validators.required, Validators.maxLength(100), ]),
+                postalCode: new FormControl(this.postalCode, [Validators.required, Validators.maxLength(100), ]),
+                town: new FormControl(this.town, [Validators.required, Validators.maxLength(100), ]),
+                countryCodeIso2: new FormControl(this.countryCodeIso2, [Validators.required, Validators.maxLength(2), ]),
             });
         }
         return this._formGroup;

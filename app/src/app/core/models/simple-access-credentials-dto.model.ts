@@ -11,7 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 export interface ISimpleAccessCredentialsDto {
-    passphrase?: string;
+    passphrase: string;
     keyFileContent?: string;
 }
 
@@ -50,7 +50,7 @@ export class SimpleAccessCredentialsDto extends BaseModel implements ISimpleAcce
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                passphrase: new FormControl(this.passphrase),
+                passphrase: new FormControl(this.passphrase, [Validators.required, ]),
                 keyFileContent: new FormControl(this.keyFileContent),
             });
         }

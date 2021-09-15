@@ -7,6 +7,7 @@
 // generate enum based on strings instead of numbers
 // (see https://blog.rsuter.com/how-to-implement-an-enum-with-string-values-in-typescript/)
 export enum AccountTypes {
+    Unknown = 0,
     Person = 1,
     LegalEntity = 2,
 }
@@ -22,7 +23,6 @@ export enum AssetTypes {
     BTC = 1,
     ETH = 2,
     XLM = 3,
-    XTZ = 4,
     LINK = 5,
     CRO = 6,
     OMG = 7,
@@ -30,7 +30,6 @@ export enum AssetTypes {
     COMP = 9,
     DAI = 10,
     SNX = 11,
-    EOS = 12,
     LTC = 13,
     AAVE = 14,
     DOT = 16,
@@ -38,6 +37,8 @@ export enum AssetTypes {
     ALGO = 18,
     CRV = 19,
     YFI = 20,
+    ATOM = 21,
+    MANA = 22,
     EUR = 1001,
     USD = 1002,
 }
@@ -73,6 +74,7 @@ export enum WealthManagementProductType {
     ValueSave = 2,
     AllWeatherGreen = 3,
     ValueSaveGreen = 4,
+    Future = 5,
     Unknown = -1,
 }
 
@@ -80,6 +82,7 @@ export enum WealthManagementPurposeType {
     NotSet = 0,
     SavingMoney = 1,
     IncreasingWealth = 2,
+    FutureAssetGrowth = 3,
 }
 
 export enum WealthManagementHorizonType {

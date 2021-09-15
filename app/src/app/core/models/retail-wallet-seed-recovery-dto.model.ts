@@ -9,23 +9,24 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
-import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
-import { IssuerWalletRoles } from './enums';
 
-export interface IDeriveIssuerWalletFromSeedDto {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials?: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export interface IRetailWalletSeedRecoveryDto {
+    institutionId?: string;
+    accountId?: string;
+    recoveryKey?: string;
+    retailWalletSeedId?: string;
+    status?: number;
+    closedDate?: Date;
 }
 
 
-export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveIssuerWalletFromSeedDto  {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export class RetailWalletSeedRecoveryDto extends BaseModel implements IRetailWalletSeedRecoveryDto  {
+    institutionId: string;
+    accountId: string;
+    recoveryKey: string;
+    retailWalletSeedId: string;
+    status: number;
+    closedDate: Date;
 
     /**
      * constructor
@@ -34,7 +35,6 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -48,10 +48,12 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.assetType = rawValues.assetType;
-            this.accountIndex = rawValues.accountIndex;
-            this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
-            this.role = rawValues.role;
+            this.institutionId = rawValues.institutionId;
+            this.accountId = rawValues.accountId;
+            this.recoveryKey = rawValues.recoveryKey;
+            this.retailWalletSeedId = rawValues.retailWalletSeedId;
+            this.status = rawValues.status;
+            this.closedDate = rawValues.closedDate;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -60,10 +62,12 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                assetType: new FormControl(this.assetType, [Validators.required, enumValidator(AssetTypes), ]),
-                accountIndex: new FormControl(this.accountIndex, [Validators.required, minValueValidator(0), maxValueValidator(1024), ]),
-                credentials: this.credentials.$formGroup,
-                role: new FormControl(this.role, [Validators.required, enumValidator(IssuerWalletRoles), ]),
+                institutionId: new FormControl(this.institutionId),
+                accountId: new FormControl(this.accountId),
+                recoveryKey: new FormControl(this.recoveryKey),
+                retailWalletSeedId: new FormControl(this.retailWalletSeedId),
+                status: new FormControl(this.status),
+                closedDate: new FormControl(this.closedDate),
             });
         }
         return this._formGroup;
@@ -73,10 +77,12 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
-        this.$formGroup.controls['accountIndex'].setValue(this.accountIndex);
-        this.credentials.setFormGroupValues();
-        this.$formGroup.controls['role'].setValue(this.role);
+        this.$formGroup.controls['institutionId'].setValue(this.institutionId);
+        this.$formGroup.controls['accountId'].setValue(this.accountId);
+        this.$formGroup.controls['recoveryKey'].setValue(this.recoveryKey);
+        this.$formGroup.controls['retailWalletSeedId'].setValue(this.retailWalletSeedId);
+        this.$formGroup.controls['status'].setValue(this.status);
+        this.$formGroup.controls['closedDate'].setValue(this.closedDate);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

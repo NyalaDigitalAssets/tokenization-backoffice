@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "fs2BtTSXAeaZ8bYyqYquwGaCp21RN+Oiw28n4F7lJeWcr5c3WIW1OOAvZ1CIn2deJotb4wo333MdXi22RjPp9Q==",
+  "success": true,
+  "projectFilePath": "d:\\work\\ganymede-backoffice\\tools\\ClientGenerator\\ClientGenerator\\ClientGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\AttilaTakacs\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -9,23 +9,18 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
-import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
-import { IssuerWalletRoles } from './enums';
 
-export interface IDeriveIssuerWalletFromSeedDto {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials?: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export interface IResetRetailWalletAccessCredentialsDto {
+    recoveryKey?: string;
+    passphrase?: string;
+    keyFileContent?: string;
 }
 
 
-export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveIssuerWalletFromSeedDto  {
-    assetType: AssetTypes;
-    accountIndex: number;
-    credentials: SimpleAccessCredentialsDto;
-    role: IssuerWalletRoles;
+export class ResetRetailWalletAccessCredentialsDto extends BaseModel implements IResetRetailWalletAccessCredentialsDto  {
+    recoveryKey: string;
+    passphrase: string;
+    keyFileContent: string;
 
     /**
      * constructor
@@ -34,7 +29,6 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -48,10 +42,9 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.assetType = rawValues.assetType;
-            this.accountIndex = rawValues.accountIndex;
-            this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
-            this.role = rawValues.role;
+            this.recoveryKey = rawValues.recoveryKey;
+            this.passphrase = rawValues.passphrase;
+            this.keyFileContent = rawValues.keyFileContent;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -60,10 +53,9 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                assetType: new FormControl(this.assetType, [Validators.required, enumValidator(AssetTypes), ]),
-                accountIndex: new FormControl(this.accountIndex, [Validators.required, minValueValidator(0), maxValueValidator(1024), ]),
-                credentials: this.credentials.$formGroup,
-                role: new FormControl(this.role, [Validators.required, enumValidator(IssuerWalletRoles), ]),
+                recoveryKey: new FormControl(this.recoveryKey),
+                passphrase: new FormControl(this.passphrase),
+                keyFileContent: new FormControl(this.keyFileContent),
             });
         }
         return this._formGroup;
@@ -73,10 +65,9 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
-        this.$formGroup.controls['accountIndex'].setValue(this.accountIndex);
-        this.credentials.setFormGroupValues();
-        this.$formGroup.controls['role'].setValue(this.role);
+        this.$formGroup.controls['recoveryKey'].setValue(this.recoveryKey);
+        this.$formGroup.controls['passphrase'].setValue(this.passphrase);
+        this.$formGroup.controls['keyFileContent'].setValue(this.keyFileContent);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ClientGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "http://127.0.0.1:4447/swagger/v1/swagger.json ../../../src/Ganymede/Ganymede.External/app/src/app/core/services/ganymede.service.ts"
+    }
+  }
+}

@@ -44,15 +44,6 @@ export class AssetTypeUtilityService {
             baseAddressUrl: 'https://stellarchain.io/address',
         },
         {
-            type: AssetTypes.XTZ,
-            unit: 'XTZ',
-            name: 'Tezos',
-            feeUnit: 'XTZ',
-            color: 'rgba(44, 125, 247, 1)',
-            baseTxUrl: 'https://tezblock.io/transaction',
-            baseAddressUrl: 'https://tezblock.io/account',
-        },
-        {
             type: AssetTypes.LINK,
             unit: 'LINK',
             feeUnit: 'ETH',
@@ -114,15 +105,6 @@ export class AssetTypeUtilityService {
             color: 'rgba(30, 26, 50, 1)',
             baseTxUrl: 'https://etherscan.io/tx',
             baseAddressUrl: 'https://etherscan.io/address',
-        },
-        {
-            type: AssetTypes.EOS,
-            unit: 'EOS',
-            feeUnit: 'EOS',
-            name: 'EOSIO',
-            color: 'rgba(54, 69, 131, 1)',
-            baseTxUrl: 'https://www.bloks.io/transaction',
-            baseAddressUrl: 'https://www.bloks.io/account',
         },
         {
             type: AssetTypes.LTC,
