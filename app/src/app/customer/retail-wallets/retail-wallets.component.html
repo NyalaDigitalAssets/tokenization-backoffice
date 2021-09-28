@@ -1,13 +1,11 @@
 <div class="mg-t10">
     <app-header title="Wallets" icon="fa-wallet">
-        <div *ngIf="wallets?.data">
-            <button mat-mini-fab color="primary" (click)="lockWallet(true)" *ngIf="!isLocked" [disabled]="disableLock">
-                <mat-icon fontSet="fa" fontIcon="fa-lock"></mat-icon>
-            </button>
-            <button mat-mini-fab color="primary" (click)="lockWallet(false)" *ngIf="isLocked" [disabled]="disableLock">
-                <mat-icon fontSet="fa" fontIcon="fa-unlock"></mat-icon>
-            </button>
-        </div>
+        <button mat-mini-fab color="primary" (click)="lockWallet(true)" *ngIf="wallets?.data && !isLocked" [disabled]="disableLock">
+            <mat-icon fontSet="fa" fontIcon="fa-lock"></mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="lockWallet(false)" *ngIf="wallets?.data && isLocked" [disabled]="disableLock">
+            <mat-icon fontSet="fa" fontIcon="fa-unlock"></mat-icon>
+        </button>
     </app-header>
     <table mat-table [dataSource]="wallets?.data" multiTemplateDataRows class="mg-t10 mat-elevation-z8 w-100">
         <ng-container matColumnDef="assetType">

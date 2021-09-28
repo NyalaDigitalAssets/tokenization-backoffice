@@ -42,45 +42,40 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div *ngIf="tokenizedAsset.optIns && tokenizedAsset.optIns.length > 0">
-                <table class="w-100" mat-table [dataSource]="tokenizedAsset.optIns">
-                    <ng-container matColumnDef="txId">
-                        <th mat-header-cell *matHeaderCellDef>TxId</th>
-                        <td mat-cell *matCellDef="let element">
-                            <a class="link" (click)="showInBlockchainExplorer(element.txId)">{{ element.txId }}</a>
-                        </td>
-                    </ng-container>
+            <table class="w-100" mat-table [dataSource]="optInDataSource">
+                <ng-container matColumnDef="nr">
+                    <th mat-header-cell *matHeaderCellDef>Nr.</th>
+                    <td mat-cell *matCellDef="let element">{{ element.nr }}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="confirmed">
-                        <th mat-header-cell *matHeaderCellDef>Confirmed</th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.confirmed">{{ element.confirmed | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
-                            <span *ngIf="!element.confirmed">-</span>
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="txId">
+                    <th mat-header-cell *matHeaderCellDef>TxId</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="link" (click)="showInBlockchainExplorer(element.txId)">
+                            <div class="elipsis">{{ element.txId }}</div>
+                        </a>
+                    </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td class="ta-r va-b" mat-cell *matCellDef="let element">
-                            <button matTooltip="Approve opt-in" mat-icon-button type="button">
-                                <app-fa-icon class="clr-scs" icon="fa-check-circle"></app-fa-icon>
-                            </button>
-                            <button matTooltip="Decline opt-in" mat-icon-button type="button">
-                                <app-fa-icon class="clr-dgr" icon="fa-times-circle"></app-fa-icon>
-                            </button>
-                            <button matTooltip="Show Retail Wallet" mat-icon-button type="button">
-                                <app-fa-icon icon="fa-wallet"></app-fa-icon>
-                            </button>
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="confirmed">
+                    <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.confirmed">{{ element.confirmed | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+                        <span *ngIf="!element.confirmed">-</span>
+                    </td>
+                </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="optInColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: optInColumns"></tr>
-                </table>
-            </div>
-            <div *ngIf="!tokenizedAsset.optIns || tokenizedAsset.optIns.length === 0">
-                <p>No opt-in have been requested!</p>
-            </div>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td class="ta-r va-m" mat-cell *matCellDef="let element">
+                        <mat-checkbox name="selected-{{ element.txId }}" [(ngModel)]="element.isSelected"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="optInColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: optInColumns"></tr>
+            </table>
+            <mat-paginator [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
         </mat-card-content>
     </mat-card>
     <mat-card class="mg-t10">

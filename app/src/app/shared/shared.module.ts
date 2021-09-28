@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -34,43 +35,32 @@ import { ModalComponent } from './modal/modal.component';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 
 const MAT_MODULES = [
-  MatIconModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatButtonModule,
-  MatIconModule,
-  MatDividerModule,
-  MatProgressSpinnerModule,
-  MatCardModule,
-  MatListModule,
-  MatTooltipModule,
-  MatTableModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatChipsModule,
-  MatExpansionModule,
-  MatTabsModule,
-  MatSelectModule,
-  MatSnackBarModule,
-  MatDialogModule,
-  MatGridListModule,
-  MatPaginatorModule
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatListModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
 ];
 
 const EXPORTS = [
-  MenuComponent,
-  FaIconComponent,
-  HeaderComponent,
-  SvgIconComponent,
-  LoadingScreenComponent,
-  CopyClipboardDirective,
-  ModalComponent,
-];
-
-@NgModule({
-  declarations: [
-    MenuItemComponent,
     MenuComponent,
     FaIconComponent,
     HeaderComponent,
@@ -78,8 +68,20 @@ const EXPORTS = [
     LoadingScreenComponent,
     CopyClipboardDirective,
     ModalComponent,
-  ],
-  imports: [CommonModule, FormsModule, QrCodeModule, ...MAT_MODULES],
-  exports: [FormsModule, ...EXPORTS, QrCodeModule, ...MAT_MODULES],
+];
+
+@NgModule({
+    declarations: [
+        MenuItemComponent,
+        MenuComponent,
+        FaIconComponent,
+        HeaderComponent,
+        SvgIconComponent,
+        LoadingScreenComponent,
+        CopyClipboardDirective,
+        ModalComponent,
+    ],
+    imports: [CommonModule, FormsModule, QrCodeModule, ...MAT_MODULES],
+    exports: [FormsModule, ...EXPORTS, QrCodeModule, ...MAT_MODULES],
 })
 export class SharedModule {}
