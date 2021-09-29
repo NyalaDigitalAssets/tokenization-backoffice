@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { IssuerWalletDto, IssuerWalletRoles, TokenizedAssetDto } from '../../core/models';
@@ -14,7 +14,7 @@ interface Balance {
     templateUrl: './issuer-wallet.component.html',
     styleUrls: ['./issuer-wallet.component.scss'],
 })
-export class IssuerWalletComponent implements OnInit {
+export class IssuerWalletComponent {
     @Input() wallet: IssuerWalletDto;
     @Output() showQrCodeClicked = new EventEmitter<string>();
 
@@ -23,8 +23,6 @@ export class IssuerWalletComponent implements OnInit {
     IssuerWalletRoles = IssuerWalletRoles;
 
     constructor(private assetTypeUtility: AssetTypeUtilityService, private router: Router) {}
-
-    ngOnInit(): void {}
 
     getIcon(): string {
         return this.assetTypeUtility.icon(this.wallet.assetType);

@@ -2,8 +2,8 @@
     <app-header title="Transfer Tokens" icon="fa-paper-plane">
         <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(
             (credForm?.invalid) ||
-            (selectedTab.value == 0 && singleForm.invalid) || 
-            (selectedTab.value == 1 && multipleForm.invalid))">
+            (selectedTab.value === 0 && singleForm.invalid) || 
+            (selectedTab.value === 1 && multipleForm.invalid))">
             <app-fa-icon icon="fa-save"></app-fa-icon>
         </button>
     </app-header>

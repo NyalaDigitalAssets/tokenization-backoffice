@@ -17,6 +17,8 @@ export interface ITokenizedAssetDto {
     unitName?: string;
     totalSupply?: number;
     decimals?: number;
+    enableFreeze?: boolean;
+    enableClawback?: boolean;
     url?: string;
     metaData?: string;
     issuerAddress?: string;
@@ -31,6 +33,8 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     unitName: string;
     totalSupply: number;
     decimals: number;
+    enableFreeze: boolean;
+    enableClawback: boolean;
     url: string;
     metaData: string;
     issuerAddress: string;
@@ -62,6 +66,8 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.unitName = rawValues.unitName;
             this.totalSupply = rawValues.totalSupply;
             this.decimals = rawValues.decimals;
+            this.enableFreeze = rawValues.enableFreeze;
+            this.enableClawback = rawValues.enableClawback;
             this.url = rawValues.url;
             this.metaData = rawValues.metaData;
             this.issuerAddress = rawValues.issuerAddress;
@@ -80,6 +86,8 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 unitName: new FormControl(this.unitName),
                 totalSupply: new FormControl(this.totalSupply),
                 decimals: new FormControl(this.decimals),
+                enableFreeze: new FormControl(this.enableFreeze),
+                enableClawback: new FormControl(this.enableClawback),
                 url: new FormControl(this.url),
                 metaData: new FormControl(this.metaData),
                 issuerAddress: new FormControl(this.issuerAddress),
@@ -99,6 +107,8 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['unitName'].setValue(this.unitName);
         this.$formGroup.controls['totalSupply'].setValue(this.totalSupply);
         this.$formGroup.controls['decimals'].setValue(this.decimals);
+        this.$formGroup.controls['enableFreeze'].setValue(this.enableFreeze);
+        this.$formGroup.controls['enableClawback'].setValue(this.enableClawback);
         this.$formGroup.controls['url'].setValue(this.url);
         this.$formGroup.controls['metaData'].setValue(this.metaData);
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);

@@ -12,7 +12,7 @@ import { AssetTypeUtilityService } from '../../core/services/asset-types-utility
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
-    selector: 'aap-retail-wallets',
+    selector: 'app-retail-wallets',
     templateUrl: './retail-wallets.component.html',
     styleUrls: ['./retail-wallets.component.scss'],
     animations: [
