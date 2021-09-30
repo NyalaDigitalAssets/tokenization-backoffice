@@ -11,11 +11,11 @@ const routes: Routes = [
     component: ListComponent,
   },
   {
-    path: ':customer-id',
+    path: ':customerId',
     component: DetailsComponent
   },
   {
-    path: ':customer-id/retail-wallets',
+    path: ':customerId/retail-wallets',
     component: RetailWalletsComponent
   }
 ];

@@ -41,6 +41,7 @@ export enum AssetTypes {
     YFI = 20,
     ATOM = 21,
     MANA = 22,
+    POLY = 23,
     EUR = 1001,
     USD = 1002,
 }

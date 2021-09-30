@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 
 import {
@@ -24,26 +25,30 @@ import { CustomApiService } from '../../core/services/ganymede.service';
     ],
 })
 export class RetailWalletsComponent implements OnInit {
-   
     displayedColumns: string[] = ['assetType', 'publicAddress', 'nativeBalance', 'lockstatus'];
-    innerTableColums: string[] = ['token', 'balance'];
+    innerTableColums: string[] = ['token', 'balance', 'actions'];
     customerId: string;
     wallets: RetailWalletDtoListApiResponse;
     expandedElement: RetailWalletDto | null;
-    isLocked: boolean = false;
-    disableLock: boolean = false;
+    isLocked = false;
+    disableLock = false;
 
     AssetTypes = AssetTypes;
+
+    @ViewChild('cbDialog', { static: true }) cbDialog: TemplateRef<any>;
 
     constructor(
         private customApi: CustomApiService,
         private assetTypeUtility: AssetTypeUtilityService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
-        this.customerId = this.route.snapshot.paramMap.get('customer-id');
-        this.getRetailWallets();
+        this.route.params.subscribe((params) => {
+            this.customerId = params.customerId;
+            this.getRetailWallets();
+        });
     }
 
     getRetailWallets() {
@@ -72,11 +77,15 @@ export class RetailWalletsComponent implements OnInit {
         });
     }
 
+    showClawbackDialog(seedId: string, walletId: string){
+        this.dialog.open(this.cbDialog);
+    }    
+
     getIcon(assetType: AssetTypes): string {
         return this.assetTypeUtility.icon(assetType);
     }
 
-    getUnit(assetType: AssetTypes): string {      
-      return this.assetTypeUtility.unit(assetType);
+    getUnit(assetType: AssetTypes): string {
+        return this.assetTypeUtility.unit(assetType);
     }
 }

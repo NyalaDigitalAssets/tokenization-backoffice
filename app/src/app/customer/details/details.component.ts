@@ -39,7 +39,7 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateCustomerModel = new UpdateCustomerAccountDto();
-    this.customerId = this.route.snapshot.paramMap.get('customer-id');
+    this.customerId = this.route.snapshot.paramMap.get('customerId');
     this.getCustomer();
   }
 
