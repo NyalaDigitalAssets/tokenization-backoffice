@@ -58,6 +58,7 @@ const MAT_MODULES = [
     MatGridListModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatDialogModule,
 ];
 
 const EXPORTS = [

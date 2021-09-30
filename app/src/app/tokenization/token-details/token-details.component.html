@@ -1,5 +1,5 @@
-<div class="mg-t10" *ngIf="tokenizedAsset">
-    <app-header title="Token: {{ tokenizedAsset.name }}" icon="fa-coins">
+<div class="mg-t10">
+    <app-header title="Token: {{ tokenizedAsset?.name }}" icon="fa-coins">
         <button mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
@@ -33,19 +33,32 @@
         </mat-card-content>
     </mat-card>
     <mat-card class="mg-t10">
-        <mat-card-header class="ai-c">
-            <div mat-card-avatar>
-                <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon>
-            </div>
-            <mat-card-title>
-                <small>Opt-Ins</small>
-            </mat-card-title>
-        </mat-card-header>
         <mat-card-content>
+            <mat-toolbar>
+                <span><app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{ tokenizedAsset?.optIns?.length }}</span>
+                <span class="tb-spacer"></span
+                ><button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
+                    <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
+                    <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
+                </button>
+                <button mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
+                    <app-fa-icon icon="fa-thumbs-up"></app-fa-icon>
+                </button>
+                <button mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
+                    <app-fa-icon icon="fa-undo"></app-fa-icon>
+                </button>
+            </mat-toolbar>
             <table class="w-100" mat-table [dataSource]="optInDataSource">
                 <ng-container matColumnDef="nr">
                     <th mat-header-cell *matHeaderCellDef>Nr.</th>
                     <td mat-cell *matCellDef="let element">{{ element.nr }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Customer</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.customerName }}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="txId">
@@ -68,17 +81,17 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td class="ta-r va-m" mat-cell *matCellDef="let element">
-                        <mat-checkbox name="selected-{{ element.txId }}" [(ngModel)]="element.isSelected"></mat-checkbox>
+                        <mat-checkbox name="selected-{{ element.txId }}" [(ngModel)]="element.isSelected" (change)="checkSelections()"></mat-checkbox>
                     </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="optInColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: optInColumns"></tr>
             </table>
-            <mat-paginator [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+            <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
         </mat-card-content>
     </mat-card>
-    <mat-card class="mg-t10">
+    <mat-card class="mg-t10" *ngIf="tokenizedAsset">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-exchange-alt"></app-fa-icon>
@@ -136,3 +149,20 @@
         </mat-card-content>
     </mat-card>
 </div>
+<ng-template #pwdDialog>
+    <h2 matDialogTitle>Credentials</h2>
+    <form #pwdForm="ngForm">
+        <mat-dialog-content>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Passphrase</mat-label>
+                    <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
+                </mat-form-field>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="ta-r">
+            <button mat-raised-button matDialogClose color="primary">Dismiss</button>
+            <button mat-raised-button [disabled]="pwdForm?.invalid" (click)="submitOptIns()">Submit</button>
+        </mat-dialog-actions>
+    </form>
+</ng-template>
