@@ -114,10 +114,9 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     submitOptIns() {
-        this.model.retailWalletIds = [];
-        this.tokenizedAsset.optIns
+        this.model.retailWalletIds = this.tokenizedAsset.optIns
             .filter((o) => o.isSelected)
-            .forEach((o) => this.model.retailWalletIds.push(o.retailWalletId));
+            .map((o) => o.retailWalletId);
 
         const q = this.isOptInAuthorizeCall
             ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
