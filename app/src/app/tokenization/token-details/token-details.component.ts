@@ -125,7 +125,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                   this.tokenizedAssetId,
                   this.model
               )
-            : this.customApi.postTokenizedAssetsRewokeOptIn(
+            : this.customApi.postTokenizedAssetsRevokeOptIn(
                   this.issuerWalletSeedId,
                   this.issuerWalletId,
                   this.tokenizedAssetId,
