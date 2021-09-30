@@ -2,13 +2,23 @@ const express = require("express");
 const proxy = require("express-http-proxy");
 const hmac256 = require("crypto-js/hmac-sha256");
 const base64 = require("crypto-js/enc-base64");
+const fs = require("fs");
 
 const app = express();
 
-const url = process.env.URL;
-const apiKey = process.env.API_KEY;
-const apiSecret = process.env.API_SECRET;
+const credentialsFils = "./credentials.json";
 const appFolder = "../app/dist/";
+
+let url = process.env.URL;
+let apiKey = process.env.API_KEY;
+let apiSecret = process.env.API_SECRET;
+
+if (fs.existsSync(credentialsFils)) {
+  const credentials = JSON.parse(fs.readFileSync(credentialsFils).toString());
+  url = credentials.url;
+  apiKey = credentials.apiKey;
+  apiSecret = credentials.apiSecret;
+}
 
 // ---- API Routing and HMAC Auth ---- //
 app.all(
