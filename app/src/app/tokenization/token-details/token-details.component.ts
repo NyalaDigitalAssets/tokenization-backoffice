@@ -1,11 +1,14 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 import {
     AssetTypes,
     ITokenizedAssetDetailsDto,
+    ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
 } from '../../core/models';
@@ -20,6 +23,7 @@ interface KeyValue {
 export class TokenizedAssetOptInDtoExtended extends TokenizedAssetOptInDto {
     isSelected?: boolean;
     nr?: number;
+    customerName?: string;
 }
 
 export interface ITokenizedAssetDetailsDtoExtend extends ITokenizedAssetDetailsDto {
@@ -32,24 +36,33 @@ export interface ITokenizedAssetDetailsDtoExtend extends ITokenizedAssetDetailsD
     styleUrls: ['./token-details.component.scss'],
 })
 export class TokenDetailsComponent implements AfterViewInit {
+    private issuerWalletSeedId: string;
+    private issuerWalletId: string;
+    private tokenizedAssetId: string;
+
+    optInColumns = ['nr', 'name', 'txId', 'confirmed', 'actions'];
+    optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
+    optInsAllSelected = false;
+    optInsAnySelected = false;
+
     tokenDetailsColumns = ['key', 'value'];
+    tokenDetails = new MatTableDataSource<KeyValue>();
+
     transferColumns = ['created', 'txId', 'fromAddress', 'toAddress', 'amount'];
-    optInColumns = ['nr', 'txId', 'confirmed', 'actions'];
-    optInDataSource = new MatTableDataSource<TokenizedAssetOptInDto>();
 
-    issuerWalletSeedId: string;
-    issuerWalletId: string;
-    tokenizedAssetId: string;
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
-    tokenDetails: KeyValue[];
+    model = new ToggleOptInAuthorizationDto();
+    isOptInAuthorizeCall = false;
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild('pwdDialog', { static: true }) pwdDialog: TemplateRef<any>;
 
     constructor(
         private customApi: CustomApiService,
         private activatedRoute: ActivatedRoute,
         private assetTypeUtility: AssetTypeUtilityService,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {}
 
     ngAfterViewInit() {
@@ -79,23 +92,76 @@ export class TokenDetailsComponent implements AfterViewInit {
         ]);
     }
 
+    toggleOptInSelection() {
+        const anySelected = this.getOptInAnySelected();
+        const allSelected = this.getOptInAllSelected();
+
+        this.tokenizedAsset.optIns.forEach((o) => {
+            o.isSelected = !anySelected ? true : allSelected ? false : anySelected;
+        });
+
+        this.checkSelections();
+    }
+
+    checkSelections() {
+        this.optInsAllSelected = this.getOptInAllSelected();
+        this.optInsAnySelected = this.getOptInAnySelected();
+    }
+
+    showOptInDialog(isOptInAuthorizeCall: boolean) {
+        this.dialog.open(this.pwdDialog);
+        this.isOptInAuthorizeCall = isOptInAuthorizeCall;
+    }
+
+    submitOptIns() {
+        this.model.retailWalletIds = [];
+        this.tokenizedAsset.optIns
+            .filter((o) => o.isSelected)
+            .forEach((o) => this.model.retailWalletIds.push(o.retailWalletId));
+
+        const q = this.isOptInAuthorizeCall
+            ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
+                  this.issuerWalletSeedId,
+                  this.issuerWalletId,
+                  this.tokenizedAssetId,
+                  this.model
+              )
+            : this.customApi.postTokenizedAssetsRewokeOptIn(
+                  this.issuerWalletSeedId,
+                  this.issuerWalletId,
+                  this.tokenizedAssetId,
+                  this.model
+              );
+
+        q.subscribe((response) => {
+            if (response) {
+                this.loadTokenDetails();
+            }
+        });
+    }
+
     private loadTokenDetails() {
-        this.customApi
-            .getTokenizedAssetsGetTokenizedAssetDetails(
+        forkJoin([
+            this.customApi.getCustomerGetCustomers(),
+            this.customApi.getTokenizedAssetsGetTokenizedAssetDetails(
                 this.issuerWalletSeedId,
                 this.issuerWalletId,
                 this.tokenizedAssetId
-            )
-            .subscribe((response) => {
-                this.tokenizedAsset = response.data;
-                this.optInDataSource.data = [];
-                let index = 1;
-                this.tokenizedAsset.optIns.forEach((o) => {
-                    o.nr = index++;
-                    this.optInDataSource.data.push(o);
-                });
-                this.tokenDetails = this.getTokenDetails(response.data);
+            ),
+        ]).subscribe((response) => {
+            const customers = response[0].data;
+            this.tokenizedAsset = response[1].data;
+            let index = 0;
+            this.tokenizedAsset.optIns.forEach((o) => {
+                const customer = customers.find((c) => c.id == o.customerId);
+                o.nr = ++index;
+                o.customerName = customer
+                    ? `${customer.firstname} ${customer.lastname}`
+                    : 'ERROR: Unknown';
             });
+            this.optInDataSource.data = this.tokenizedAsset.optIns;
+            this.tokenDetails.data = this.getTokenDetails(response[1].data);
+        });
     }
 
     private getTokenDetails(tokenizedAsset: TokenizedAssetDetailsDto): KeyValue[] {
@@ -121,5 +187,13 @@ export class TokenDetailsComponent implements AfterViewInit {
         }
 
         return details;
+    }
+
+    private getOptInAllSelected(): boolean {
+        return this.tokenizedAsset.optIns.every((o) => o.isSelected);
+    }
+
+    private getOptInAnySelected(): boolean {
+        return this.tokenizedAsset.optIns.some((o) => o.isSelected);
     }
 }

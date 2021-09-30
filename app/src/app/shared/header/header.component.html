@@ -12,7 +12,7 @@
     </mat-card-content>
     <mat-card-actions>
         <div class="mg-b2 mg-x2">
-            <button mat-mini-fab color="accent" matTooltip="Back" type="button" (click)="goBack()"><app-fa-icon icon="fa-long-arrow-alt-left"></app-fa-icon></button>
+            <button mat-mini-fab color="accent" matTooltip="Back" type="button" (click)="goBack()" *ngIf="showBack"><app-fa-icon icon="fa-long-arrow-alt-left"></app-fa-icon></button>
             <ng-content></ng-content>
         </div>
     </mat-card-actions>

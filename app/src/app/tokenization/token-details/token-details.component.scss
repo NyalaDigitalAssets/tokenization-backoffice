@@ -4,3 +4,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+mat-toolbar {
+    .tb-spacer {
+        flex: 1 1 auto;
+    }
+
+    button {
+        margin: 0 10px;
+    }
+}

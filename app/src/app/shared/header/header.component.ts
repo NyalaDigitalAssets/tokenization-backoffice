@@ -11,6 +11,7 @@ export class HeaderComponent {
     @Input() subTitle?: string;
     @Input() icon?: string;
     @Input() content?: string;
+    @Input() showBack = true;
 
     constructor(private location: Location) {}
 

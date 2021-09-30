@@ -1,25 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component,  ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CustomerAccountDto } from 'src/app/core/models';
-import { CustomApiService } from 'src/app/core/services/ganymede.service';
+
+import { CustomerAccountDto } from '../../core/models';
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements AfterViewInit {
   displayedColumns: string[] = ['name', 'email', 'phoneNumber', 'walletAccess'];
-  dataSource: CustomerAccountDto[];
+  dataSource = new MatTableDataSource<CustomerAccountDto>();
   searchText = '';
 
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  
   constructor(
     private customApi: CustomApiService,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
     this.search();
   }
 
@@ -35,7 +41,7 @@ export class ListComponent implements OnInit {
       .getCustomerQueryCustomers(queryParams.join('&'))
       .subscribe(
         (response) => {
-          this.dataSource = response.data;
+          this.dataSource.data = response.data;
         },
       );
   }

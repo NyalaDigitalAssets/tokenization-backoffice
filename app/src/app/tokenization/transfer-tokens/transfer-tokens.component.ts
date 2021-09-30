@@ -99,8 +99,8 @@ export class TransferTokensComponent implements OnInit {
                 this.model.transfers = new Array<TokenizedAssetToRetailWallet>();
                 for (let i = 0; i < result.length; i++)
                     this.model.transfers.push(new TokenizedAssetToRetailWallet({
-                        amount: result[i][1],
-                        retailWalletId: result[i][0]
+                        retailWalletId: result[i][0],
+                        amount: parseFloat(result[i][1])
                     }));
                 this.dataSource = new MatTableDataSource<TokenizedAssetToRetailWallet>(this.model.transfers);
                 this.dataSource.paginator = this.paginator;
