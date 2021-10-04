@@ -13,6 +13,7 @@ import { TokenDetailsComponent } from './token-details/token-details.component';
 import { TokenizationRoutingModule } from './tokenization-routing.module';
 import { LockIssuerWalletComponent } from './lock-issuer-wallet/lock-issuer-wallet.component';
 import { TransferTokensComponent } from './transfer-tokens/transfer-tokens.component';
+import { ClawbackTokensComponent } from './clawback-tokens/clawback-tokens.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { TransferTokensComponent } from './transfer-tokens/transfer-tokens.compo
         TokenDetailsComponent,
         LockIssuerWalletComponent,
         TransferTokensComponent,
+        ClawbackTokensComponent,
     ],
     imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
 })

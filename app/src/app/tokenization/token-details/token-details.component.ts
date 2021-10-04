@@ -92,6 +92,18 @@ export class TokenDetailsComponent implements AfterViewInit {
         ]);
     }
 
+    clawbackTokens() {
+        this.router.navigate([
+            'tokenization',
+            this.issuerWalletSeedId,
+            'issuer-wallets',
+            this.issuerWalletId,
+            'tokens',
+            this.tokenizedAssetId,
+            'clawback',
+        ]);
+    }
+    
     toggleOptInSelection() {
         const anySelected = this.getOptInAnySelected();
         const allSelected = this.getOptInAllSelected();

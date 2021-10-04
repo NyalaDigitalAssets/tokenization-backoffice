@@ -3,6 +3,10 @@
         <button mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
+        &nbsp;
+        <button mat-mini-fab color="primary" matTooltip="Clawback Tokens" (click)="clawbackTokens()">
+            <app-fa-icon icon="fa-undo"></app-fa-icon>
+        </button>
     </app-header>
     <mat-card class="mg-t10">
         <mat-card-header class="ai-c">
@@ -35,16 +39,21 @@
     <mat-card class="mg-t10">
         <mat-card-content>
             <mat-toolbar>
-                <span><app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{ tokenizedAsset?.optIns?.length }}</span>
-                <span class="tb-spacer"></span
-                ><button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
+                <span>
+                    <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{
+                    tokenizedAsset?.optIns?.length }}
+                </span>
+                <span class="tb-spacer"></span><button mat-mini-fab matTooltip="Select all" type="button"
+                    (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
                     <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
+                <button mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button"
+                    [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
                     <app-fa-icon icon="fa-thumbs-up"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
+                <button mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button"
+                    [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
                     <app-fa-icon icon="fa-undo"></app-fa-icon>
                 </button>
             </mat-toolbar>
@@ -81,7 +90,8 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td class="ta-r va-m" mat-cell *matCellDef="let element">
-                        <mat-checkbox name="selected-{{ element.txId }}" [(ngModel)]="element.isSelected" (change)="checkSelections()"></mat-checkbox>
+                        <mat-checkbox name="selected-{{ element.txId }}" [(ngModel)]="element.isSelected"
+                            (change)="checkSelections()"></mat-checkbox>
                     </td>
                 </ng-container>
 
@@ -113,21 +123,27 @@
                     <ng-container matColumnDef="txId">
                         <th mat-header-cell *matHeaderCellDef>TxId</th>
                         <td mat-cell *matCellDef="let element">
-                            <a (click)="showInBlockchainExplorer(element.txId)">{{ element.txId }}</a>
+                            <div class="elipsis" [appCopyClipboard]="element.txId">
+                                {{ element.txId }}
+                            </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="fromAddress">
                         <th mat-header-cell *matHeaderCellDef>From</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.fromAddress }}
+                            <div class="elipsis" [appCopyClipboard]="element.txId">
+                                {{ element.fromAddress }}
+                            </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="toAddress">
                         <th mat-header-cell *matHeaderCellDef>To</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.toAddress }}
+                            <div class="elipsis" [appCopyClipboard]="element.txId">
+                                {{ element.toAddress }}
+                            </div>
                         </td>
                     </ng-container>
 
@@ -156,7 +172,8 @@
             <div class="w-100">
                 <mat-form-field appearance="standard" class="pd-x10">
                     <mat-label>Passphrase</mat-label>
-                    <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
+                    <input matInput required type="password" [(ngModel)]="model.credentials.passphrase"
+                        name="passphrase" />
                 </mat-form-field>
             </div>
         </mat-dialog-content>

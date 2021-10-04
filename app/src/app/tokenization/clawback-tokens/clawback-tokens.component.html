@@ -1,0 +1,66 @@
+<div class="mg-t10">
+    <app-header title="Clawback Tokens" icon="fa-paper-plane">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(
+            (credForm?.invalid) ||
+            (selectedTab.value === 0 && singleForm.invalid))">
+            <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+    </app-header>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-crosshairs"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Target</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab.value"
+                    (selectedIndexChange)="selectedTab.setValue($event)">
+                    <mat-tab label="Single">
+                        <div class="row pd-5">
+                            <form #singleForm="ngForm">
+                                <mat-form-field appearance="standard" class="pd-x10">
+                                    <mat-label>Retail Wallet</mat-label>
+                                    <mat-select [(ngModel)]="selectedWallet" name="retailwallet" required>
+                                        <mat-option>Select retail wallet</mat-option>
+                                        <mat-option *ngFor="let wallet of wallets" [value]="wallet.value">
+                                            {{wallet.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="standard" class="mg-x10 pd-x10">
+                                    <mat-label>Amount</mat-label>
+                                    <input matInput required type="number" [(ngModel)]="amount" name="amount" />
+                                </mat-form-field>
+                            </form>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <form #credForm="ngForm">
+                    <mat-form-field appearance="standard" class="pd-x10">
+                        <mat-label>Passphrase</mat-label>
+                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase"
+                            name="passphrase" />
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
