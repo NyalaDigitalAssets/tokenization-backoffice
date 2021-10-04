@@ -24,7 +24,12 @@
 
                 <ng-container matColumnDef="value">
                     <th mat-header-cell *matHeaderCellDef>Value</th>
-                    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+                    <td mat-cell *matCellDef="let element">
+                        <span>{{ element.value }}</span>
+                        <button type="button" mat-icon-button class="mg-l1" color="primary" *ngIf="element.showCopy" [appCopyClipboard]="element.value">
+                            <app-fa-icon icon="fa-copy"></app-fa-icon>
+                        </button>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="tokenDetailsColumns"></tr>
@@ -48,16 +53,20 @@
                     <app-fa-icon icon="fa-undo"></app-fa-icon>
                 </button>
             </mat-toolbar>
-            <table class="w-100" mat-table [dataSource]="optInDataSource">
-                <ng-container matColumnDef="nr">
-                    <th mat-header-cell *matHeaderCellDef>Nr.</th>
-                    <td mat-cell *matCellDef="let element">{{ element.nr }}</td>
+            <table class="w-100" mat-table [dataSource]="optInDataSource" matSort matSortActive="created" matSortDirection="desc">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="link" (click)="showCustomerWallets(element.customerId)">
+                            {{ element.customerName }}
+                        </a>
+                    </td>
                 </ng-container>
 
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Customer</th>
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.customerName }}
+                        {{ element.created | date: 'dd.MM.yyyy HH:mm:ss' }}
                     </td>
                 </ng-container>
 

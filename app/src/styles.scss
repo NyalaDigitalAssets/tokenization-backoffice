@@ -189,10 +189,6 @@ $base-gap: 5;
     align-items: center;
 }
 
-.va-b {
-    vertical-align: bottom;
-}
-
 .va-m {
     vertical-align: middle;
 }
@@ -209,4 +205,8 @@ $base-gap: 5;
     &:visited {
         columns: $sec;
     }
+}
+
+.mat-icon-button {
+    line-height: 20px !important;
 }

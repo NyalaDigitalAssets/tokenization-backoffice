@@ -9,24 +9,27 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { OptInStatus } from './enums';
 
 export interface ITokenizedAssetOptInDto {
     id?: string;
     txId?: string;
-    fee?: string;
     confirmed?: Date;
     customerId?: string;
     retailWalletId?: string;
+    created?: Date;
+    status?: OptInStatus;
 }
 
 
 export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAssetOptInDto  {
     id: string;
     txId: string;
-    fee: string;
     confirmed: Date;
     customerId: string;
     retailWalletId: string;
+    created: Date;
+    status: OptInStatus;
 
     /**
      * constructor
@@ -50,10 +53,11 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.id = rawValues.id;
             this.txId = rawValues.txId;
-            this.fee = rawValues.fee;
             this.confirmed = rawValues.confirmed;
             this.customerId = rawValues.customerId;
             this.retailWalletId = rawValues.retailWalletId;
+            this.created = rawValues.created;
+            this.status = rawValues.status;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -64,10 +68,11 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
                 txId: new FormControl(this.txId),
-                fee: new FormControl(this.fee),
                 confirmed: new FormControl(this.confirmed),
                 customerId: new FormControl(this.customerId),
                 retailWalletId: new FormControl(this.retailWalletId),
+                created: new FormControl(this.created),
+                status: new FormControl(this.status, [enumValidator(OptInStatus), ]),
             });
         }
         return this._formGroup;
@@ -79,10 +84,11 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
     setFormGroupValues() {
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['txId'].setValue(this.txId);
-        this.$formGroup.controls['fee'].setValue(this.fee);
         this.$formGroup.controls['confirmed'].setValue(this.confirmed);
         this.$formGroup.controls['customerId'].setValue(this.customerId);
         this.$formGroup.controls['retailWalletId'].setValue(this.retailWalletId);
+        this.$formGroup.controls['created'].setValue(this.created);
+        this.$formGroup.controls['status'].setValue(this.status);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

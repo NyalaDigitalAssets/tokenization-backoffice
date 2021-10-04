@@ -41,6 +41,7 @@ export enum AssetTypes {
     YFI = 20,
     ATOM = 21,
     MANA = 22,
+    POLY = 23,
     EUR = 1001,
     USD = 1002,
 }
@@ -55,6 +56,16 @@ export enum BulkResultItemStatus {
 export enum IssuerWalletRoles {
     Issuer = 1,
     Distributor = 2,
+}
+
+export enum OptInStatus {
+    New = 0,
+    Sent = 1,
+    Failed = 2,
+    Rejected = 3,
+    Approved = 4,
+    Revoked = 5,
+    AuthorizationFailed = 6,
 }
 
 export enum Products {
@@ -233,6 +244,7 @@ export class AllEnums {
     AssetTypes = AssetTypes;
     BulkResultItemStatus = BulkResultItemStatus;
     IssuerWalletRoles = IssuerWalletRoles;
+    OptInStatus = OptInStatus;
     Products = Products;
     WalletType = WalletType;
     WealthManagementProductType = WealthManagementProductType;

@@ -20,6 +20,7 @@ export interface IRetailWalletDto {
     reservedAmount?: number;
     stakedAmount?: number;
     seedLockStatus?: boolean;
+    retailWalletSeedId?: string;
 }
 
 
@@ -31,6 +32,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     reservedAmount: number;
     stakedAmount: number;
     seedLockStatus: boolean;
+    retailWalletSeedId: string;
 
     /**
      * constructor
@@ -60,6 +62,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
             this.reservedAmount = rawValues.reservedAmount;
             this.stakedAmount = rawValues.stakedAmount;
             this.seedLockStatus = rawValues.seedLockStatus;
+            this.retailWalletSeedId = rawValues.retailWalletSeedId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -75,6 +78,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
                 reservedAmount: new FormControl(this.reservedAmount),
                 stakedAmount: new FormControl(this.stakedAmount),
                 seedLockStatus: new FormControl(this.seedLockStatus),
+                retailWalletSeedId: new FormControl(this.retailWalletSeedId),
             });
         }
         return this._formGroup;
@@ -91,6 +95,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
         this.$formGroup.controls['reservedAmount'].setValue(this.reservedAmount);
         this.$formGroup.controls['stakedAmount'].setValue(this.stakedAmount);
         this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);
+        this.$formGroup.controls['retailWalletSeedId'].setValue(this.retailWalletSeedId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

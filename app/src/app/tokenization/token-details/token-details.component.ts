@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -18,11 +19,11 @@ import { CustomApiService } from '../../core/services/ganymede.service';
 interface KeyValue {
     key: string;
     value: object;
+    showCopy: boolean;
 }
 
 export class TokenizedAssetOptInDtoExtended extends TokenizedAssetOptInDto {
     isSelected?: boolean;
-    nr?: number;
     customerName?: string;
 }
 
@@ -40,7 +41,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
-    optInColumns = ['nr', 'name', 'txId', 'confirmed', 'actions'];
+    optInColumns = ['name', 'created', 'txId', 'confirmed', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
@@ -55,6 +56,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     isOptInAuthorizeCall = false;
 
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
     @ViewChild('pwdDialog', { static: true }) pwdDialog: TemplateRef<any>;
 
     constructor(
@@ -67,6 +69,7 @@ export class TokenDetailsComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.optInDataSource.paginator = this.paginator;
+        this.optInDataSource.sort = this.sort;
         this.activatedRoute.params.subscribe((params) => {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
@@ -78,6 +81,14 @@ export class TokenDetailsComponent implements AfterViewInit {
     showInBlockchainExplorer(txId: string) {
         const url = `${this.assetTypeUtility.txUrl(AssetTypes.XLM)}/${txId}`;
         window.open(url, '_blank');
+    }
+
+    showCustomerWallets(customerId: string) {
+        this.router.navigate([
+            'customer',
+            customerId,
+            'retail-wallets',
+        ]);
     }
 
     sendTokens() {
@@ -150,10 +161,8 @@ export class TokenDetailsComponent implements AfterViewInit {
         ]).subscribe((response) => {
             const customers = response[0].data;
             this.tokenizedAsset = response[1].data;
-            let index = 0;
             this.tokenizedAsset.optIns.forEach((o) => {
                 const customer = customers.find((c) => c.id == o.customerId);
-                o.nr = ++index;
                 o.customerName = customer
                     ? `${customer.firstname} ${customer.lastname}`
                     : 'ERROR: Unknown';
@@ -165,6 +174,7 @@ export class TokenDetailsComponent implements AfterViewInit {
 
     private getTokenDetails(tokenizedAsset: TokenizedAssetDetailsDto): KeyValue[] {
         const relevantProps = [
+            'id',
             'assetId',
             'name',
             'unitName',
@@ -181,7 +191,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                 relevantProps.indexOf(prop) !== -1
             ) {
                 const element = this.tokenizedAsset[prop];
-                details.push({ key: prop, value: element });
+                details.push({ key: prop, value: element, showCopy: prop === 'id' });
             }
         }
 
