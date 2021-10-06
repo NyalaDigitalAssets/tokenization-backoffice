@@ -8,9 +8,11 @@ import { forkJoin } from 'rxjs';
 import {
     AssetTypes,
     ITokenizedAssetDetailsDto,
+    OptInStatus,
     ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
+    WalletTransferStatus,
 } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
@@ -40,7 +42,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
-    optInColumns = ['nr', 'name', 'txId', 'confirmed', 'actions'];
+    optInColumns = ['nr', 'status', 'name', 'txId', 'confirmed', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
@@ -48,7 +50,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     tokenDetailsColumns = ['key', 'value'];
     tokenDetails = new MatTableDataSource<KeyValue>();
 
-    transferColumns = ['created', 'txId', 'fromAddress', 'toAddress', 'amount'];
+    transferColumns = ['created', 'status', 'txId', 'fromAddress', 'toAddress', 'amount'];
 
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
     model = new ToggleOptInAuthorizationDto();
@@ -149,6 +151,14 @@ export class TokenDetailsComponent implements AfterViewInit {
                 this.loadTokenDetails();
             }
         });
+    }
+
+    getTransferStatus(status: WalletTransferStatus): string {
+        return WalletTransferStatus[status];
+    }
+
+    getOptinStatus(status: OptInStatus): string {
+        return OptInStatus[status];
     }
 
     private loadTokenDetails() {

@@ -45,7 +45,7 @@ export class ClawbackTokensComponent implements OnInit {
 
     wallets: RetailWallet[] = [
         { value: 'c930b6eb-cac4-4f0c-addc-14932f4ecf2f', viewValue: 'Wallet 1' },
-        { value: '2ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 2' },
+        { value: '043e1d6e-77fa-48cc-b756-38303aea0598', viewValue: 'Wallet 2' },
         { value: '3ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 3' }
     ];
 

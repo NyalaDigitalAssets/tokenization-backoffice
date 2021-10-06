@@ -63,6 +63,11 @@
                     <td mat-cell *matCellDef="let element">{{ element.nr }}</td>
                 </ng-container>
 
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">{{ getOptinStatus(element.status) }}</td>
+                </ng-container>
+
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Customer</th>
                     <td mat-cell *matCellDef="let element">
@@ -119,7 +124,13 @@
                             {{ element.created | date: 'dd.MM.yyyy HH:mm:ss' }}
                         </td>
                     </ng-container>
-
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ getTransferStatus(element.status) }}
+                        </td>
+                    </ng-container>
+                    
                     <ng-container matColumnDef="txId">
                         <th mat-header-cell *matHeaderCellDef>TxId</th>
                         <td mat-cell *matCellDef="let element">
@@ -132,7 +143,7 @@
                     <ng-container matColumnDef="fromAddress">
                         <th mat-header-cell *matHeaderCellDef>From</th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="elipsis" [appCopyClipboard]="element.txId">
+                            <div class="elipsis" [appCopyClipboard]="element.fromAddress">
                                 {{ element.fromAddress }}
                             </div>
                         </td>
@@ -141,7 +152,7 @@
                     <ng-container matColumnDef="toAddress">
                         <th mat-header-cell *matHeaderCellDef>To</th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="elipsis" [appCopyClipboard]="element.txId">
+                            <div class="elipsis" [appCopyClipboard]="element.toAddress">
                                 {{ element.toAddress }}
                             </div>
                         </td>

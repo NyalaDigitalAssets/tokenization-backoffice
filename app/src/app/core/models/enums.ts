@@ -58,6 +58,27 @@ export enum IssuerWalletRoles {
     Distributor = 2,
 }
 
+export enum WalletTransferStatus {
+    New = 0,
+    Pending = 1,
+    Rejected = 2,
+    Approved = 3,
+    Sent = 4,
+    Successful = 5,
+    Failed = 6,
+    TimedOut = 7,
+}
+
+export enum OptInStatus {
+    New = 0,
+    Sent = 1,
+    Failed = 2,
+    Rejected = 3,
+    Approved = 4,
+    Revoked = 5,
+    AuthorizationFailed = 6,
+}
+
 export enum Products {
     ETFWealthManagement = 100,
     RetailWallet = 101,
@@ -234,6 +255,8 @@ export class AllEnums {
     AssetTypes = AssetTypes;
     BulkResultItemStatus = BulkResultItemStatus;
     IssuerWalletRoles = IssuerWalletRoles;
+    WalletTransferStatus = WalletTransferStatus;
+    OptInStatus = OptInStatus;
     Products = Products;
     WalletType = WalletType;
     WealthManagementProductType = WealthManagementProductType;

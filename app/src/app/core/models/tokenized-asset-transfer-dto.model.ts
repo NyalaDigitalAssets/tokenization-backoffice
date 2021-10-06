@@ -9,10 +9,12 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { WalletTransferStatus } from './enums';
 
 export interface ITokenizedAssetTransferDto {
     id?: string;
     receiverRetailWalletId?: string;
+    status?: WalletTransferStatus;
     created?: Date;
     txId?: string;
     fromAddress?: string;
@@ -24,6 +26,7 @@ export interface ITokenizedAssetTransferDto {
 export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAssetTransferDto  {
     id: string;
     receiverRetailWalletId: string;
+    status: WalletTransferStatus;
     created: Date;
     txId: string;
     fromAddress: string;
@@ -52,6 +55,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.id = rawValues.id;
             this.receiverRetailWalletId = rawValues.receiverRetailWalletId;
+            this.status = rawValues.status;
             this.created = rawValues.created;
             this.txId = rawValues.txId;
             this.fromAddress = rawValues.fromAddress;
@@ -67,6 +71,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
                 receiverRetailWalletId: new FormControl(this.receiverRetailWalletId),
+                status: new FormControl(this.status, [enumValidator(WalletTransferStatus), ]),
                 created: new FormControl(this.created),
                 txId: new FormControl(this.txId),
                 fromAddress: new FormControl(this.fromAddress),
@@ -83,6 +88,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
     setFormGroupValues() {
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['receiverRetailWalletId'].setValue(this.receiverRetailWalletId);
+        this.$formGroup.controls['status'].setValue(this.status);
         this.$formGroup.controls['created'].setValue(this.created);
         this.$formGroup.controls['txId'].setValue(this.txId);
         this.$formGroup.controls['fromAddress'].setValue(this.fromAddress);
