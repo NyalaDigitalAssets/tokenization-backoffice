@@ -58,6 +58,17 @@ export enum IssuerWalletRoles {
     Distributor = 2,
 }
 
+export enum WalletTransferStatus {
+    New = 0,
+    Pending = 1,
+    Rejected = 2,
+    Approved = 3,
+    Sent = 4,
+    Successful = 5,
+    Failed = 6,
+    TimedOut = 7,
+}
+
 export enum OptInStatus {
     New = 0,
     Sent = 1,
@@ -244,6 +255,7 @@ export class AllEnums {
     AssetTypes = AssetTypes;
     BulkResultItemStatus = BulkResultItemStatus;
     IssuerWalletRoles = IssuerWalletRoles;
+    WalletTransferStatus = WalletTransferStatus;
     OptInStatus = OptInStatus;
     Products = Products;
     WalletType = WalletType;

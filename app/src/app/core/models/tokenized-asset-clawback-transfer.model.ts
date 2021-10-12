@@ -10,15 +10,15 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 
-export interface IGuidListApiResponse {
-    errorMessageCodes?: Array<string>;
-    data?: Array<string>;
+export interface ITokenizedAssetClawbackTransfer {
+    retailWalletId?: string;
+    amount?: number;
 }
 
 
-export class GuidListApiResponse extends BaseModel implements IGuidListApiResponse  {
-    errorMessageCodes: Array<string>;
-    data: Array<string>;
+export class TokenizedAssetClawbackTransfer extends BaseModel implements ITokenizedAssetClawbackTransfer  {
+    retailWalletId: string;
+    amount: number;
 
     /**
      * constructor
@@ -27,8 +27,6 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.errorMessageCodes = new Array<string>(); 
-        this.data = new Array<string>(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -42,8 +40,8 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.fillModelArray<string>(this, 'errorMessageCodes', rawValues.errorMessageCodes, useFormGroupValuesToModel);
-            this.fillModelArray<string>(this, 'data', rawValues.data, useFormGroupValuesToModel);
+            this.retailWalletId = rawValues.retailWalletId;
+            this.amount = rawValues.amount;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -52,13 +50,9 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                errorMessageCodes: new FormArray([]),
-                data: new FormArray([]),
+                retailWalletId: new FormControl(this.retailWalletId),
+                amount: new FormControl(this.amount),
             });
-            // generate FormArray control elements
-            this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
-            // generate FormArray control elements
-            this.fillFormArray<string>('data', this.data);
         }
         return this._formGroup;
     }
@@ -67,8 +61,8 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
-        this.fillFormArray<string>('data', this.data);
+        this.$formGroup.controls['retailWalletId'].setValue(this.retailWalletId);
+        this.$formGroup.controls['amount'].setValue(this.amount);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
