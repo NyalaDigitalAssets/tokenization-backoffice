@@ -73,9 +73,16 @@
                 <ng-container matColumnDef="txId">
                     <th mat-header-cell *matHeaderCellDef>TxId</th>
                     <td mat-cell *matCellDef="let element">
-                        <a class="link" (click)="showInBlockchainExplorer(element.txId)">
+                        <a class="link" (click)="showTxInBlockchainExplorer(element.txId)">
                             <div class="elipsis">{{ element.txId }}</div>
                         </a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ OptInStatus[element.status] }}
                     </td>
                 </ng-container>
 
@@ -100,7 +107,7 @@
             <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
         </mat-card-content>
     </mat-card>
-    <mat-card class="mg-t10" *ngIf="tokenizedAsset">
+    <mat-card class="mg-t10 mg-b5" *ngIf="tokenizedAsset">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-exchange-alt"></app-fa-icon>
@@ -122,21 +129,27 @@
                     <ng-container matColumnDef="txId">
                         <th mat-header-cell *matHeaderCellDef>TxId</th>
                         <td mat-cell *matCellDef="let element">
-                            <a (click)="showInBlockchainExplorer(element.txId)">{{ element.txId }}</a>
+                            <a class="link" (click)="showTxInBlockchainExplorer(element.txId)">
+                                <div class="elipsis">{{ element.txId }}</div>
+                            </a>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="fromAddress">
                         <th mat-header-cell *matHeaderCellDef>From</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.fromAddress }}
+                            <a class="link" (click)="showAddressInBlockchainExplorer(element.fromAddress)">
+                                <div class="elipsis">{{ element.fromAddress }}</div>
+                            </a>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="toAddress">
                         <th mat-header-cell *matHeaderCellDef>To</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.toAddress }}
+                            <a class="link" (click)="showAddressInBlockchainExplorer(element.toAddress)">
+                                <div class="elipsis">{{ element.toAddress }}</div>
+                            </a>
                         </td>
                     </ng-container>
 

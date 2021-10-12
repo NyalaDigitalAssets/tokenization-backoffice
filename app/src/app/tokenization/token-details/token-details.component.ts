@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import {
     AssetTypes,
     ITokenizedAssetDetailsDto,
+    OptInStatus,
     ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
@@ -41,7 +42,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
-    optInColumns = ['name', 'created', 'txId', 'confirmed', 'actions'];
+    optInColumns = ['name', 'created', 'txId', 'status', 'confirmed', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
@@ -54,6 +55,8 @@ export class TokenDetailsComponent implements AfterViewInit {
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
     model = new ToggleOptInAuthorizationDto();
     isOptInAuthorizeCall = false;
+
+    OptInStatus = OptInStatus;
 
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -78,8 +81,13 @@ export class TokenDetailsComponent implements AfterViewInit {
         });
     }
 
-    showInBlockchainExplorer(txId: string) {
+    showTxInBlockchainExplorer(txId: string) {
         const url = `${this.assetTypeUtility.txUrl(AssetTypes.XLM)}/${txId}`;
+        window.open(url, '_blank');
+    }
+
+    showAddressInBlockchainExplorer(address: string) {
+        const url = `${this.assetTypeUtility.addressUrl(AssetTypes.XLM)}/${address}`;
         window.open(url, '_blank');
     }
 
@@ -143,10 +151,9 @@ export class TokenDetailsComponent implements AfterViewInit {
                   this.model
               );
 
-        q.subscribe((response) => {
-            if (response) {
-                this.loadTokenDetails();
-            }
+        q.subscribe(() => {
+            this.model = new ToggleOptInAuthorizationDto();
+            this.dialog.closeAll();
         });
     }
 
