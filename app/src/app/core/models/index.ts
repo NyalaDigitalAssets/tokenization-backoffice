@@ -41,6 +41,7 @@ export * from './issuer-wallet-dto-list-api-response.model';
 export * from './create-tokenized-asset-dto.model';
 export * from './tokenized-asset-dto-api-response.model';
 export * from './tokenized-asset-transfer-dto.model';
+export * from './transaction-dto.model';
 export * from './tokenized-asset-opt-in-dto.model';
 export * from './tokenized-asset-details-dto.model';
 export * from './tokenized-asset-details-dto-api-response.model';

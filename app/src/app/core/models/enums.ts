@@ -42,6 +42,7 @@ export enum AssetTypes {
     ATOM = 21,
     MANA = 22,
     POLY = 23,
+    LUNA = 24,
     EUR = 1001,
     USD = 1002,
 }
@@ -67,6 +68,17 @@ export enum WalletTransferStatus {
     Successful = 5,
     Failed = 6,
     TimedOut = 7,
+}
+
+export enum TransactionActions {
+    TxNative = 1,
+    TxAsset = 2,
+    IssueAsset = 3,
+    FreezeAsset = 4,
+    ClawbackAssets = 5,
+    OptIn = 6,
+    AuthOptIn = 7,
+    LockAccount = 8,
 }
 
 export enum OptInStatus {
@@ -256,6 +268,7 @@ export class AllEnums {
     BulkResultItemStatus = BulkResultItemStatus;
     IssuerWalletRoles = IssuerWalletRoles;
     WalletTransferStatus = WalletTransferStatus;
+    TransactionActions = TransactionActions;
     OptInStatus = OptInStatus;
     Products = Products;
     WalletType = WalletType;

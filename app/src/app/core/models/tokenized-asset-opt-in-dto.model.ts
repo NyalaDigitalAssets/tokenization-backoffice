@@ -9,12 +9,13 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { TransactionDto } from './transaction-dto.model';
 import { OptInStatus } from './enums';
 
 export interface ITokenizedAssetOptInDto {
     id?: string;
-    txId?: string;
-    confirmed?: Date;
+    txIds?: Array<TransactionDto>;
+    modified?: Date;
     customerId?: string;
     retailWalletId?: string;
     created?: Date;
@@ -24,8 +25,8 @@ export interface ITokenizedAssetOptInDto {
 
 export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAssetOptInDto  {
     id: string;
-    txId: string;
-    confirmed: Date;
+    txIds: Array<TransactionDto>;
+    modified: Date;
     customerId: string;
     retailWalletId: string;
     created: Date;
@@ -38,6 +39,7 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.txIds = new Array<TransactionDto>(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -52,8 +54,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.id = rawValues.id;
-            this.txId = rawValues.txId;
-            this.confirmed = rawValues.confirmed;
+            this.fillModelArray<TransactionDto>(this, 'txIds', rawValues.txIds, useFormGroupValuesToModel, TransactionDto, SubTypeFactory.createSubTypeInstance);
+            this.modified = rawValues.modified;
             this.customerId = rawValues.customerId;
             this.retailWalletId = rawValues.retailWalletId;
             this.created = rawValues.created;
@@ -67,13 +69,15 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
-                txId: new FormControl(this.txId),
-                confirmed: new FormControl(this.confirmed),
+                txIds: new FormArray([]),
+                modified: new FormControl(this.modified),
                 customerId: new FormControl(this.customerId),
                 retailWalletId: new FormControl(this.retailWalletId),
                 created: new FormControl(this.created),
                 status: new FormControl(this.status, [enumValidator(OptInStatus), ]),
             });
+            // generate FormArray control elements
+            this.fillFormArray<TransactionDto>('txIds', this.txIds, TransactionDto);
         }
         return this._formGroup;
     }
@@ -83,8 +87,8 @@ export class TokenizedAssetOptInDto extends BaseModel implements ITokenizedAsset
     */
     setFormGroupValues() {
         this.$formGroup.controls['id'].setValue(this.id);
-        this.$formGroup.controls['txId'].setValue(this.txId);
-        this.$formGroup.controls['confirmed'].setValue(this.confirmed);
+        this.fillFormArray<TransactionDto>('txIds', this.txIds, TransactionDto);
+        this.$formGroup.controls['modified'].setValue(this.modified);
         this.$formGroup.controls['customerId'].setValue(this.customerId);
         this.$formGroup.controls['retailWalletId'].setValue(this.retailWalletId);
         this.$formGroup.controls['created'].setValue(this.created);

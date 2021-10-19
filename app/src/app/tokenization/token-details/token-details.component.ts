@@ -13,6 +13,7 @@ import {
     ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
+    TransactionActions,
 } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
@@ -26,6 +27,7 @@ interface KeyValue {
 export class TokenizedAssetOptInDtoExtended extends TokenizedAssetOptInDto {
     isSelected?: boolean;
     customerName?: string;
+    isLoading?: boolean;
 }
 
 export interface ITokenizedAssetDetailsDtoExtend extends ITokenizedAssetDetailsDto {
@@ -42,7 +44,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
-    optInColumns = ['name', 'created', 'txId', 'status', 'confirmed', 'actions'];
+    optInColumns = ['name', 'created', 'txs', 'status', 'modified', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
@@ -57,6 +59,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     isOptInAuthorizeCall = false;
 
     OptInStatus = OptInStatus;
+    TransactionActions = TransactionActions;
 
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -92,11 +95,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     showCustomerWallets(customerId: string) {
-        this.router.navigate([
-            'customer',
-            customerId,
-            'retail-wallets',
-        ]);
+        this.router.navigate(['customer', customerId, 'retail-wallets']);
     }
 
     sendTokens() {
@@ -154,10 +153,13 @@ export class TokenDetailsComponent implements AfterViewInit {
         q.subscribe(() => {
             this.model = new ToggleOptInAuthorizationDto();
             this.dialog.closeAll();
+            this.tokenizedAsset.optIns
+                .filter((o) => o.isSelected)
+                .forEach((o) => (o.isLoading = true));
         });
     }
 
-    private loadTokenDetails() {
+    loadTokenDetails() {
         forkJoin([
             this.customApi.getCustomerGetCustomers(),
             this.customApi.getTokenizedAssetsGetTokenizedAssetDetails(
