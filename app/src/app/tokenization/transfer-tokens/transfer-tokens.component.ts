@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { CustomApiService } from 'src/app/core/services/ganymede.service';
 
@@ -10,11 +10,6 @@ import {
     SimpleAccessCredentialsDto,
     TokenizedAssetToRetailWallet,
 } from '../../core/models';
-
-interface RetailWallet {
-    value: string;
-    viewValue: string;
-}
 
 @Component({
     selector: 'app-transfer-tokens',
@@ -38,20 +33,12 @@ export class TransferTokensComponent implements OnInit {
     @ViewChild('credForm') credForm;
 
     csvColumns = ['RetailWalletId', 'Amount'];
-
-    wallets: RetailWallet[] = [
-        { value: '1ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 1' },
-        { value: '2ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 2' },
-        { value: '3ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 3' },
-    ];
-
     model: IssuerWalletTokenizedAssetTransferDto;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private ngxCsvParser: NgxCsvParser,
-        private customApi: CustomApiService,
-        private router: Router
+        private customApi: CustomApiService
     ) {}
 
     ngOnInit(): void {
@@ -83,7 +70,7 @@ export class TransferTokensComponent implements OnInit {
     }
 
     csvInputChange(fileInputEvent: any) {
-        this.selectedFile = fileInputEvent.target.files[0];
+        this.selectedFile = fileInputEvent;
         this.selectedFileName = this.selectedFile.name;
         this.ngxCsvParser
             .parse(this.selectedFile, { header: false, delimiter: ',' })

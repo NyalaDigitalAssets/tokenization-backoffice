@@ -1,0 +1,30 @@
+<div class="dropzone" appDragAndDrop (fileDropped)="fileDragged($event)">
+    <div *ngIf="!iconMode">
+        <div class="animate__animated animate__flipInX" *ngIf="!filename">
+            <button type="button" mat-raised-button color="primary" (click)="openDialogue(file)">
+                <span>Drag and drop {{ buttonText }} file or click</span>
+            </button>
+            <input hidden="true" #file type="file" single [accept]="accept" (change)="fileChanged($event)" />
+        </div>
+        <div class="animate__animated animate__flipInX" *ngIf="filename">
+            <mat-icon>insert_drive_file</mat-icon>
+            <span class="mg-l2">{{ filename }}</span>
+            <button color="warn" mat-icon-button (click)="reset()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="iconMode">
+        <div class="animate__animated animate__flipInX" *ngIf="!filename">
+            <button type="button" mat-mini-fab color="primary" (click)="openDialogue(file)" [matTooltip]="buttonText">
+                <app-fa-icon icon="fa-upload"></app-fa-icon>
+            </button>
+            <input hidden="true" #file type="file" single [accept]="accept" (change)="fileChanged($event)" />
+        </div>
+        <div class="animate__animated animate__flipInX" *ngIf="filename">
+            <button color="warn" mat-mini-fab (click)="reset()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
