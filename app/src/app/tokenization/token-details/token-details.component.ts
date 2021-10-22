@@ -121,6 +121,18 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.checkSelections();
     }
 
+    uploadSelectionCustomerCSV() {}
+
+    downloadSelectionCustomerCSV() {
+        const rows = this.tokenizedAsset.optIns.map((o) => `${o.id},${o.customerName}`);
+        const data = rows.join('\r\n');
+        const a = document.createElement('a');
+        a.download = 'opt-in-selection.csv';
+        a.href = `data:text/csv;charset=UTF-8,\ufeff${data}`;
+        a.target = '_blank';
+        a.click();
+    }
+
     checkSelections() {
         this.optInsAllSelected = this.getOptInAllSelected();
         this.optInsAnySelected = this.getOptInAnySelected();

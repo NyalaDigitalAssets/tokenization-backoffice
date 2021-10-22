@@ -44,8 +44,26 @@
         <mat-card-content>
             <mat-toolbar>
                 <span><app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{ tokenizedAsset?.optIns?.length }}</span>
-                <span class="tb-spacer"></span
-                ><button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
+                <span class="tb-spacer"></span>
+                <button
+                    mat-mini-fab
+                    matTooltip="Download a CSV file containing a list of customers. Delete the users you don't want to select and reupload the file the select the remaining ones."
+                    type="button"
+                    (click)="downloadSelectionCustomerCSV()"
+                >
+                    <app-fa-icon icon="fa-download"></app-fa-icon>
+                </button>
+                <button
+                mat-mini-fab
+                color="primary"
+                matTooltip="Upload the CSV file with the list of users you want to select."
+                type="button"
+                disabled
+                (click)="uploadSelectionCustomerCSV()"
+            >
+                <app-fa-icon icon="fa-upload"></app-fa-icon>
+            </button>
+                <button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
                     <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
                 </button>
