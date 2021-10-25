@@ -46,6 +46,7 @@
                 <span><app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{ tokenizedAsset?.optIns?.length }}</span>
                 <span class="tb-spacer"></span>
                 <button
+                    class="mg-x1"
                     mat-mini-fab
                     matTooltip="Download a CSV file containing a list of customers. Delete the users you don't want to select and reupload the file the select the remaining ones."
                     type="button"
@@ -53,17 +54,21 @@
                 >
                     <app-fa-icon icon="fa-download"></app-fa-icon>
                 </button>
-                <button mat-mini-fab color="primary" matTooltip="Upload the CSV file with the list of users you want to select." type="button" disabled (click)="uploadSelectionCustomerCSV()">
-                    <app-fa-icon icon="fa-upload"></app-fa-icon>
-                </button>
+                <app-dropzone
+                    class="mg-x1"
+                    [iconMode]="true"
+                    buttonText="Upload the CSV file with the list of users you want to select."
+                    accept=".csv"
+                    (fileSelected)="csvInputChange($event)"
+                ></app-dropzone>
                 <button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
                     <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
+                <button class="mg-x1" mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
                     <app-fa-icon icon="fa-thumbs-up"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
+                <button class="mg-x1" mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
                     <app-fa-icon icon="fa-undo"></app-fa-icon>
                 </button>
             </mat-toolbar>

@@ -28,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { QrCodeModule } from 'ng-qrcode';
 
 import { CopyClipboardDirective } from './copy-clipboard.directive';
+import { DragAndDropDirective } from './drag-and-drop.directive';
+import { DropzoneComponent } from './dropzone/dropzone.component';
 import { FaIconComponent } from './fa-icon/fa-icon.component';
 import { HeaderComponent } from './header/header.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
@@ -66,24 +68,28 @@ const MAT_MODULES = [
 ];
 
 const EXPORTS = [
+    CopyClipboardDirective,
+    DragAndDropDirective,
     MenuComponent,
     FaIconComponent,
     HeaderComponent,
     SvgIconComponent,
     LoadingScreenComponent,
-    CopyClipboardDirective,
     ModalComponent,
+    DropzoneComponent,
 ];
 
 @NgModule({
     declarations: [
+        DragAndDropDirective,
+        CopyClipboardDirective,
         MenuItemComponent,
         MenuComponent,
         FaIconComponent,
         HeaderComponent,
         SvgIconComponent,
         LoadingScreenComponent,
-        CopyClipboardDirective,
+        DropzoneComponent,
         ModalComponent,
     ],
     imports: [CommonModule, FormsModule, QrCodeModule, ...MAT_MODULES],

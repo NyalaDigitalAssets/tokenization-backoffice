@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxCsvParser } from 'ngx-csv-parser';
 import { forkJoin } from 'rxjs';
 
 import {
@@ -74,7 +75,8 @@ export class TokenDetailsComponent implements AfterViewInit {
         private activatedRoute: ActivatedRoute,
         private assetTypeUtility: AssetTypeUtilityService,
         private router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private ngxCsvParser: NgxCsvParser
     ) {}
 
     ngAfterViewInit() {
@@ -125,7 +127,29 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.checkSelections();
     }
 
-    uploadSelectionCustomerCSV() {}
+    csvInputChange(fileInputEvent: any) {
+        this.ngxCsvParser
+            .parse(fileInputEvent, { header: false, delimiter: ',' })
+            .pipe()
+            .subscribe(
+                (result: Array<any>) => {
+                    this.tokenizedAsset.optIns.forEach((o) => {
+                        o.isSelected = false;
+                    });
+                    result.forEach((row) => {
+                        const optInId = row[0];
+                        const optIn = this.tokenizedAsset.optIns.find((o) => o.id === optInId);
+                        if (optIn) {
+                            optIn.isSelected = true;
+                        }
+                    });
+                    this.checkSelections();
+                },
+                (error) => {
+                    console.error('Error', error);
+                }
+            );
+    }
 
     downloadSelectionCustomerCSV() {
         const rows = this.tokenizedAsset.optIns.map((o) => `${o.id},${o.customerName}`);
