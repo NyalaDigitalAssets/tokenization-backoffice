@@ -8,8 +8,10 @@ import { forkJoin } from 'rxjs';
 
 import {
     AssetTypes,
+    CustomerRetailWalletDto,
     ITokenizedAssetDetailsDto,
     OptInStatus,
+    RetailWalletAccessLevels,
     ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
@@ -28,6 +30,7 @@ export class TokenizedAssetOptInDtoExtended extends TokenizedAssetOptInDto {
     isSelected?: boolean;
     customerName?: string;
     isLoading?: boolean;
+    walletAccess?: RetailWalletAccessLevels;
 }
 
 export interface ITokenizedAssetDetailsDtoExtend extends ITokenizedAssetDetailsDto {
@@ -44,7 +47,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
-    optInColumns = ['name', 'created', 'txs', 'status', 'modified', 'actions'];
+    optInColumns = ['name', 'walletAccess', 'created', 'txs', 'status', 'modified', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
@@ -60,6 +63,7 @@ export class TokenDetailsComponent implements AfterViewInit {
 
     OptInStatus = OptInStatus;
     TransactionActions = TransactionActions;
+    RetailWalletAccessLevels = RetailWalletAccessLevels;
 
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -144,9 +148,15 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     submitOptIns() {
-        this.model.retailWalletIds = this.tokenizedAsset.optIns
+        this.model.customerRetailWalletIds = this.tokenizedAsset.optIns
             .filter((o) => o.isSelected)
-            .map((o) => o.retailWalletId);
+            .map(
+                (o) =>
+                    new CustomerRetailWalletDto({
+                        retailWalletId: o.retailWalletId,
+                        customerId: o.customerId,
+                    })
+            );
 
         const q = this.isOptInAuthorizeCall
             ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
@@ -187,6 +197,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                 o.customerName = customer
                     ? `${customer.firstname} ${customer.lastname}`
                     : 'ERROR: Unknown';
+                o.walletAccess = customer.walletAccess;
             });
             this.optInDataSource.data = this.tokenizedAsset.optIns;
             this.tokenDetails.data = this.getTokenDetails(response[1].data);

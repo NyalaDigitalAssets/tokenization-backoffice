@@ -53,16 +53,9 @@
                 >
                     <app-fa-icon icon="fa-download"></app-fa-icon>
                 </button>
-                <button
-                mat-mini-fab
-                color="primary"
-                matTooltip="Upload the CSV file with the list of users you want to select."
-                type="button"
-                disabled
-                (click)="uploadSelectionCustomerCSV()"
-            >
-                <app-fa-icon icon="fa-upload"></app-fa-icon>
-            </button>
+                <button mat-mini-fab color="primary" matTooltip="Upload the CSV file with the list of users you want to select." type="button" disabled (click)="uploadSelectionCustomerCSV()">
+                    <app-fa-icon icon="fa-upload"></app-fa-icon>
+                </button>
                 <button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
                     <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
@@ -81,6 +74,13 @@
                         <a class="link" (click)="showCustomerWallets(element.customerId)">
                             {{ element.customerName }}
                         </a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="walletAccess">
+                    <th mat-header-cell *matHeaderCellDef>Wallet Access</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ RetailWalletAccessLevels[element.walletAccess] }}
                     </td>
                 </ng-container>
 
@@ -117,7 +117,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="modified">
-                    <th mat-header-cell *matHeaderCellDef>Modified</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Modified</th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.modified">{{ element.modified | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
                         <span *ngIf="!element.modified">-</span>

@@ -47,6 +47,7 @@ export * from './tokenized-asset-details-dto.model';
 export * from './tokenized-asset-details-dto-api-response.model';
 export * from './tokenized-asset-to-retail-wallet.model';
 export * from './issuer-wallet-tokenized-asset-transfer-dto.model';
+export * from './customer-retail-wallet-dto.model';
 export * from './toggle-opt-in-authorization-dto.model';
 export * from './tokenized-asset-clawback-transfer.model';
 export * from './tokenized-asset-clawback-dto.model';
