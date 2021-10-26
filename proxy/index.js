@@ -6,15 +6,15 @@ const fs = require("fs");
 
 const app = express();
 
-const credentialsFils = "./credentials.json";
+const credentialsFile = "./credentials.json";
 const appFolder = "../app/dist/";
 
 let url = process.env.URL;
 let apiKey = process.env.API_KEY;
 let apiSecret = process.env.API_SECRET;
 
-if (fs.existsSync(credentialsFils)) {
-  const credentials = JSON.parse(fs.readFileSync(credentialsFils).toString());
+if (fs.existsSync(credentialsFile)) {
+  const credentials = JSON.parse(fs.readFileSync(credentialsFile).toString());
   url = credentials.url;
   apiKey = credentials.apiKey;
   apiSecret = credentials.apiSecret;

@@ -1,5 +1,5 @@
 .elipsis {
-    width: 150px;
+    width: 180px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -9,8 +9,18 @@ mat-toolbar {
     .tb-spacer {
         flex: 1 1 auto;
     }
+}
 
-    button {
-        margin: 0 10px;
+.tx-list {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+
+    strong {
+        margin-right: 5px;
+    }
+
+    li {
+        margin-bottom: 10px;
     }
 }

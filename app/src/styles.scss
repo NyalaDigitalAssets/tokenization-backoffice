@@ -133,37 +133,37 @@ $base-gap: 5;
 
 @for $i from 1 through 10 {
     .mg-#{$i} {
-        margin: #{($base-gap * $i)}px;
+        margin: #{($base-gap * $i)}px !important;
     }
 
     .mg-l#{$i} {
-        margin-left: #{($base-gap * $i)}px;
+        margin-left: #{($base-gap * $i)}px !important;
     }
 
     .mg-r#{$i} {
-        margin-right: #{($base-gap * $i)}px;
+        margin-right: #{($base-gap * $i)}px !important;
     }
 
     .mg-b#{$i} {
-        margin-bottom: #{($base-gap * $i)}px;
+        margin-bottom: #{($base-gap * $i)}px !important;
     }
 
     .mg-t#{$i} {
-        margin-top: #{($base-gap * $i)}px;
+        margin-top: #{($base-gap * $i)}px !important;
     }
 
     .mg-y#{$i} {
-        margin-top: #{($base-gap * $i)}px;
-        margin-bottom: #{($base-gap * $i)}px;
+        margin-top: #{($base-gap * $i)}px !important;
+        margin-bottom: #{($base-gap * $i)}px !important;
     }
 
     .mg-x#{$i} {
-        margin-left: #{($base-gap * $i)}px;
-        margin-right: #{($base-gap * $i)}px;
+        margin-left: #{($base-gap * $i)}px !important;
+        margin-right: #{($base-gap * $i)}px !important;
     }
 
     .pd-#{$i} {
-        padding: #{($base-gap * $i)}px;
+        padding: #{($base-gap * $i)}px !important;
     }
 }
 
@@ -189,10 +189,6 @@ $base-gap: 5;
     align-items: center;
 }
 
-.va-b {
-    vertical-align: bottom;
-}
-
 .va-m {
     vertical-align: middle;
 }
@@ -209,4 +205,8 @@ $base-gap: 5;
     &:visited {
         columns: $sec;
     }
+}
+
+.mat-icon-button {
+    line-height: 20px !important;
 }

@@ -15,10 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { QrCodeModule } from 'ng-qrcode';
 
 import { CopyClipboardDirective } from './copy-clipboard.directive';
+import { DragAndDropDirective } from './drag-and-drop.directive';
+import { DropzoneComponent } from './dropzone/dropzone.component';
 import { FaIconComponent } from './fa-icon/fa-icon.component';
 import { HeaderComponent } from './header/header.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
@@ -59,27 +63,33 @@ const MAT_MODULES = [
     MatPaginatorModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatSortModule,
+    MatProgressBarModule,
 ];
 
 const EXPORTS = [
+    CopyClipboardDirective,
+    DragAndDropDirective,
     MenuComponent,
     FaIconComponent,
     HeaderComponent,
     SvgIconComponent,
     LoadingScreenComponent,
-    CopyClipboardDirective,
     ModalComponent,
+    DropzoneComponent,
 ];
 
 @NgModule({
     declarations: [
+        DragAndDropDirective,
+        CopyClipboardDirective,
         MenuItemComponent,
         MenuComponent,
         FaIconComponent,
         HeaderComponent,
         SvgIconComponent,
         LoadingScreenComponent,
-        CopyClipboardDirective,
+        DropzoneComponent,
         ModalComponent,
     ],
     imports: [CommonModule, FormsModule, QrCodeModule, ...MAT_MODULES],

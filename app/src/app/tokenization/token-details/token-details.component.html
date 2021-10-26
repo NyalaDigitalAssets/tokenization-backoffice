@@ -1,5 +1,8 @@
 <div class="mg-t10">
     <app-header title="Token: {{ tokenizedAsset?.name }}" icon="fa-coins">
+        <button class="mg-r2" mat-mini-fab color="primary" matTooltip="Reload Details" (click)="loadTokenDetails()">
+            <app-fa-icon icon="fa-sync"></app-fa-icon>
+        </button>
         <button mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
@@ -28,7 +31,12 @@
 
                 <ng-container matColumnDef="value">
                     <th mat-header-cell *matHeaderCellDef>Value</th>
-                    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+                    <td mat-cell *matCellDef="let element">
+                        <span>{{ element.value }}</span>
+                        <button type="button" mat-icon-button class="mg-l1" color="primary" *ngIf="element.showCopy" [appCopyClipboard]="element.value">
+                            <app-fa-icon icon="fa-copy"></app-fa-icon>
+                        </button>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="tokenDetailsColumns"></tr>
@@ -39,56 +47,89 @@
     <mat-card class="mg-t10">
         <mat-card-content>
             <mat-toolbar>
-                <span>
-                    <app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{
-                    tokenizedAsset?.optIns?.length }}
-                </span>
-                <span class="tb-spacer"></span><button mat-mini-fab matTooltip="Select all" type="button"
-                    (click)="toggleOptInSelection()">
+                <span><app-fa-icon class="fa-2x" icon="fa-handshake"></app-fa-icon> Opt-Ins: {{ tokenizedAsset?.optIns?.length }}</span>
+                <span class="tb-spacer"></span>
+                <button
+                    class="mg-x1"
+                    mat-mini-fab
+                    matTooltip="Download a CSV file containing a list of customers. Delete the users you don't want to select and reupload the file the select the remaining ones."
+                    type="button"
+                    (click)="downloadSelectionCustomerCSV()"
+                >
+                    <app-fa-icon icon="fa-download"></app-fa-icon>
+                </button>
+                <app-dropzone
+                    class="mg-x1"
+                    [iconMode]="true"
+                    buttonText="Upload the CSV file with the list of users you want to select."
+                    accept=".csv"
+                    (fileSelected)="csvInputChange($event)"
+                ></app-dropzone>
+                <button mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
                     <app-fa-icon *ngIf="!optInsAllSelected" icon="fa-square"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button"
-                    [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
+                <button class="mg-x1" mat-mini-fab matTooltip="Authorize Opt-Ins" color="primary" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(true)">
                     <app-fa-icon icon="fa-thumbs-up"></app-fa-icon>
                 </button>
-                <button mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button"
-                    [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
+                <button class="mg-x1" mat-mini-fab matTooltip="Revoke Opt-Ins" color="warn" type="button" [disabled]="!optInsAnySelected" (click)="showOptInDialog(false)">
                     <app-fa-icon icon="fa-undo"></app-fa-icon>
                 </button>
             </mat-toolbar>
-            <table class="w-100" mat-table [dataSource]="optInDataSource">
-                <ng-container matColumnDef="nr">
-                    <th mat-header-cell *matHeaderCellDef>Nr.</th>
-                    <td mat-cell *matCellDef="let element">{{ element.nr }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">{{ getOptinStatus(element.status) }}</td>
-                </ng-container>
-
+            <table class="w-100" mat-table [dataSource]="optInDataSource" matSort matSortActive="created" matSortDirection="desc">
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Customer</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.customerName }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="txId">
-                    <th mat-header-cell *matHeaderCellDef>TxId</th>
-                    <td mat-cell *matCellDef="let element">
-                        <a class="link" (click)="showInBlockchainExplorer(element.txId)">
-                            <div class="elipsis">{{ element.txId }}</div>
+                        <a class="link" (click)="showCustomerWallets(element.customerId)">
+                            {{ element.customerName }}
                         </a>
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="confirmed">
-                    <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+                <ng-container matColumnDef="walletAccess">
+                    <th mat-header-cell *matHeaderCellDef>Wallet Access</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.confirmed">{{ element.confirmed | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
-                        <span *ngIf="!element.confirmed">-</span>
+                        {{ RetailWalletAccessLevels[element.walletAccess] }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.created | date: 'dd.MM.yyyy HH:mm:ss' }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="txs">
+                    <th mat-header-cell *matHeaderCellDef>Transactions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <ul class="tx-list">
+                            <li *ngFor="let tx of element.txIds">
+                                <strong>{{ TransactionActions[tx.txAction] }}</strong>
+                                <a class="link" (click)="showTxInBlockchainExplorer(tx.txId)">
+                                    <div class="elipsis">{{ tx.txId }}</div>
+                                </a>
+                                <span>{{ tx.created | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+                            </li>
+                        </ul>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="mg-r5" *ngIf="element.isLoading">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </div>
+                        <div *ngIf="!element.isLoading">{{ OptInStatus[element.status] }}</div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="modified">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Modified</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.modified">{{ element.modified | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+                        <span *ngIf="!element.modified">-</span>
                     </td>
                 </ng-container>
 
@@ -106,7 +147,7 @@
             <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
         </mat-card-content>
     </mat-card>
-    <mat-card class="mg-t10 mg-b10" *ngIf="tokenizedAsset">
+    <mat-card class="mg-t10 mg-b5" *ngIf="tokenizedAsset">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-exchange-alt"></app-fa-icon>
@@ -134,27 +175,27 @@
                     <ng-container matColumnDef="txId">
                         <th mat-header-cell *matHeaderCellDef>TxId</th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="elipsis" [appCopyClipboard]="element.txId">
-                                {{ element.txId }}
-                            </div>
+                            <a class="link" (click)="showTxInBlockchainExplorer(element.txId)">
+                                <div class="elipsis">{{ element.txId }}</div>
+                            </a>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="fromAddress">
                         <th mat-header-cell *matHeaderCellDef>From</th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="elipsis" [appCopyClipboard]="element.fromAddress">
-                                {{ element.fromAddress }}
-                            </div>
+                            <a class="link" (click)="showAddressInBlockchainExplorer(element.fromAddress)">
+                                <div class="elipsis">{{ element.fromAddress }}</div>
+                            </a>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="toAddress">
                         <th mat-header-cell *matHeaderCellDef>To</th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="elipsis" [appCopyClipboard]="element.toAddress">
-                                {{ element.toAddress }}
-                            </div>
+                            <a class="link" (click)="showAddressInBlockchainExplorer(element.toAddress)">
+                                <div class="elipsis">{{ element.toAddress }}</div>
+                            </a>
                         </td>
                     </ng-container>
 

@@ -9,16 +9,19 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { TransactionActions } from './enums';
 
-export interface IGuidListApiResponse {
-    errorMessageCodes?: Array<string>;
-    data?: Array<string>;
+export interface ITransactionDto {
+    txAction?: TransactionActions;
+    created?: Date;
+    txId?: string;
 }
 
 
-export class GuidListApiResponse extends BaseModel implements IGuidListApiResponse  {
-    errorMessageCodes: Array<string>;
-    data: Array<string>;
+export class TransactionDto extends BaseModel implements ITransactionDto  {
+    txAction: TransactionActions;
+    created: Date;
+    txId: string;
 
     /**
      * constructor
@@ -27,8 +30,6 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.errorMessageCodes = new Array<string>(); 
-        this.data = new Array<string>(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -42,8 +43,9 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.fillModelArray<string>(this, 'errorMessageCodes', rawValues.errorMessageCodes, useFormGroupValuesToModel);
-            this.fillModelArray<string>(this, 'data', rawValues.data, useFormGroupValuesToModel);
+            this.txAction = rawValues.txAction;
+            this.created = rawValues.created;
+            this.txId = rawValues.txId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -52,13 +54,10 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                errorMessageCodes: new FormArray([]),
-                data: new FormArray([]),
+                txAction: new FormControl(this.txAction, [enumValidator(TransactionActions), ]),
+                created: new FormControl(this.created),
+                txId: new FormControl(this.txId),
             });
-            // generate FormArray control elements
-            this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
-            // generate FormArray control elements
-            this.fillFormArray<string>('data', this.data);
         }
         return this._formGroup;
     }
@@ -67,8 +66,9 @@ export class GuidListApiResponse extends BaseModel implements IGuidListApiRespon
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
-        this.fillFormArray<string>('data', this.data);
+        this.$formGroup.controls['txAction'].setValue(this.txAction);
+        this.$formGroup.controls['created'].setValue(this.created);
+        this.$formGroup.controls['txId'].setValue(this.txId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
