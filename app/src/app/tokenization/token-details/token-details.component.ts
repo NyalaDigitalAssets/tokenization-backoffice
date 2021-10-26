@@ -56,7 +56,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     tokenDetailsColumns = ['key', 'value'];
     tokenDetails = new MatTableDataSource<KeyValue>();
 
-    transferColumns = ['created', 'status', 'txId', 'fromAddress', 'toAddress', 'amount'];
+    transferColumns = ['created', 'txId', 'fromAddress', 'toAddress', 'amount'];
 
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
     model = new ToggleOptInAuthorizationDto();
@@ -116,18 +116,6 @@ export class TokenDetailsComponent implements AfterViewInit {
         ]);
     }
 
-    clawbackTokens() {
-        this.router.navigate([
-            'tokenization',
-            this.issuerWalletSeedId,
-            'issuer-wallets',
-            this.issuerWalletId,
-            'tokens',
-            this.tokenizedAssetId,
-            'clawback',
-        ]);
-    }
-    
     toggleOptInSelection() {
         const anySelected = this.getOptInAnySelected();
         const allSelected = this.getOptInAllSelected();
