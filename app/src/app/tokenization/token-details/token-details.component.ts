@@ -104,6 +104,10 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.router.navigate(['customer', customerId, 'retail-wallets']);
     }
 
+    isXlmToken () {
+        return this.tokenizedAsset?.assetType === AssetTypes.XLM;
+    }
+
     sendTokens() {
         this.router.navigate([
             'tokenization',
@@ -113,6 +117,18 @@ export class TokenDetailsComponent implements AfterViewInit {
             'tokens',
             this.tokenizedAssetId,
             'transfer',
+        ]);
+    }
+
+    burnTokens() {
+        this.router.navigate([
+            'tokenization',
+            this.issuerWalletSeedId,
+            'issuer-wallets',
+            this.issuerWalletId,
+            'tokens',
+            this.tokenizedAssetId,
+            'burn',
         ]);
     }
 

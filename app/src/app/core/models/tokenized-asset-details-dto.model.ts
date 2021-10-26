@@ -9,6 +9,7 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { AssetTypes } from './enums';
 import { TokenizedAssetTransferDto } from './tokenized-asset-transfer-dto.model';
 import { TokenizedAssetOptInDto } from './tokenized-asset-opt-in-dto.model';
 
@@ -25,6 +26,7 @@ export interface ITokenizedAssetDetailsDto {
     metaData?: string;
     issuerAddress?: string;
     distributionAddress?: string;
+    assetType?: AssetTypes;
     transfers?: Array<TokenizedAssetTransferDto>;
     optIns?: Array<TokenizedAssetOptInDto>;
 }
@@ -43,6 +45,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
     metaData: string;
     issuerAddress: string;
     distributionAddress: string;
+    assetType: AssetTypes;
     transfers: Array<TokenizedAssetTransferDto>;
     optIns: Array<TokenizedAssetOptInDto>;
 
@@ -80,6 +83,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
             this.metaData = rawValues.metaData;
             this.issuerAddress = rawValues.issuerAddress;
             this.distributionAddress = rawValues.distributionAddress;
+            this.assetType = rawValues.assetType;
             this.fillModelArray<TokenizedAssetTransferDto>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetTransferDto, SubTypeFactory.createSubTypeInstance);
             this.fillModelArray<TokenizedAssetOptInDto>(this, 'optIns', rawValues.optIns, useFormGroupValuesToModel, TokenizedAssetOptInDto, SubTypeFactory.createSubTypeInstance);
             // set values in model properties for added formControls
@@ -102,6 +106,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
                 metaData: new FormControl(this.metaData),
                 issuerAddress: new FormControl(this.issuerAddress),
                 distributionAddress: new FormControl(this.distributionAddress),
+                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
                 transfers: new FormArray([]),
                 optIns: new FormArray([]),
             });
@@ -129,6 +134,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
         this.$formGroup.controls['metaData'].setValue(this.metaData);
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);
         this.$formGroup.controls['distributionAddress'].setValue(this.distributionAddress);
+        this.$formGroup.controls['assetType'].setValue(this.assetType);
         this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         this.fillFormArray<TokenizedAssetOptInDto>('optIns', this.optIns, TokenizedAssetOptInDto);
         // set formValues in added formControls
