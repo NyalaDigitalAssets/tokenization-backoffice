@@ -39,6 +39,11 @@ export class AppComponent implements AfterViewInit, OnInit {
                 label: 'Tokenization',
                 route: 'tokenization',
             },
+            {
+                icon: 'fa-faucet',
+                label: 'Faucet',
+                route: 'faucet',
+            },
         ];
     }
 

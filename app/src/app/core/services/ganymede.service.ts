@@ -12,6 +12,8 @@ import {
     ElectronicSecurityBasicInfoDtoApiResponse,
     BulkCreateTrustLineDto,
     BulkResultDtoApiResponse,
+    RequestFaucetFundingDto,
+    WalletFundingResultsDtoApiResponse,
     IssuerWalletSeedDtoListApiResponse,
     CreateIssuerWalletSeedDto,
     IssuerWalletSeedDtoApiResponse,
@@ -65,6 +67,7 @@ export class CustomApiService {
     postCustomerSubmitCustomerKycData = (customerid: string, data: KycDataDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<KycDataDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/kyc`, data, showLoading, handleErrorGlobally);
     getElectronicSecurityGetAssetInfo = (assetid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<ElectronicSecurityBasicInfoDtoApiResponse> => this.apiService.get<ElectronicSecurityBasicInfoDtoApiResponse>(queryParams ? `/api/external/v1/electronic-security/{asset-id}?${queryParams}` : `/api/external/v1/electronic-security/${assetid}`, showLoading, handleErrorGlobally);
     postElectronicSecurityCreateTrustLines = (assetid: string, data: BulkCreateTrustLineDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BulkResultDtoApiResponse> => this.apiService.post<BulkCreateTrustLineDto, BulkResultDtoApiResponse>(`/api/external/v1/electronic-security/${assetid}/trust-lines`, data, showLoading, handleErrorGlobally);
+    postFaucetRequestWalletFunding = (data: RequestFaucetFundingDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<WalletFundingResultsDtoApiResponse> => this.apiService.post<RequestFaucetFundingDto, WalletFundingResultsDtoApiResponse>(`/api/external/v1/request-funding`, data, showLoading, handleErrorGlobally);
     getIssuerWalletGetIssuerWalletSeeds = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletSeedDtoListApiResponse> => this.apiService.get<IssuerWalletSeedDtoListApiResponse>(queryParams ? `/api/external/v1/issuer-wallet-seeds?${queryParams}` : `/api/external/v1/issuer-wallet-seeds`, showLoading, handleErrorGlobally);
     postIssuerWalletCreateIssuerWalletSeed = (data: CreateIssuerWalletSeedDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletSeedDtoApiResponse> => this.apiService.post<CreateIssuerWalletSeedDto, IssuerWalletSeedDtoApiResponse>(`/api/external/v1/issuer-wallet-seeds`, data, showLoading, handleErrorGlobally);
     putIssuerWalletDeriveNewIssuerWallet = (issuerwalletseedid: string, data: DeriveIssuerWalletFromSeedDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<GuidApiResponse> => this.apiService.put<DeriveIssuerWalletFromSeedDto, GuidApiResponse>(`/api/external/v1/issuer-wallet-seeds/${issuerwalletseedid}`, data, showLoading, handleErrorGlobally);
