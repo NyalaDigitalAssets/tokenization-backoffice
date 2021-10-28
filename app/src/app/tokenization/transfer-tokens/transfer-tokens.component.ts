@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
-import { CustomApiService } from 'src/app/core/services/ganymede.service';
 
 import {
     IssuerWalletTokenizedAssetTransferDto,
     SimpleAccessCredentialsDto,
     TokenizedAssetToRetailWallet,
 } from '../../core/models';
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
     selector: 'app-transfer-tokens',
@@ -27,18 +26,15 @@ export class TransferTokensComponent implements OnInit {
     selectedFile: File;
     selectedFileName: string;
 
-    dataSource: MatTableDataSource<TokenizedAssetToRetailWallet>;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('credForm') credForm;
-
-    csvColumns = ['RetailWalletId', 'Amount'];
     model: IssuerWalletTokenizedAssetTransferDto;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private ngxCsvParser: NgxCsvParser,
-        private customApi: CustomApiService
+        private customApi: CustomApiService,
+        private snackbar: MatSnackBar,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -61,7 +57,22 @@ export class TransferTokensComponent implements OnInit {
                 this.model
             )
             .subscribe(
-                () => {},
+                () => {
+                    this.snackbar.open('Transactions initated!', 'OK', {
+                        duration: 5000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'bottom',
+                        politeness: 'polite',
+                    });
+                    this.router.navigate([
+                        'tokenization',
+                        this.issuerWalletSeedId,
+                        'issuer-wallets',
+                        this.issuerWalletId,
+                        'tokens',
+                        this.tokenizedAssetId,
+                    ]);
+                },
                 () => {},
                 () => {
                     this.resetFields();
@@ -85,10 +96,6 @@ export class TransferTokensComponent implements OnInit {
                                 amount: parseFloat(result[i][1]),
                             })
                         );
-                    this.dataSource = new MatTableDataSource<TokenizedAssetToRetailWallet>(
-                        this.model.transfers
-                    );
-                    this.dataSource.paginator = this.paginator;
                 },
                 (error: NgxCSVParserError) => {
                     console.error('Error', error);
@@ -97,8 +104,7 @@ export class TransferTokensComponent implements OnInit {
     }
 
     resetFields() {
-        this.dataSource = new MatTableDataSource<TokenizedAssetToRetailWallet>();
-        this.model.transfers = new Array<TokenizedAssetToRetailWallet>();
+        this.model = new IssuerWalletTokenizedAssetTransferDto();
         this.selectedFile = null;
         this.selectedFileName = '';
     }

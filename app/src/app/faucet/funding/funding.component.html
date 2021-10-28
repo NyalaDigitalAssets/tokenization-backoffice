@@ -18,7 +18,6 @@
             <div class="w-100">
                 <div *ngIf="results && results.length > 0">
                     <table class="w-100" mat-table [dataSource]="results">
-
                         <ng-container matColumnDef="WalletId">
                             <th mat-header-cell *matHeaderCellDef>Wallet Id</th>
                             <td mat-cell *matCellDef="let element">
@@ -56,17 +55,7 @@
                     <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="loadRetailWallets($event)" (fileRemoved)="reset()"></app-dropzone>
                 </div>
                 <div *ngIf="model.retailWallets && model.retailWallets.length > 0">
-                    <table class="w-100" mat-table [dataSource]="model.retailWallets">
-                        <ng-container matColumnDef="WalletId">
-                            <th mat-header-cell *matHeaderCellDef>Retail Wallet Id</th>
-                            <td mat-cell *matCellDef="let element">
-                                <p>{{ element }}</p>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="csvColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: csvColumns"></tr>
-                    </table>
+                    <p>Number of selected wallets: {{ model.retailWallets.length }}</p>
                 </div>
             </div>
         </mat-card-content>
@@ -87,17 +76,7 @@
                     <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="loadIssuerWallets($event)" (fileRemoved)="reset()"></app-dropzone>
                 </div>
                 <div *ngIf="model.issuerWallets && model.issuerWallets.length > 0">
-                    <table class="w-100" mat-table [dataSource]="model.issuerWallets">
-                        <ng-container matColumnDef="WalletId">
-                            <th mat-header-cell *matHeaderCellDef>Issuer Wallet Id</th>
-                            <td mat-cell *matCellDef="let element">
-                                <p>{{ element }}</p>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="csvColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: csvColumns"></tr>
-                    </table>
+                    <p>Number of selected wallets: {{ model.issuerWallets.length }}</p>
                 </div>
             </div>
         </mat-card-content>

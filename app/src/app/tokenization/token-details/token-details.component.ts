@@ -16,6 +16,7 @@ import {
     ToggleOptInAuthorizationDto,
     TokenizedAssetDetailsDto,
     TokenizedAssetOptInDto,
+    TokenizedAssetTransferDto,
     TransactionActions,
 } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
@@ -48,15 +49,19 @@ export class TokenDetailsComponent implements AfterViewInit {
     private issuerWalletId: string;
     private tokenizedAssetId: string;
 
+    @ViewChild('optInPaginator', { static: false }) optInPaginator: MatPaginator;
     optInColumns = ['name', 'walletAccess', 'created', 'txs', 'status', 'modified', 'actions'];
     optInDataSource = new MatTableDataSource<TokenizedAssetOptInDtoExtended>();
     optInsAllSelected = false;
     optInsAnySelected = false;
+    optInSelectedCount = 0;
 
     tokenDetailsColumns = ['key', 'value'];
     tokenDetails = new MatTableDataSource<KeyValue>();
 
+    @ViewChild('transferPaginator', { static: false }) transferPaginator: MatPaginator;
     transferColumns = ['created', 'txId', 'fromAddress', 'toAddress', 'amount'];
+    transferDataSource = new MatTableDataSource<TokenizedAssetTransferDto>();
 
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
     model = new ToggleOptInAuthorizationDto();
@@ -66,8 +71,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     TransactionActions = TransactionActions;
     RetailWalletAccessLevels = RetailWalletAccessLevels;
 
-    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: false }) sort: MatSort;
+    @ViewChild(MatSort, { static: false }) optInSort: MatSort;
     @ViewChild('pwdDialog', { static: true }) pwdDialog: TemplateRef<any>;
 
     constructor(
@@ -80,8 +84,10 @@ export class TokenDetailsComponent implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        this.optInDataSource.paginator = this.paginator;
-        this.optInDataSource.sort = this.sort;
+        this.optInDataSource.paginator = this.optInPaginator;
+        this.optInDataSource.sort = this.optInSort;
+        this.transferDataSource.paginator = this.transferPaginator;
+
         this.activatedRoute.params.subscribe((params) => {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
@@ -164,6 +170,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     checkSelections() {
         this.optInsAllSelected = this.getOptInAllSelected();
         this.optInsAnySelected = this.getOptInAnySelected();
+        this.optInSelectedCount = this.tokenizedAsset.optIns.filter((o) => o.isSelected).length;
     }
 
     showOptInDialog(isOptInAuthorizeCall: boolean) {
@@ -224,6 +231,9 @@ export class TokenDetailsComponent implements AfterViewInit {
                 o.walletAccess = customer.walletAccess;
             });
             this.optInDataSource.data = this.tokenizedAsset.optIns;
+            this.transferDataSource.data = this.tokenizedAsset.transfers.sort((a, b) =>
+                a.created > b.created ? -1 : 1
+            );
             this.tokenDetails.data = this.getTokenDetails(response[1].data);
         });
     }

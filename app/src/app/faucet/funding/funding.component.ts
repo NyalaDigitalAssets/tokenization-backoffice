@@ -14,7 +14,6 @@ export class FundingComponent implements OnInit {
     results: WalletFundingResult[];
     submitted = false;
 
-    csvColumns = ['WalletId'];
     resultColumns = ['WalletId', 'Result'];
     FaucetFundingResult = FaucetFundingResult;
 
