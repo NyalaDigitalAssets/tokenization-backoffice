@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxCsvParser } from 'ngx-csv-parser';
 
-import { FaucetFundingResult, RequestFaucetFundingDto, WalletFundingResult } from '../../core/models';
+import {
+    FaucetFundingResult,
+    RequestFaucetFundingDto,
+    WalletFundingResult,
+} from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -16,10 +20,13 @@ export class FundingComponent implements OnInit {
 
     resultColumns = ['WalletId', 'Result'];
     FaucetFundingResult = FaucetFundingResult;
+    headerContent: string;
 
     constructor(private ngxCsvParser: NgxCsvParser, private customApi: CustomApiService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.headerContent = `This faucet can be used to top up your issuer or retail wallets with native tokens in order to create new tokenized assets or to establish more than one opt-in from a given retail wallet.`;
+    }
 
     loadRetailWallets(file: any) {
         this.ngxCsvParser

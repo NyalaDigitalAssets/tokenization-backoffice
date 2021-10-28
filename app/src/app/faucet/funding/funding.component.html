@@ -1,5 +1,5 @@
 <div class="mg-t10">
-    <app-header title="Faucet" icon="fa-faucet">
+    <app-header title="Faucet" [content]="headerContent" icon="fa-faucet">
         <button mat-mini-fab color="primary" matTooltip="Submit" [disabled]="submitted" (click)="submit()">
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
