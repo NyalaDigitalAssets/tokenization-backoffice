@@ -133,6 +133,13 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.checkSelections();
     }
 
+    unselectAll() {
+        this.tokenizedAsset.optIns.forEach((o) => {
+            o.isSelected = false;
+        });
+        this.checkSelections();
+    }
+
     csvInputChange(fileInputEvent: any) {
         this.ngxCsvParser
             .parse(fileInputEvent, { header: false, delimiter: ',' })

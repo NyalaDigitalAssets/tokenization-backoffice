@@ -63,6 +63,7 @@
                     buttonText="Upload the CSV file with the list of users you want to select."
                     accept=".csv"
                     (fileSelected)="csvInputChange($event)"
+                    (fileRemoved)="unselectAll()"
                 ></app-dropzone>
                 <button class="mg-x1" mat-mini-fab matTooltip="Select all" type="button" (click)="toggleOptInSelection()">
                     <app-fa-icon *ngIf="optInsAllSelected" icon="fa-check-square"></app-fa-icon>
