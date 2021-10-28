@@ -9,17 +9,16 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { TokenizedAssetBurn } from './tokenized-asset-burn.model';
 import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
 export interface ITokenizedAssetBurnDto {
-    burn?: TokenizedAssetBurn;
+    amount?: number;
     credentials?: SimpleAccessCredentialsDto;
 }
 
 
 export class TokenizedAssetBurnDto extends BaseModel implements ITokenizedAssetBurnDto  {
-    burn: TokenizedAssetBurn;
+    amount: number;
     credentials: SimpleAccessCredentialsDto;
 
     /**
@@ -29,7 +28,6 @@ export class TokenizedAssetBurnDto extends BaseModel implements ITokenizedAssetB
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.burn = new TokenizedAssetBurn(); 
         this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
@@ -44,7 +42,7 @@ export class TokenizedAssetBurnDto extends BaseModel implements ITokenizedAssetB
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.burn.setValues(rawValues.burn, useFormGroupValuesToModel);
+            this.amount = rawValues.amount;
             this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -54,7 +52,7 @@ export class TokenizedAssetBurnDto extends BaseModel implements ITokenizedAssetB
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                burn: this.burn.$formGroup,
+                amount: new FormControl(this.amount),
                 credentials: this.credentials.$formGroup,
             });
         }
@@ -65,7 +63,7 @@ export class TokenizedAssetBurnDto extends BaseModel implements ITokenizedAssetB
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.burn.setFormGroupValues();
+        this.$formGroup.controls['amount'].setValue(this.amount);
         this.credentials.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
