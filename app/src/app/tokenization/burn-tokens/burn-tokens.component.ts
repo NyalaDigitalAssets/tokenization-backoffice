@@ -1,21 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Form, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { CustomApiService } from 'src/app/core/services/ganymede.service';
 
 import {
     SimpleAccessCredentialsDto,
     TokenizedAssetBurnDto,
-    TokenizedAssetBurn,
-    TokenizedAssetToRetailWallet,
 } from '../../core/models';
-
-interface RetailWallet {
-    value: string;
-    viewValue: string;
-}
 
 @Component({
     selector: 'app-burn-tokens',
@@ -30,14 +21,7 @@ export class BurnTokensComponent implements OnInit {
     selectedTab: FormControl;
 
     amount: number;
-    selectedWallet: string;
 
-    selectedFile: File;
-    selectedFileName: string;
-
-    dataSource: MatTableDataSource<TokenizedAssetToRetailWallet>;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('credForm') credForm;
 
     model: TokenizedAssetBurnDto;
@@ -59,14 +43,10 @@ export class BurnTokensComponent implements OnInit {
         });
     }
     submit() {
-        this.model.burn = new TokenizedAssetBurn({
-            amount: this.amount,
-            retailWalletId: this.selectedWallet
-        });
+        this.model.amount = this.amount;
         this.customApi.postTokenizedAssetsBurnAsset(this.issuerWalletSeedId, this.issuerWalletId, this.tokenizedAssetId, this.model)
             .subscribe(
                 (response) => {
-                    console.log(response);
                     this.resetFields();
                 },
                 () => {
@@ -75,9 +55,6 @@ export class BurnTokensComponent implements OnInit {
     }
 
     resetFields() {
-        this.dataSource = new MatTableDataSource<TokenizedAssetToRetailWallet>();
-        this.model.burn = new TokenizedAssetBurn();
-        this.selectedFile = null;
-        this.selectedFileName = '';
+        this.model = new TokenizedAssetBurnDto();
     }
 }
