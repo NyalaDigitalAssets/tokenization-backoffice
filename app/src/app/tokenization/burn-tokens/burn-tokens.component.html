@@ -1,10 +1,10 @@
 <div class="mg-t10">
     <app-header title="Burn Tokens" icon="fa-burn">
-        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(credForm?.invalid || singleForm.invalid)">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(credForm?.invalid || singleForm?.invalid)">
             <app-fa-icon icon="fa-save"></app-fa-icon>
         </button>
     </app-header>
-    <mat-card class="mg-t10">
+    <mat-card class="mg-t10" *ngIf="model">
         <mat-card-header class="ai-c">
             <div mat-card-avatar>
                 <app-fa-icon class="fa-2x" icon="fa-burn"></app-fa-icon>
@@ -19,7 +19,7 @@
                     <form #singleForm="ngForm">
                         <mat-form-field appearance="standard">
                             <mat-label>Amount</mat-label>
-                            <input matInput required type="number" [(ngModel)]="amount" name="amount" />
+                            <input matInput required type="number" [(ngModel)]="model.amount" name="model.amount" />
                         </mat-form-field>
                     </form>
                 </div>

@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { CustomApiService } from 'src/app/core/services/ganymede.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-    SimpleAccessCredentialsDto,
-    TokenizedAssetBurnDto,
-} from '../../core/models';
+import { SimpleAccessCredentialsDto, TokenizedAssetBurnDto } from '../../core/models';
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
     selector: 'app-burn-tokens',
@@ -17,21 +14,19 @@ export class BurnTokensComponent implements OnInit {
     issuerWalletSeedId: string;
     issuerWalletId: string;
     tokenizedAssetId: string;
-
-    selectedTab: FormControl;
-
-    amount: number;
+    model: TokenizedAssetBurnDto;
 
     @ViewChild('credForm') credForm;
-
-    model: TokenizedAssetBurnDto;
+    @ViewChild('singleForm') singleForm;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private customApi: CustomApiService) { }
+        private router: Router,
+        private snackbar: MatSnackBar,
+        private customApi: CustomApiService
+    ) {}
 
     ngOnInit(): void {
-        this.selectedTab = new FormControl(0);
         this.activatedRoute.params.subscribe((params) => {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
@@ -39,22 +34,32 @@ export class BurnTokensComponent implements OnInit {
             this.model = new TokenizedAssetBurnDto({
                 credentials: new SimpleAccessCredentialsDto(),
             });
-
         });
     }
-    submit() {
-        this.model.amount = this.amount;
-        this.customApi.postTokenizedAssetsBurnAsset(this.issuerWalletSeedId, this.issuerWalletId, this.tokenizedAssetId, this.model)
-            .subscribe(
-                (response) => {
-                    this.resetFields();
-                },
-                () => {
-                    this.resetFields();
-                });
-    }
 
-    resetFields() {
-        this.model = new TokenizedAssetBurnDto();
+    submit() {
+        this.customApi
+            .postTokenizedAssetsBurnAsset(
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            )
+            .subscribe(() => {
+                this.snackbar.open(`${this.model.amount} tokens burned successfully!`, 'OK', {
+                    duration: 5000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'bottom',
+                    politeness: 'polite',
+                });
+                this.router.navigate([
+                    'tokenization',
+                    this.issuerWalletSeedId,
+                    'issuer-wallets',
+                    this.issuerWalletId,
+                    'tokens',
+                    this.tokenizedAssetId,
+                ]);
+            });
     }
 }

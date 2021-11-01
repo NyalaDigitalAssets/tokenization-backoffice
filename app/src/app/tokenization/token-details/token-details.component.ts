@@ -110,7 +110,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.router.navigate(['customer', customerId, 'retail-wallets']);
     }
 
-    isXlmToken () {
+    isTokenBurnSupported () {
         return this.tokenizedAsset?.assetType === AssetTypes.XLM;
     }
 

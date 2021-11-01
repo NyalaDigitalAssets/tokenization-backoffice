@@ -6,7 +6,7 @@
         <button class="mg-r2" mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">
             <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
         </button>
-        <button mat-mini-fab color="primary" matTooltip="Burn Tokens" (click)="burnTokens()" *ngIf=isXlmToken()>
+        <button mat-mini-fab color="primary" matTooltip="Burn Tokens" (click)="burnTokens()" [disabled]="!isTokenBurnSupported()">
             <app-fa-icon icon="fa-burn"></app-fa-icon>
         </button>
     </app-header>
