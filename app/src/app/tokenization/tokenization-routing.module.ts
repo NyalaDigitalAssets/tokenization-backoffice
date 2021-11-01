@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BurnTokensComponent } from './burn-tokens/burn-tokens.component';
+import { ClawbackTokensComponent } from './clawback-tokens/clawback-tokens.component';
 
 import { CreateTokenComponent } from './create-token/create-token.component';
 import { CreateComponent } from './create/create.component';
@@ -37,6 +39,14 @@ const routes: Routes = [
     {
         path: ':seedId/issuer-wallets/:issuerWalletId/tokens/:tokenizedAssetId/transfer',
         component: TransferTokensComponent,
+    },
+    {
+        path: ':seedId/issuer-wallets/:issuerWalletId/tokens/:tokenizedAssetId/clawback',
+        component: ClawbackTokensComponent,
+    },
+    {
+        path: ':seedId/issuer-wallets/:issuerWalletId/tokens/:tokenizedAssetId/burn',
+        component: BurnTokensComponent,
     },
 ];
 

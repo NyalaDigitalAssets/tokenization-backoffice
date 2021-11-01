@@ -9,6 +9,7 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { AssetTypes } from './enums';
 
 export interface ITokenizedAssetDto {
     id?: string;
@@ -23,6 +24,7 @@ export interface ITokenizedAssetDto {
     metaData?: string;
     issuerAddress?: string;
     distributionAddress?: string;
+    assetType?: AssetTypes;
 }
 
 
@@ -39,6 +41,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     metaData: string;
     issuerAddress: string;
     distributionAddress: string;
+    assetType: AssetTypes;
 
     /**
      * constructor
@@ -72,6 +75,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.metaData = rawValues.metaData;
             this.issuerAddress = rawValues.issuerAddress;
             this.distributionAddress = rawValues.distributionAddress;
+            this.assetType = rawValues.assetType;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -92,6 +96,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 metaData: new FormControl(this.metaData),
                 issuerAddress: new FormControl(this.issuerAddress),
                 distributionAddress: new FormControl(this.distributionAddress),
+                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
             });
         }
         return this._formGroup;
@@ -113,6 +118,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['metaData'].setValue(this.metaData);
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);
         this.$formGroup.controls['distributionAddress'].setValue(this.distributionAddress);
+        this.$formGroup.controls['assetType'].setValue(this.assetType);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
