@@ -16,13 +16,16 @@
                     {{ wallet.publicAddress }}
                 </span>
             </mat-chip>
-            <mat-chip selected color="accent" (click)="showAddressQrCode()">
+            <mat-chip selected color="accent" matTooltip="Show QR code address" (click)="showAddressQrCode()">
                 <app-fa-icon icon="fa-qrcode"></app-fa-icon>
             </mat-chip>
-            <mat-chip selected color="accent" (click)="goToBlockchainExplorer()">
+            <mat-chip selected color="accent" matTooltip="Open blockchain explorer" (click)="goToBlockchainExplorer()">
                 <app-fa-icon icon="fa-search"></app-fa-icon>
             </mat-chip>
-            <mat-chip selected color="warn" (click)="goToAccountLocking()">
+            <mat-chip selected color="accent" matTooltip="Request funding for wallet (Can only be done once every 24h)" (click)="requestFunding()">
+                <app-fa-icon icon="fa-arrow-alt-circle-up"></app-fa-icon>
+            </mat-chip>
+            <mat-chip selected color="warn" matTooltip="Lock down wallet" (click)="goToAccountLocking()">
                 <app-fa-icon icon="fa-lock"></app-fa-icon>
             </mat-chip>
         </mat-chip-list>

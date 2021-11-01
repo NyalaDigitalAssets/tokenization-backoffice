@@ -18,6 +18,13 @@ const routes: Routes = [
       import('./tokenization/tokenization.module').then(
         (m) => m.TokenizationModule
       ),
+  },  
+  {
+    path: 'faucet',
+    loadChildren: () =>
+      import('./faucet/faucet.module').then(
+        (m) => m.FaucetModule
+      ),
   },
   { path: '**', component: HomeComponent },
 ];

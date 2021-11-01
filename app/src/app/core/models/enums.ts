@@ -54,6 +54,12 @@ export enum BulkResultItemStatus {
     Duplicate = 11,
 }
 
+export enum FaucetFundingResult {
+    Initiated = 1,
+    Failed = -2,
+    NotEligible = -1,
+}
+
 export enum IssuerWalletRoles {
     Issuer = 1,
     Distributor = 2,
@@ -266,6 +272,7 @@ export class AllEnums {
     RetailWalletAccessLevels = RetailWalletAccessLevels;
     AssetTypes = AssetTypes;
     BulkResultItemStatus = BulkResultItemStatus;
+    FaucetFundingResult = FaucetFundingResult;
     IssuerWalletRoles = IssuerWalletRoles;
     WalletTransferStatus = WalletTransferStatus;
     TransactionActions = TransactionActions;

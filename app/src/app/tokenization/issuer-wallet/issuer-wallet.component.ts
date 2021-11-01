@@ -1,8 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-import { IssuerWalletDto, IssuerWalletRoles, TokenizedAssetDto } from '../../core/models';
+import {
+    FaucetFundingResult,
+    IssuerWalletDto,
+    IssuerWalletRoles,
+    RequestFaucetFundingDto,
+    TokenizedAssetDto,
+} from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 interface Balance {
     amount: number;
@@ -22,7 +30,12 @@ export class IssuerWalletComponent {
     balanceColumns: string[] = ['amount', 'unitName'];
     IssuerWalletRoles = IssuerWalletRoles;
 
-    constructor(private assetTypeUtility: AssetTypeUtilityService, private router: Router) {}
+    constructor(
+        private assetTypeUtility: AssetTypeUtilityService,
+        private customApi: CustomApiService,
+        private snackBar: MatSnackBar,
+        private router: Router
+    ) {}
 
     getIcon(): string {
         return this.assetTypeUtility.icon(this.wallet.assetType);
@@ -43,6 +56,25 @@ export class IssuerWalletComponent {
             this.wallet.id,
             'lock',
         ]);
+    }
+
+    requestFunding() {
+        const model = new RequestFaucetFundingDto({ issuerWallets: [this.wallet.id] });
+        this.customApi.postFaucetRequestWalletFunding(model).subscribe((results) => {
+            const fundingRequest = results.data.issuerFundingResults[0];
+            this.snackBar.open(
+                fundingRequest.result === FaucetFundingResult.Initiated
+                    ? 'Funding requested!'
+                    : 'Unable to request funding at the moment!',
+                'OK',
+                {
+                    duration: 5000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'bottom',
+                    politeness: 'polite',
+                }
+            );
+        });
     }
 
     showAddressQrCode() {

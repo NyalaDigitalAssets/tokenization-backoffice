@@ -1,0 +1,84 @@
+<div class="mg-t10">
+    <app-header title="Faucet" [content]="headerContent" icon="fa-faucet">
+        <button mat-mini-fab color="primary" matTooltip="Submit" [disabled]="submitted" (click)="submit()">
+            <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
+        </button>
+    </app-header>
+
+    <mat-card class="mg-t10" *ngIf="submitted">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-list"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Results</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div *ngIf="results && results.length > 0">
+                    <table class="w-100" mat-table [dataSource]="results">
+                        <ng-container matColumnDef="WalletId">
+                            <th mat-header-cell *matHeaderCellDef>Wallet Id</th>
+                            <td mat-cell *matCellDef="let element">
+                                <p>{{ element.walletId }}</p>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Result">
+                            <th mat-header-cell *matHeaderCellDef>Result</th>
+                            <td mat-cell *matCellDef="let element">
+                                <p>{{ FaucetFundingResult[element.result] }}</p>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="resultColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: resultColumns"></tr>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mg-t10" *ngIf="model && !submitted">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-user-friends"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Retail Wallets</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row pd-5">
+                    <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="loadRetailWallets($event)" (fileRemoved)="reset()"></app-dropzone>
+                </div>
+                <div *ngIf="model.retailWallets && model.retailWallets.length > 0">
+                    <p>Number of selected wallets: {{ model.retailWallets.length }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mg-t10" *ngIf="model && !submitted">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-building"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Issuer Wallets</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row pd-5">
+                    <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="loadIssuerWallets($event)" (fileRemoved)="reset()"></app-dropzone>
+                </div>
+                <div *ngIf="model.issuerWallets && model.issuerWallets.length > 0">
+                    <p>Number of selected wallets: {{ model.issuerWallets.length }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
