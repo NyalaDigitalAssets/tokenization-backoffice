@@ -10,7 +10,6 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { AccountTypes } from './enums';
-import { RetailWalletAccessLevels } from './enums';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
 
 export interface ICreateCustomerAccountDto {
@@ -26,7 +25,6 @@ export interface ICreateCustomerAccountDto {
     postalCode: string;
     town: string;
     countryIso: string;
-    walletAccess?: RetailWalletAccessLevels;
     company?: CustomerCompanyDetailDto;
     id?: string;
     email: string;
@@ -46,7 +44,6 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
     postalCode: string;
     town: string;
     countryIso: string;
-    walletAccess: RetailWalletAccessLevels;
     company: CustomerCompanyDetailDto;
     id: string;
     email: string;
@@ -84,7 +81,6 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
             this.postalCode = rawValues.postalCode;
             this.town = rawValues.town;
             this.countryIso = rawValues.countryIso;
-            this.walletAccess = rawValues.walletAccess;
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
             this.id = rawValues.id;
             this.email = rawValues.email;
@@ -108,7 +104,6 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
                 postalCode: new FormControl(this.postalCode, [Validators.required, Validators.maxLength(100), ]),
                 town: new FormControl(this.town, [Validators.required, Validators.maxLength(100), ]),
                 countryIso: new FormControl(this.countryIso, [Validators.required, Validators.minLength(2), Validators.maxLength(2), ]),
-                walletAccess: new FormControl(this.walletAccess, [enumValidator(RetailWalletAccessLevels), ]),
                 company: this.company.$formGroup,
                 id: new FormControl(this.id),
                 email: new FormControl(this.email, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
@@ -133,7 +128,6 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
         this.$formGroup.controls['postalCode'].setValue(this.postalCode);
         this.$formGroup.controls['town'].setValue(this.town);
         this.$formGroup.controls['countryIso'].setValue(this.countryIso);
-        this.$formGroup.controls['walletAccess'].setValue(this.walletAccess);
         this.company.setFormGroupValues();
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['email'].setValue(this.email);

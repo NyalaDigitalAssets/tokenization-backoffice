@@ -18,7 +18,6 @@ export interface IKycDataDto {
     lastname: string;
     placeOfBirth: string;
     dateOfBirth: Date;
-    address: KycAddressDto;
     email: string;
     nonPepPerson: boolean;
     highCorruptionIndex: boolean;
@@ -26,6 +25,7 @@ export interface IKycDataDto {
     nonUsTaxPerson: boolean;
     identVerified: boolean;
     eulaAgreed: boolean;
+    address: KycAddressDto;
     company?: CustomerCompanyDetailDto;
 }
 
@@ -36,7 +36,6 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     lastname: string;
     placeOfBirth: string;
     dateOfBirth: Date;
-    address: KycAddressDto;
     email: string;
     nonPepPerson: boolean;
     highCorruptionIndex: boolean;
@@ -44,6 +43,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     nonUsTaxPerson: boolean;
     identVerified: boolean;
     eulaAgreed: boolean;
+    address: KycAddressDto;
     company: CustomerCompanyDetailDto;
 
     /**
@@ -73,7 +73,6 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
             this.lastname = rawValues.lastname;
             this.placeOfBirth = rawValues.placeOfBirth;
             this.dateOfBirth = rawValues.dateOfBirth;
-            this.address.setValues(rawValues.address, useFormGroupValuesToModel);
             this.email = rawValues.email;
             this.nonPepPerson = rawValues.nonPepPerson;
             this.highCorruptionIndex = rawValues.highCorruptionIndex;
@@ -81,6 +80,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
             this.nonUsTaxPerson = rawValues.nonUsTaxPerson;
             this.identVerified = rawValues.identVerified;
             this.eulaAgreed = rawValues.eulaAgreed;
+            this.address.setValues(rawValues.address, useFormGroupValuesToModel);
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -95,7 +95,6 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
                 lastname: new FormControl(this.lastname, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
                 placeOfBirth: new FormControl(this.placeOfBirth, [Validators.required, Validators.minLength(0), Validators.maxLength(100), ]),
                 dateOfBirth: new FormControl(this.dateOfBirth, [Validators.required, ]),
-                address: this.address.$formGroup,
                 email: new FormControl(this.email, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
                 nonPepPerson: new FormControl(this.nonPepPerson, [Validators.required, ]),
                 highCorruptionIndex: new FormControl(this.highCorruptionIndex, [Validators.required, ]),
@@ -103,6 +102,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
                 nonUsTaxPerson: new FormControl(this.nonUsTaxPerson, [Validators.required, ]),
                 identVerified: new FormControl(this.identVerified, [Validators.required, ]),
                 eulaAgreed: new FormControl(this.eulaAgreed, [Validators.required, ]),
+                address: this.address.$formGroup,
                 company: this.company.$formGroup,
             });
         }
@@ -118,7 +118,6 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
         this.$formGroup.controls['lastname'].setValue(this.lastname);
         this.$formGroup.controls['placeOfBirth'].setValue(this.placeOfBirth);
         this.$formGroup.controls['dateOfBirth'].setValue(this.dateOfBirth);
-        this.address.setFormGroupValues();
         this.$formGroup.controls['email'].setValue(this.email);
         this.$formGroup.controls['nonPepPerson'].setValue(this.nonPepPerson);
         this.$formGroup.controls['highCorruptionIndex'].setValue(this.highCorruptionIndex);
@@ -126,6 +125,7 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
         this.$formGroup.controls['nonUsTaxPerson'].setValue(this.nonUsTaxPerson);
         this.$formGroup.controls['identVerified'].setValue(this.identVerified);
         this.$formGroup.controls['eulaAgreed'].setValue(this.eulaAgreed);
+        this.address.setFormGroupValues();
         this.company.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
