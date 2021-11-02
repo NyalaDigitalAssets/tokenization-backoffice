@@ -9,32 +9,38 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { AssetTypes } from './enums';
+import { WalletTypes } from './enums';
 import { TransactionActions } from './enums';
-import { TxStatusDto } from './enums';
+import { TxStatus } from './enums';
 
 export interface ITransactionToShowDto {
-    txAction?: TransactionActions;
-    created?: Date;
-    txId?: string;
     id?: string;
     institutionId?: string;
+    assetType?: AssetTypes;
+    sourceWalletType?: WalletTypes;
+    action?: TransactionActions;
     txBody?: string;
     modified?: Date;
-    status?: TxStatusDto;
+    status?: TxStatus;
     retryCounter?: number;
+    txId?: string;
+    created?: Date;
 }
 
 
 export class TransactionToShowDto extends BaseModel implements ITransactionToShowDto  {
-    txAction: TransactionActions;
-    created: Date;
-    txId: string;
     id: string;
     institutionId: string;
+    assetType: AssetTypes;
+    sourceWalletType: WalletTypes;
+    action: TransactionActions;
     txBody: string;
     modified: Date;
-    status: TxStatusDto;
+    status: TxStatus;
     retryCounter: number;
+    txId: string;
+    created: Date;
 
     /**
      * constructor
@@ -56,15 +62,17 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.txAction = rawValues.txAction;
-            this.created = rawValues.created;
-            this.txId = rawValues.txId;
             this.id = rawValues.id;
             this.institutionId = rawValues.institutionId;
+            this.assetType = rawValues.assetType;
+            this.sourceWalletType = rawValues.sourceWalletType;
+            this.action = rawValues.action;
             this.txBody = rawValues.txBody;
             this.modified = rawValues.modified;
             this.status = rawValues.status;
             this.retryCounter = rawValues.retryCounter;
+            this.txId = rawValues.txId;
+            this.created = rawValues.created;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -73,15 +81,17 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                txAction: new FormControl(this.txAction, [enumValidator(TransactionActions), ]),
-                created: new FormControl(this.created),
-                txId: new FormControl(this.txId),
                 id: new FormControl(this.id),
                 institutionId: new FormControl(this.institutionId),
+                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                sourceWalletType: new FormControl(this.sourceWalletType, [enumValidator(WalletTypes), ]),
+                action: new FormControl(this.action, [enumValidator(TransactionActions), ]),
                 txBody: new FormControl(this.txBody),
                 modified: new FormControl(this.modified),
-                status: new FormControl(this.status, [enumValidator(TxStatusDto), ]),
+                status: new FormControl(this.status, [enumValidator(TxStatus), ]),
                 retryCounter: new FormControl(this.retryCounter),
+                txId: new FormControl(this.txId),
+                created: new FormControl(this.created),
             });
         }
         return this._formGroup;
@@ -91,15 +101,17 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['txAction'].setValue(this.txAction);
-        this.$formGroup.controls['created'].setValue(this.created);
-        this.$formGroup.controls['txId'].setValue(this.txId);
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['institutionId'].setValue(this.institutionId);
+        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['sourceWalletType'].setValue(this.sourceWalletType);
+        this.$formGroup.controls['action'].setValue(this.action);
         this.$formGroup.controls['txBody'].setValue(this.txBody);
         this.$formGroup.controls['modified'].setValue(this.modified);
         this.$formGroup.controls['status'].setValue(this.status);
         this.$formGroup.controls['retryCounter'].setValue(this.retryCounter);
+        this.$formGroup.controls['txId'].setValue(this.txId);
+        this.$formGroup.controls['created'].setValue(this.created);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { TxRoutingModule } from './tx-routing.module';
 import { ListComponent } from './list/list.component';
+import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -10,8 +12,12 @@ import { ListComponent } from './list/list.component';
     ListComponent
   ],
   imports: [
+    CoreModule,
+    SharedModule,
     CommonModule,
-    TxRoutingModule
+    CommonModule,
+    TxRoutingModule,
   ]
+  
 })
 export class TxModule { }
