@@ -27,3 +27,13 @@ environment:
 4. Run docker-compose up
 
 ![image](https://user-images.githubusercontent.com/24613746/133413158-8ffdd2fa-3e9f-44b9-8a59-2af890e26fb5.png)
+
+## Easy redeploy
+
+1. Navigate to the git folder
+
+2. Open powershell and run the redeploy.ps1 script
+
+```
+./redeploy.ps1
+```
