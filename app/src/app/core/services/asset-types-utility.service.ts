@@ -40,8 +40,8 @@ export class AssetTypeUtilityService {
             feeUnit: 'XLM',
             name: 'Lumen',
             color: 'rgba(62,27,219, 1)',
-            baseTxUrl: 'https://stellarchain.io/tx',
-            baseAddressUrl: 'https://stellarchain.io/address',
+            baseTxUrl: 'https://stellar.expert/explorer/public/tx/',
+            baseAddressUrl: 'https://stellar.expert/explorer/public/account',
         },
         {
             type: AssetTypes.LINK,

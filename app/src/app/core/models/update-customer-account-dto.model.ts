@@ -10,7 +10,6 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { AccountTypes } from './enums';
-import { RetailWalletAccessLevels } from './enums';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
 
 export interface IUpdateCustomerAccountDto {
@@ -26,7 +25,6 @@ export interface IUpdateCustomerAccountDto {
     postalCode: string;
     town: string;
     countryIso: string;
-    walletAccess?: RetailWalletAccessLevels;
     company?: CustomerCompanyDetailDto;
 }
 
@@ -44,7 +42,6 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
     postalCode: string;
     town: string;
     countryIso: string;
-    walletAccess: RetailWalletAccessLevels;
     company: CustomerCompanyDetailDto;
 
     /**
@@ -80,7 +77,6 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
             this.postalCode = rawValues.postalCode;
             this.town = rawValues.town;
             this.countryIso = rawValues.countryIso;
-            this.walletAccess = rawValues.walletAccess;
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -102,7 +98,6 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
                 postalCode: new FormControl(this.postalCode, [Validators.required, Validators.maxLength(100), ]),
                 town: new FormControl(this.town, [Validators.required, Validators.maxLength(100), ]),
                 countryIso: new FormControl(this.countryIso, [Validators.required, Validators.minLength(2), Validators.maxLength(2), ]),
-                walletAccess: new FormControl(this.walletAccess, [enumValidator(RetailWalletAccessLevels), ]),
                 company: this.company.$formGroup,
             });
         }
@@ -125,7 +120,6 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
         this.$formGroup.controls['postalCode'].setValue(this.postalCode);
         this.$formGroup.controls['town'].setValue(this.town);
         this.$formGroup.controls['countryIso'].setValue(this.countryIso);
-        this.$formGroup.controls['walletAccess'].setValue(this.walletAccess);
         this.company.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();

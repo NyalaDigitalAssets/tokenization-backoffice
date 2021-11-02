@@ -1,22 +1,14 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Form, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { CustomApiService } from 'src/app/core/services/ganymede.service';
 
 import {
     SimpleAccessCredentialsDto,
     TokenizedAssetClawbackDto,
     TokenizedAssetClawbackTransfer,
-    TokenizedAssetToRetailWallet,
 } from '../../core/models';
-
-interface RetailWallet {
-    value: string;
-    viewValue: string;
-}
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
     selector: 'app-clawback-tokens',
@@ -28,36 +20,22 @@ export class ClawbackTokensComponent implements OnInit {
     issuerWalletId: string;
     tokenizedAssetId: string;
 
-    selectedTab: FormControl;
-
-    amount: number;
     selectedWallet: string;
-
     selectedFile: File;
     selectedFileName: string;
 
-    dataSource: MatTableDataSource<TokenizedAssetToRetailWallet>;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('credForm') credForm;
-
-    csvColumns = ['RetailWalletId', 'Amount'];
-
-    wallets: RetailWallet[] = [
-        { value: 'c930b6eb-cac4-4f0c-addc-14932f4ecf2f', viewValue: 'Wallet 1' },
-        { value: '043e1d6e-77fa-48cc-b756-38303aea0598', viewValue: 'Wallet 2' },
-        { value: '3ddaa5e4-747c-4283-aa33-e965d422f45f', viewValue: 'Wallet 3' }
-    ];
-
     model: TokenizedAssetClawbackDto;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private ngxCsvParser: NgxCsvParser,
-        private customApi: CustomApiService) { }
+        private customApi: CustomApiService,
+        private snackbar: MatSnackBar,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
-        this.selectedTab = new FormControl(0);
         this.activatedRoute.params.subscribe((params) => {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
@@ -65,29 +43,65 @@ export class ClawbackTokensComponent implements OnInit {
             this.model = new TokenizedAssetClawbackDto({
                 credentials: new SimpleAccessCredentialsDto(),
             });
-
         });
     }
+
     submit() {
-        // if (this.selectedTab.value === 0) { //Single clawback
-        this.model.clawback = new TokenizedAssetClawbackTransfer({
-            amount: this.amount,
-            retailWalletId: this.selectedWallet
-        });
-        this.customApi.postTokenizedAssetsClawbackAsset(this.issuerWalletSeedId, this.issuerWalletId, this.tokenizedAssetId, this.model)
+        this.customApi
+            .postTokenizedAssetsClawbackAsset(
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            )
             .subscribe(
-                (response) => {
-                    console.log(response);
-                    this.resetFields();
+                () => {
+                    this.snackbar.open('Clawbacks initated!', 'OK', {
+                        duration: 5000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'bottom',
+                        politeness: 'polite',
+                    });
+                    this.router.navigate([
+                        'tokenization',
+                        this.issuerWalletSeedId,
+                        'issuer-wallets',
+                        this.issuerWalletId,
+                        'tokens',
+                        this.tokenizedAssetId,
+                    ]);
                 },
                 () => {
                     this.resetFields();
-                });
+                }
+            );
+    }
+
+    csvInputChange(fileInputEvent: any) {
+        this.selectedFile = fileInputEvent;
+        this.selectedFileName = this.selectedFile.name;
+        this.ngxCsvParser
+            .parse(this.selectedFile, { header: false, delimiter: ',' })
+            .pipe()
+            .subscribe(
+                (result: Array<any>) => {
+                    this.model.clawbacks = new Array<TokenizedAssetClawbackTransfer>();
+                    for (let i = 0; i < result.length; i++)
+                        this.model.clawbacks.push(
+                            new TokenizedAssetClawbackTransfer({
+                                retailWalletId: result[i][0],
+                                amount: parseFloat(result[i][1]),
+                            })
+                        );
+                },
+                (error: NgxCSVParserError) => {
+                    console.error('Error', error);
+                }
+            );
     }
 
     resetFields() {
-        this.dataSource = new MatTableDataSource<TokenizedAssetToRetailWallet>();
-        this.model.clawback = new TokenizedAssetClawbackTransfer();
+        this.model.clawbacks = [];
         this.selectedFile = null;
         this.selectedFileName = '';
     }

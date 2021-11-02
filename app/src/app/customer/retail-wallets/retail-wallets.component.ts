@@ -1,14 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import {
-    AssetTypes,
-    LockRetailWalletsDto,
-    RetailWalletDto,
-    RetailWalletDtoListApiResponse,
-} from '../../core/models';
+import { AssetTypes, LockRetailWalletsDto, RetailWalletDto, RetailWalletDtoListApiResponse } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
@@ -26,7 +20,7 @@ import { CustomApiService } from '../../core/services/ganymede.service';
 })
 export class RetailWalletsComponent implements OnInit {
     displayedColumns: string[] = ['assetType', 'publicAddress', 'nativeBalance', 'lockstatus'];
-    innerTableColums: string[] = ['token', 'balance', 'actions'];
+    innerTableColums: string[] = ['token', 'balance'];
     customerId: string;
     wallets: RetailWalletDtoListApiResponse;
     expandedElement: RetailWalletDto | null;
@@ -35,13 +29,11 @@ export class RetailWalletsComponent implements OnInit {
 
     AssetTypes = AssetTypes;
 
-    @ViewChild('cbDialog', { static: true }) cbDialog: TemplateRef<any>;
 
     constructor(
         private customApi: CustomApiService,
         private assetTypeUtility: AssetTypeUtilityService,
         private route: ActivatedRoute,
-        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -76,10 +68,6 @@ export class RetailWalletsComponent implements OnInit {
             }
         });
     }
-
-    showClawbackDialog(seedId: string, walletId: string){
-        this.dialog.open(this.cbDialog);
-    }    
 
     getIcon(assetType: AssetTypes): string {
         return this.assetTypeUtility.icon(assetType);
