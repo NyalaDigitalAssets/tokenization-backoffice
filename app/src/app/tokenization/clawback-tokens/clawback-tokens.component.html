@@ -1,9 +1,7 @@
 <div class="mg-t10">
     <app-header title="Clawback Tokens" icon="fa-undo">
-        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(
-            (credForm?.invalid) ||
-            (selectedTab.value === 0 && singleForm.invalid))">
-            <app-fa-icon icon="fa-save"></app-fa-icon>
+        <button mat-mini-fab color="primary" matTooltip="Initiate clawback" (click)="submit()" [disabled]="credForm?.invalid">
+            <app-fa-icon icon="fa-undo"></app-fa-icon>
         </button>
     </app-header>
     <mat-card class="mg-t10">
@@ -17,28 +15,12 @@
         </mat-card-header>
         <mat-card-content>
             <div class="w-100">
-                <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab.value"
-                    (selectedIndexChange)="selectedTab.setValue($event)">
-                    <mat-tab label="Single">
-                        <div class="row pd-5">
-                            <form #singleForm="ngForm">
-                                <mat-form-field appearance="standard" class="pd-x10">
-                                    <mat-label>Retail Wallet</mat-label>
-                                    <mat-select [(ngModel)]="selectedWallet" name="retailwallet" required>
-                                        <mat-option>Select retail wallet</mat-option>
-                                        <mat-option *ngFor="let wallet of wallets" [value]="wallet.value">
-                                            {{wallet.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-form-field appearance="standard" class="mg-x10 pd-x10">
-                                    <mat-label>Amount</mat-label>
-                                    <input matInput required type="number" [(ngModel)]="amount" name="amount" />
-                                </mat-form-field>
-                            </form>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
+                <div class="row pd-5">
+                    <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="csvInputChange($event)" (fileRemoved)="resetFields()"></app-dropzone>
+                </div>
+                <div *ngIf="model && model.clawbacks && model.clawbacks.length > 0">
+                    <p>Number of selected wallets to clawback from: {{ model.clawbacks.length }}</p>
+                </div>
             </div>
         </mat-card-content>
     </mat-card>
@@ -56,8 +38,7 @@
                 <form #credForm="ngForm">
                     <mat-form-field appearance="standard" class="pd-x10">
                         <mat-label>Passphrase</mat-label>
-                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase"
-                            name="passphrase" />
+                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
                     </mat-form-field>
                 </form>
             </div>

@@ -131,7 +131,7 @@ body {
 
 $base-gap: 5;
 
-@for $i from 1 through 10 {
+@for $i from 0 through 10 {
     .mg-#{$i} {
         margin: #{($base-gap * $i)}px !important;
     }

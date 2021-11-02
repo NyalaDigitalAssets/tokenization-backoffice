@@ -13,13 +13,13 @@ import { TokenizedAssetClawbackTransfer } from './tokenized-asset-clawback-trans
 import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
 export interface ITokenizedAssetClawbackDto {
-    clawback?: TokenizedAssetClawbackTransfer;
+    clawbacks?: Array<TokenizedAssetClawbackTransfer>;
     credentials?: SimpleAccessCredentialsDto;
 }
 
 
 export class TokenizedAssetClawbackDto extends BaseModel implements ITokenizedAssetClawbackDto  {
-    clawback: TokenizedAssetClawbackTransfer;
+    clawbacks: Array<TokenizedAssetClawbackTransfer>;
     credentials: SimpleAccessCredentialsDto;
 
     /**
@@ -29,7 +29,7 @@ export class TokenizedAssetClawbackDto extends BaseModel implements ITokenizedAs
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.clawback = new TokenizedAssetClawbackTransfer(); 
+        this.clawbacks = new Array<TokenizedAssetClawbackTransfer>(); 
         this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
@@ -44,7 +44,7 @@ export class TokenizedAssetClawbackDto extends BaseModel implements ITokenizedAs
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.clawback.setValues(rawValues.clawback, useFormGroupValuesToModel);
+            this.fillModelArray<TokenizedAssetClawbackTransfer>(this, 'clawbacks', rawValues.clawbacks, useFormGroupValuesToModel, TokenizedAssetClawbackTransfer, SubTypeFactory.createSubTypeInstance);
             this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -54,9 +54,11 @@ export class TokenizedAssetClawbackDto extends BaseModel implements ITokenizedAs
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                clawback: this.clawback.$formGroup,
+                clawbacks: new FormArray([]),
                 credentials: this.credentials.$formGroup,
             });
+            // generate FormArray control elements
+            this.fillFormArray<TokenizedAssetClawbackTransfer>('clawbacks', this.clawbacks, TokenizedAssetClawbackTransfer);
         }
         return this._formGroup;
     }
@@ -65,7 +67,7 @@ export class TokenizedAssetClawbackDto extends BaseModel implements ITokenizedAs
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.clawback.setFormGroupValues();
+        this.fillFormArray<TokenizedAssetClawbackTransfer>('clawbacks', this.clawbacks, TokenizedAssetClawbackTransfer);
         this.credentials.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
