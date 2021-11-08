@@ -1,12 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 import { LoadingService } from '../../core/services/loading.service';
 
@@ -26,7 +19,6 @@ export class LoadingScreenComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.elmRef.nativeElement.style.display = 'none';
     this.loadingSubscription = LoadingService.loadingStatus
-      .pipe(debounceTime(200))
       .subscribe((status: boolean) => {      
         this.elmRef.nativeElement.style.display = status ? 'block' : 'none';
         this.changeDetectorRef.detectChanges();

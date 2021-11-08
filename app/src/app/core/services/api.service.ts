@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, OperatorFunction } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { LoadingService } from './loading.service';
+
 @Injectable({
     providedIn: 'root',
 })
@@ -11,9 +13,18 @@ export class ApiService {
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
-    ) { }
+        private loadingService: LoadingService
+    ) {}
 
-    get<TResponse>(url: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<TResponse> {
+    get<TResponse>(
+        url: string,
+        showLoading: boolean = true,
+        handleErrorGlobally: boolean = true
+    ): Observable<TResponse> {
+        if (showLoading) {
+            this.loadingService.startLoading();
+        }
+
         if (handleErrorGlobally) {
             return this.http
                 .get(url)
@@ -23,14 +34,18 @@ export class ApiService {
                 );
         }
 
-        return this.http
-            .get(url)
-            .pipe(
-                this.successHandler<TResponse>(showLoading),
-            );
+        return this.http.get(url).pipe(this.successHandler<TResponse>(showLoading));
     }
 
-    delete<TResponse>(url: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<TResponse> {
+    delete<TResponse>(
+        url: string,
+        showLoading: boolean = true,
+        handleErrorGlobally: boolean = true
+    ): Observable<TResponse> {
+        if (showLoading) {
+            this.loadingService.startLoading();
+        }
+
         if (handleErrorGlobally) {
             return this.http
                 .delete(url)
@@ -40,11 +55,7 @@ export class ApiService {
                 );
         }
 
-        return this.http
-            .delete(url)
-            .pipe(
-                this.successHandler<TResponse>(showLoading),
-            );
+        return this.http.delete(url).pipe(this.successHandler<TResponse>(showLoading));
     }
 
     post<TPost, TResponse>(
@@ -53,6 +64,10 @@ export class ApiService {
         showLoading: boolean = true,
         handleErrorGlobally: boolean = true
     ): Observable<TResponse> {
+        if (showLoading) {
+            this.loadingService.startLoading();
+        }
+
         if (handleErrorGlobally) {
             return this.http
                 .post(url, toPost)
@@ -62,11 +77,7 @@ export class ApiService {
                 );
         }
 
-        return this.http
-            .post(url, toPost)
-            .pipe(
-                this.successHandler<TResponse>(showLoading),
-            );
+        return this.http.post(url, toPost).pipe(this.successHandler<TResponse>(showLoading));
     }
 
     put<TPost, TResponse>(
@@ -75,6 +86,10 @@ export class ApiService {
         showLoading: boolean = true,
         handleErrorGlobally: boolean = true
     ): Observable<TResponse> {
+        if (showLoading) {
+            this.loadingService.startLoading();
+        }
+
         if (handleErrorGlobally) {
             return this.http
                 .put(url, toPost)
@@ -84,11 +99,7 @@ export class ApiService {
                 );
         }
 
-        return this.http
-            .put(url, toPost)
-            .pipe(
-                this.successHandler<TResponse>(showLoading),
-            );
+        return this.http.put(url, toPost).pipe(this.successHandler<TResponse>(showLoading));
     }
 
     patch<TPost, TResponse>(
@@ -97,6 +108,10 @@ export class ApiService {
         showLoading: boolean = true,
         handleErrorGlobally: boolean = true
     ): Observable<TResponse> {
+        if (showLoading) {
+            this.loadingService.startLoading();
+        }
+
         if (handleErrorGlobally) {
             return this.http
                 .patch(url, toPost)
@@ -106,15 +121,14 @@ export class ApiService {
                 );
         }
 
-        return this.http
-            .patch(url, toPost)
-            .pipe(
-                this.successHandler<TResponse>(showLoading),
-            );
+        return this.http.patch(url, toPost).pipe(this.successHandler<TResponse>(showLoading));
     }
 
     private successHandler<TResponse>(showLoading: boolean): OperatorFunction<TResponse, any> {
         return map<TResponse, any>((resp) => {
+            if (showLoading) {
+                this.loadingService.stopLoading();
+            }
             return resp;
         });
     }
@@ -125,29 +139,37 @@ export class ApiService {
             let errors = null;
             if (errorResponse && errorResponse.error && errorResponse.error.errorMessageCodes) {
                 errorResponse.error.errorMessageCodes.map((m) => (errorMessage += m + '\r\n'));
-            }
-            else if(errorResponse &&  errorResponse.statusText && errorResponse.error && errorResponse.error.status){
+            } else if (
+                errorResponse &&
+                errorResponse.statusText &&
+                errorResponse.error &&
+                errorResponse.error.status
+            ) {
                 errorMessage = errorResponse.statusText;
-                if(errorResponse.error.title){
-                    errorMessage += ' - ' + errorResponse.error.title;}
-                if(errorResponse.error.errors){
+                if (errorResponse.error.title) {
+                    errorMessage += ' - ' + errorResponse.error.title;
+                }
+                if (errorResponse.error.errors) {
                     errors = errorResponse.error.errors;
                 }
-            } 
-            else {
+            } else {
                 errorMessage = 'Server error.';
-                if(errorResponse.status && errorResponse.statusText){
-                    errorMessage = errorResponse.statusText + " ("+errorResponse.status+")"
+                if (errorResponse.status && errorResponse.statusText) {
+                    errorMessage = errorResponse.statusText + ' (' + errorResponse.status + ')';
                 }
-                if(errorResponse.error){
+                if (errorResponse.error) {
                     errors = errorResponse.error;
                 }
             }
-            
-            if(errors){
-                console.error(errorMessage, "Error details: ", errors);
-            }else{
+
+            if (errors) {
+                console.error(errorMessage, 'Error details: ', errors);
+            } else {
                 console.error(errorMessage);
+            }
+
+            if (showLoading) {
+                this.loadingService.stopLoading();
             }
 
             this.snackBar.open(errorMessage, 'OK', {
@@ -155,7 +177,7 @@ export class ApiService {
                 horizontalPosition: 'center',
                 verticalPosition: 'bottom',
                 politeness: 'polite',
-              });
+            });
 
             return null;
         });

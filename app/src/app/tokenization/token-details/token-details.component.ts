@@ -253,7 +253,7 @@ export class TokenDetailsComponent implements AfterViewInit {
             this.customApi.getTokenizedAssetsGetTokenizedAssetDetails(
                 this.issuerWalletSeedId,
                 this.issuerWalletId,
-                this.tokenizedAssetId
+                this.tokenizedAssetId,
             ),
         ]).subscribe((response) => {
             const customers = response[0].data;
