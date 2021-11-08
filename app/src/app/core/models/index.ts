@@ -69,6 +69,8 @@ export * from './authenticated-institution-dto.model';
 export * from './authenticated-institution-dto-api-response.model';
 export * from './transaction-to-show-dto.model';
 export * from './transaction-to-show-dto-list-api-response.model';
+export * from './cancel-transactions-dto.model';
+export * from './int-32-api-response.model';
 export * from './wallet-basic-info-dto.model';
 export * from './wallet-basic-info-dto-api-response.model';
 export * from './delete-wallet-dto.model';

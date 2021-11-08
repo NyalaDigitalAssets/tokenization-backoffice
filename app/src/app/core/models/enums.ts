@@ -114,6 +114,7 @@ export enum WalletTypes {
 export enum TxStatus {
     New = 1,
     Succesful = 2,
+    Canceled = -3,
     Failed = -2,
     Retrying = -1,
 }

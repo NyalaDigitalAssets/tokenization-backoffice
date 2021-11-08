@@ -15,7 +15,6 @@ import { CoreModule } from '../core/core.module';
     CoreModule,
     SharedModule,
     CommonModule,
-    CommonModule,
     TxRoutingModule,
   ]
   
