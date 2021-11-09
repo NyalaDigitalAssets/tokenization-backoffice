@@ -1,11 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, OnInit, Component, ViewChild, TemplateRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { interval, Subscription } from 'rxjs';
+
 import {
     AssetTypes,
     CancelTransactionsDto,
@@ -13,19 +14,18 @@ import {
     TransactionToShowDto,
     TxStatus,
     WalletTypes,
-} from 'src/app/core/models';
-import { AssetTypeUtilityService } from 'src/app/core/services/asset-types-utility.service';
-import { CustomApiService } from 'src/app/core/services/ganymede.service';
+} from '../../core/models';
+import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { CustomApiService } from '../../core/services/ganymede.service';
 
 interface TimeValue {
     value: number;
     viewValue: string;
 }
 
-
- class  ExtendedResponse extends TransactionToShowDto{
-    icon? : string;
- }
+class ExtendedResponse extends TransactionToShowDto {
+    icon?: string;
+}
 
 @Component({
     selector: 'app-list',
@@ -106,8 +106,8 @@ export class ListComponent implements AfterViewInit, OnInit {
     }
 
     setupAutoSync() {
-        this.timerSub = interval(5000).subscribe(() => {
-            this.reload(true);
+        this.timerSub = interval(10000).subscribe(() => {
+            this.reload(false);
         });
     }
 
@@ -125,11 +125,13 @@ export class ListComponent implements AfterViewInit, OnInit {
             .subscribe(
                 (response) => {
                     this.loadedTxData = response.data;
-                    this.loadedTxData.forEach(x => x.icon = this.assetTypeUtility.icon(x.assetType));
+                    this.loadedTxData.forEach(
+                        (x) => (x.icon = this.assetTypeUtility.icon(x.assetType))
+                    );
                     this.applyFilters();
                 },
                 () => {},
-                () => (this.isSyncing = false)
+                () => setTimeout(() => (this.isSyncing = false), 1000)
             );
     }
 
@@ -145,7 +147,7 @@ export class ListComponent implements AfterViewInit, OnInit {
         data.filter((x) => selectedIds.includes(x.id)).forEach((x) => this.selection.select(x));
         this.dataSource.data = data;
     }
-    getAssetIcon(assetType: AssetTypes){
+    getAssetIcon(assetType: AssetTypes) {
         return this.assetTypeUtility.icon(assetType);
     }
     showTxInBlockchainExplorer(assetType: AssetTypes, txId: string) {
