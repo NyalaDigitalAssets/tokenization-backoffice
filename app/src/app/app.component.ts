@@ -44,6 +44,11 @@ export class AppComponent implements AfterViewInit, OnInit {
                 label: 'Faucet',
                 route: 'faucet',
             },
+            {
+                icon: 'fa-exchange-alt',
+                label: 'Tx',
+                route: 'tx',
+            },
         ];
     }
 

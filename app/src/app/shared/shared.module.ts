@@ -25,6 +25,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+// import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBadgeModule} from '@angular/material/badge';
 import { QrCodeModule } from 'ng-qrcode';
 
 import { CopyClipboardDirective } from './copy-clipboard.directive';
@@ -65,6 +68,7 @@ const MAT_MODULES = [
     MatDialogModule,
     MatSortModule,
     MatProgressBarModule,
+    MatBadgeModule
 ];
 
 const EXPORTS = [

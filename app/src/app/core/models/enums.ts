@@ -104,6 +104,21 @@ export enum Products {
     Tokenization = 103,
 }
 
+export enum WalletTypes {
+    Institutional = 1,
+    Retail = 2,
+    Issuer = 3,
+    Faucet = 4,
+}
+
+export enum TxStatus {
+    New = 1,
+    Succesful = 2,
+    Canceled = -3,
+    Failed = -2,
+    Retrying = -1,
+}
+
 export enum WalletType {
     NotSet = 0,
     Standard = 1,
@@ -278,6 +293,8 @@ export class AllEnums {
     TransactionActions = TransactionActions;
     OptInStatus = OptInStatus;
     Products = Products;
+    WalletTypes = WalletTypes;
+    TxStatus = TxStatus;
     WalletType = WalletType;
     WealthManagementProductType = WealthManagementProductType;
     WealthManagementPurposeType = WealthManagementPurposeType;
