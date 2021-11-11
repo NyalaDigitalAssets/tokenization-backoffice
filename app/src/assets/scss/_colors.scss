@@ -5,6 +5,7 @@ $ter: #303741;
 $wht: #ffffff;
 $blk: #000000;
 $dgr: #ff003c;
+$wrn: #fdc700;
 $scs: #1ce11f;
 
 $color-list: (
@@ -15,6 +16,7 @@ $color-list: (
   blk: $blk,
   dgr: $dgr,
   scs: $scs,
+  wrn: $wrn,
 );
 
 @each $key, $val in $color-list {

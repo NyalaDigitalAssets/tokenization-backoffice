@@ -38,15 +38,14 @@ export class ListComponent implements AfterViewInit, OnInit {
         'assetType',
         'srcWallet',
         'action',
-        'txBody',
-        'status',
-        'retryCounter',
         'txId',
-        'modified',
+        'retryCounter',
         'created',
+        'modified',
+        'status',
     ];
 
-    @ViewChild(MatSort, { static: false }) optInSort: MatSort;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild('cancelDialog', { static: true }) cancelDialog: TemplateRef<any>;
 
@@ -70,7 +69,7 @@ export class ListComponent implements AfterViewInit, OnInit {
         (value) => typeof value === 'string'
     );
 
-    selectedMinutes: number = this.dateOptions[0].value;
+    selectedMinutes: number = this.dateOptions[4].value;
     selectedStatus: string = 'All';
 
     timerSub: Subscription;
@@ -89,7 +88,7 @@ export class ListComponent implements AfterViewInit, OnInit {
 
     ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.optInSort;
+        this.dataSource.sort = this.sort;
     }
 
     ngOnInit(): void {
@@ -125,9 +124,9 @@ export class ListComponent implements AfterViewInit, OnInit {
             .subscribe(
                 (response) => {
                     this.loadedTxData = response.data;
-                    this.loadedTxData.forEach(
-                        (x) => (x.icon = this.assetTypeUtility.icon(x.assetType))
-                    );
+                    this.loadedTxData.forEach((x) => {
+                        x.icon = this.assetTypeUtility.icon(x.assetType);
+                    });
                     this.applyFilters();
                 },
                 () => {},
@@ -172,13 +171,6 @@ export class ListComponent implements AfterViewInit, OnInit {
         }
 
         this.selection.select(...this.dataSource.data);
-    }
-
-    checkboxLabel(row?: TransactionToShowDto): string {
-        if (!row) {
-            return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-        }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${1}`;
     }
 
     showDialog() {

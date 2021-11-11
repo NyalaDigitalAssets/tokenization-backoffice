@@ -16,3 +16,10 @@ mat-toolbar {
         -webkit-transform: rotate(360deg);
     }
 }
+
+.elipsis {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
