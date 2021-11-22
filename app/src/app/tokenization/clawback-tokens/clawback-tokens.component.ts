@@ -62,14 +62,7 @@ export class ClawbackTokensComponent implements OnInit {
                         verticalPosition: 'bottom',
                         politeness: 'polite',
                     });
-                    this.router.navigate([
-                        'tokenization',
-                        this.issuerWalletSeedId,
-                        'issuer-wallets',
-                        this.issuerWalletId,
-                        'tokens',
-                        this.tokenizedAssetId,
-                    ]);
+                    this.router.navigate(['tx']);
                 },
                 () => {
                     this.resetFields();
