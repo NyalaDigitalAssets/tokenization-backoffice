@@ -43,7 +43,7 @@ export * from './issuer-wallet-recovery-kit-file-dto.model';
 export * from './issuer-wallet-recovery-kit-file-dto-api-response.model';
 export * from './empty-result.model';
 export * from './issuer-wallet-dto-list-api-response.model';
-export * from './create-tokenized-asset-dto.model';
+export * from './init-tokenized-asset-creation-dto.model';
 export * from './tokenized-asset-dto-api-response.model';
 export * from './tokenized-asset-transfer-dto.model';
 export * from './transaction-dto.model';

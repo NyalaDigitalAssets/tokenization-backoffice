@@ -1,10 +1,9 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AssetTypeUtilityService } from 'src/app/core/services/asset-types-utility.service';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
-import { AssetTypes, IIssuerWalletDto, IssuerWalletSeedDto } from '../../core/models';
+import { AssetTypes, IssuerWalletSeedDto, SimpleAccessCredentialsDto } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -14,19 +13,24 @@ import { CustomApiService } from '../../core/services/ganymede.service';
 })
 export class ListComponent implements OnInit {
     @ViewChild('qrTpl') qrTpl: TemplateRef<any>;
+    @ViewChild('pwdDialog', { static: true }) pwdDialog: TemplateRef<any>;
 
     publicAddress: string;
+    issuerWalletSeedId: string;
+    issuerWalletId: string;
+    tokenizedAssetId: string;
     issuerWalletSeeds: IssuerWalletSeedDto[];
     AssetTypes = AssetTypes;
+    credentials: SimpleAccessCredentialsDto;
 
     constructor(
         private customApi: CustomApiService,
         private router: Router,
-        private assetTypeUtility: AssetTypeUtilityService,
         public dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
+        this.credentials = new SimpleAccessCredentialsDto();
         this.loadIssuerWalletSeeds();
     }
 
@@ -57,7 +61,28 @@ export class ListComponent implements OnInit {
         });
     }
 
-    sendTokens(wallet: IIssuerWalletDto) {}
+    showTokenFinalizingForm(
+        issuerWalletSeedId: string,
+        issuerWalletId: string,
+        tokenizedAssetId: string
+    ) {
+        this.issuerWalletSeedId = issuerWalletSeedId;
+        this.issuerWalletId = issuerWalletId;
+        this.tokenizedAssetId = tokenizedAssetId;
+    }
+
+    submitFinalizingTokenizedAssetCreation() {
+        this.customApi
+            .putTokenizedAssetsCreateTokenizedAsset(
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.credentials
+            )
+            .subscribe({
+                next: (tokenizedAsset) => this.loadIssuerWalletSeeds(),
+            });
+    }
 
     loadIssuerWalletSeeds() {
         this.customApi.getIssuerWalletGetIssuerWalletSeeds().subscribe((response) => {

@@ -51,3 +51,21 @@
         <p>{{ publicAddress }}</p>
     </div>
 </ng-template>
+
+<ng-template #pwdDialog>
+    <h2 matDialogTitle>Credentials</h2>
+    <form #pwdForm="ngForm">
+        <mat-dialog-content>
+            <div class="w-100">
+                <mat-form-field appearance="standard" class="pd-x10">
+                    <mat-label>Passphrase</mat-label>
+                    <input matInput required type="password" [(ngModel)]="credentials.passphrase" name="passphrase" />
+                </mat-form-field>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="ta-r">
+            <button mat-raised-button matDialogClose color="primary">Dismiss</button>
+            <button mat-raised-button [disabled]="pwdForm?.invalid" (click)="submitFinalizingTokenizedAssetCreation()">Submit</button>
+        </mat-dialog-actions>
+    </form>
+</ng-template>
