@@ -9,12 +9,14 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { WealthManagementType } from './enums';
 import { WealthManagementProductType } from './enums';
 import { WealthManagementPurposeType } from './enums';
 import { WealthManagementHorizonType } from './enums';
 import { EtfOnboardingPersonalDataDto } from './etf-onboarding-personal-data-dto.model';
 
 export interface ICreateEtfOnboardingDto {
+    type?: WealthManagementType;
     product?: WealthManagementProductType;
     investmentAmount?: number;
     monthlyInvestmentAmount?: number;
@@ -39,6 +41,7 @@ export interface ICreateEtfOnboardingDto {
 
 
 export class CreateEtfOnboardingDto extends BaseModel implements ICreateEtfOnboardingDto  {
+    type: WealthManagementType;
     product: WealthManagementProductType;
     investmentAmount: number;
     monthlyInvestmentAmount: number;
@@ -81,6 +84,7 @@ export class CreateEtfOnboardingDto extends BaseModel implements ICreateEtfOnboa
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
+            this.type = rawValues.type;
             this.product = rawValues.product;
             this.investmentAmount = rawValues.investmentAmount;
             this.monthlyInvestmentAmount = rawValues.monthlyInvestmentAmount;
@@ -109,6 +113,7 @@ export class CreateEtfOnboardingDto extends BaseModel implements ICreateEtfOnboa
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
+                type: new FormControl(this.type, [enumValidator(WealthManagementType), ]),
                 product: new FormControl(this.product, [enumValidator(WealthManagementProductType), ]),
                 investmentAmount: new FormControl(this.investmentAmount),
                 monthlyInvestmentAmount: new FormControl(this.monthlyInvestmentAmount),
@@ -138,6 +143,7 @@ export class CreateEtfOnboardingDto extends BaseModel implements ICreateEtfOnboa
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
+        this.$formGroup.controls['type'].setValue(this.type);
         this.$formGroup.controls['product'].setValue(this.product);
         this.$formGroup.controls['investmentAmount'].setValue(this.investmentAmount);
         this.$formGroup.controls['monthlyInvestmentAmount'].setValue(this.monthlyInvestmentAmount);

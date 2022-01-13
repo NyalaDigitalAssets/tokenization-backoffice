@@ -35,16 +35,15 @@ export class IssuerWalletComponent {
         private customApi: CustomApiService,
         private snackBar: MatSnackBar,
         private router: Router
-    ) {}
+    ) { }
 
     getIcon(): string {
         return this.assetTypeUtility.icon(this.wallet.assetType);
     }
 
     goToBlockchainExplorer() {
-        const url = `${this.assetTypeUtility.addressUrl(this.wallet.assetType)}/${
-            this.wallet.publicAddress
-        }`;
+        const url = `${this.assetTypeUtility.addressUrl(this.wallet.assetType)}/${this.wallet.publicAddress
+            }`;
         window.open(url, '_blank');
     }
 
@@ -96,7 +95,7 @@ export class IssuerWalletComponent {
         const balances: Balance[] = [];
 
         balances.push({
-            amount: this.wallet.balance.nativeBalance,
+            amount: this.wallet.balance.nativeBalance.free + this.wallet.balance.nativeBalance.locked,
             unitName: this.assetTypeUtility.unit(this.wallet.assetType),
         });
 

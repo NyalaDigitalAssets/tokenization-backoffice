@@ -9,12 +9,12 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { WalletTransferStatus } from './enums';
+import { WalletTransactionStatus } from './enums';
 
 export interface ITokenizedAssetTransferDto {
     id?: string;
     receiverRetailWalletId?: string;
-    status?: WalletTransferStatus;
+    status?: WalletTransactionStatus;
     created?: Date;
     txId?: string;
     fromAddress?: string;
@@ -26,7 +26,7 @@ export interface ITokenizedAssetTransferDto {
 export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAssetTransferDto  {
     id: string;
     receiverRetailWalletId: string;
-    status: WalletTransferStatus;
+    status: WalletTransactionStatus;
     created: Date;
     txId: string;
     fromAddress: string;
@@ -71,7 +71,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
                 receiverRetailWalletId: new FormControl(this.receiverRetailWalletId),
-                status: new FormControl(this.status, [enumValidator(WalletTransferStatus), ]),
+                status: new FormControl(this.status, [enumValidator(WalletTransactionStatus), ]),
                 created: new FormControl(this.created),
                 txId: new FormControl(this.txId),
                 fromAddress: new FormControl(this.fromAddress),

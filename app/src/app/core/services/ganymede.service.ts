@@ -31,8 +31,9 @@ import {
     TokenizedAssetBurnDto,
     RetailWalletDtoListApiResponse,
     RetailWalletRecoveryKitFileDtoApiResponse,
+    RetailWalletDtoApiResponse,
     RetailWalletOptInDto,
-    LockRetailWalletsDto,
+    LockWalletsDto,
     RetailWalletSeedRecoveryDtoApiResponse,
     ResetRetailWalletAccessCredentialsDto,
     AuthenticatedInstitutionDtoApiResponse,
@@ -89,8 +90,9 @@ export class CustomApiService {
     getRetailWalletGetRetailWalletsDetails = (customerid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoListApiResponse> => this.apiService.get<RetailWalletDtoListApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/retail-wallets?${queryParams}` : `/api/external/v1/customers/${customerid}/retail-wallets`, showLoading, handleErrorGlobally);
     postRetailWalletInitiateRetailWallet = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoListApiResponse> => this.apiService.post<SimpleAccessCredentialsDto, RetailWalletDtoListApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets`, data, showLoading, handleErrorGlobally);
     deleteRetailWalletDeleteRetailWallets = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletRecoveryKitFileDtoApiResponse> => this.apiService.delete<RetailWalletRecoveryKitFileDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets`, showLoading, handleErrorGlobally);
+    putRetailWalletDeriveRetailWallet = (customerid: string, assettype: number, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoApiResponse> => this.apiService.put<SimpleAccessCredentialsDto, RetailWalletDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/${assettype}`, data, showLoading, handleErrorGlobally);
     postRetailWalletOptInWithRetailWallet = (customerid: string, retailwalletid: string, data: RetailWalletOptInDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<RetailWalletOptInDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/${retailwalletid}/opt-in`, data, showLoading, handleErrorGlobally);
-    putRetailWalletLockRetailWallets = (customerid: string, data: LockRetailWalletsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.put<LockRetailWalletsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/lock`, data, showLoading, handleErrorGlobally);
+    putRetailWalletLockRetailWallets = (customerid: string, data: LockWalletsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.put<LockWalletsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/lock`, data, showLoading, handleErrorGlobally);
     postRetailWalletInitiateRetailWalletPassphraseRecovery = (customerid: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletSeedRecoveryDtoApiResponse> => this.apiService.post<any, RetailWalletSeedRecoveryDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/recovery`, {}, showLoading, handleErrorGlobally);
     putRetailWalletRecoverRetailWalletSeedAccess = (customerid: string, data: ResetRetailWalletAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.put<ResetRetailWalletAccessCredentialsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/recovery`, data, showLoading, handleErrorGlobally);
     getStatusGet = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<any> => this.apiService.get<any>(queryParams ? `/api/external/v1/status?${queryParams}` : `/api/external/v1/status`, showLoading, handleErrorGlobally);

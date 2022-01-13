@@ -41,8 +41,13 @@ export enum AssetTypes {
     YFI = 20,
     ATOM = 21,
     MANA = 22,
-    POLY = 23,
+    POLYX = 23,
     LUNA = 24,
+    XRP = 25,
+    BNB = 26,
+    ADA = 27,
+    SOL = 28,
+    BCH = 29,
     EUR = 1001,
     USD = 1002,
 }
@@ -65,7 +70,13 @@ export enum IssuerWalletRoles {
     Distributor = 2,
 }
 
-export enum WalletTransferStatus {
+export enum ReviewDecision {
+    Pending = 0,
+    Approved = 1,
+    Rejected = 2,
+}
+
+export enum WalletTransactionStatus {
     New = 0,
     Pending = 1,
     Rejected = 2,
@@ -85,6 +96,9 @@ export enum TransactionActions {
     OptIn = 6,
     AuthOptIn = 7,
     LockAccount = 8,
+    Stake = 9,
+    Unstake = 10,
+    WithdrawRewards = 11,
 }
 
 export enum OptInStatus {
@@ -126,12 +140,20 @@ export enum WalletType {
     External = 3,
 }
 
+export enum WealthManagementType {
+    Core = 0,
+    Crypto = 1,
+}
+
 export enum WealthManagementProductType {
     AllWeather = 1,
     ValueSave = 2,
     AllWeatherGreen = 3,
     ValueSaveGreen = 4,
     Future = 5,
+    CryptoCore = 6,
+    CryptoETP = 7,
+    N11 = 8,
     Unknown = -1,
 }
 
@@ -289,13 +311,15 @@ export class AllEnums {
     BulkResultItemStatus = BulkResultItemStatus;
     FaucetFundingResult = FaucetFundingResult;
     IssuerWalletRoles = IssuerWalletRoles;
-    WalletTransferStatus = WalletTransferStatus;
+    ReviewDecision = ReviewDecision;
+    WalletTransactionStatus = WalletTransactionStatus;
     TransactionActions = TransactionActions;
     OptInStatus = OptInStatus;
     Products = Products;
     WalletTypes = WalletTypes;
     TxStatus = TxStatus;
     WalletType = WalletType;
+    WealthManagementType = WealthManagementType;
     WealthManagementProductType = WealthManagementProductType;
     WealthManagementPurposeType = WealthManagementPurposeType;
     WealthManagementHorizonType = WealthManagementHorizonType;

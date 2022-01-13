@@ -10,6 +10,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { AssetTypes } from './enums';
+import { ReviewDecision } from './enums';
 import { TokenizedAssetTransferDto } from './tokenized-asset-transfer-dto.model';
 import { TokenizedAssetOptInDto } from './tokenized-asset-opt-in-dto.model';
 
@@ -27,6 +28,9 @@ export interface ITokenizedAssetDetailsDto {
     issuerAddress?: string;
     distributionAddress?: string;
     assetType?: AssetTypes;
+    reviewDecision?: ReviewDecision;
+    reviewedAt?: Date;
+    reviewer?: string;
     transfers?: Array<TokenizedAssetTransferDto>;
     optIns?: Array<TokenizedAssetOptInDto>;
 }
@@ -46,6 +50,9 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
     issuerAddress: string;
     distributionAddress: string;
     assetType: AssetTypes;
+    reviewDecision: ReviewDecision;
+    reviewedAt: Date;
+    reviewer: string;
     transfers: Array<TokenizedAssetTransferDto>;
     optIns: Array<TokenizedAssetOptInDto>;
 
@@ -84,6 +91,9 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
             this.issuerAddress = rawValues.issuerAddress;
             this.distributionAddress = rawValues.distributionAddress;
             this.assetType = rawValues.assetType;
+            this.reviewDecision = rawValues.reviewDecision;
+            this.reviewedAt = rawValues.reviewedAt;
+            this.reviewer = rawValues.reviewer;
             this.fillModelArray<TokenizedAssetTransferDto>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetTransferDto, SubTypeFactory.createSubTypeInstance);
             this.fillModelArray<TokenizedAssetOptInDto>(this, 'optIns', rawValues.optIns, useFormGroupValuesToModel, TokenizedAssetOptInDto, SubTypeFactory.createSubTypeInstance);
             // set values in model properties for added formControls
@@ -107,6 +117,9 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
                 issuerAddress: new FormControl(this.issuerAddress),
                 distributionAddress: new FormControl(this.distributionAddress),
                 assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                reviewDecision: new FormControl(this.reviewDecision, [enumValidator(ReviewDecision), ]),
+                reviewedAt: new FormControl(this.reviewedAt),
+                reviewer: new FormControl(this.reviewer),
                 transfers: new FormArray([]),
                 optIns: new FormArray([]),
             });
@@ -135,6 +148,9 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);
         this.$formGroup.controls['distributionAddress'].setValue(this.distributionAddress);
         this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['reviewDecision'].setValue(this.reviewDecision);
+        this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
+        this.$formGroup.controls['reviewer'].setValue(this.reviewer);
         this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         this.fillFormArray<TokenizedAssetOptInDto>('optIns', this.optIns, TokenizedAssetOptInDto);
         // set formValues in added formControls

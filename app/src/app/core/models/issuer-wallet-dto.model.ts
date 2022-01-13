@@ -11,7 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 import { IssuerWalletRoles } from './enums';
 import { AssetTypes } from './enums';
-import { BalanceDto } from './balance-dto.model';
+import { BalancesInDecimalDto } from './balances-in-decimal-dto.model';
 import { TokenizedAssetDto } from './tokenized-asset-dto.model';
 
 export interface IIssuerWalletDto {
@@ -23,8 +23,9 @@ export interface IIssuerWalletDto {
     publicAddress?: string;
     accountIndex?: number;
     name?: string;
-    balance?: BalanceDto;
+    balance?: BalancesInDecimalDto;
     tokenizedAssets?: Array<TokenizedAssetDto>;
+    seedLockStatus?: boolean;
 }
 
 
@@ -37,8 +38,9 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
     publicAddress: string;
     accountIndex: number;
     name: string;
-    balance: BalanceDto;
+    balance: BalancesInDecimalDto;
     tokenizedAssets: Array<TokenizedAssetDto>;
+    seedLockStatus: boolean;
 
     /**
      * constructor
@@ -47,7 +49,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.balance = new BalanceDto(); 
+        this.balance = new BalancesInDecimalDto(); 
         this.tokenizedAssets = new Array<TokenizedAssetDto>(); 
 
         if (values) {
@@ -72,6 +74,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
             this.name = rawValues.name;
             this.balance.setValues(rawValues.balance, useFormGroupValuesToModel);
             this.fillModelArray<TokenizedAssetDto>(this, 'tokenizedAssets', rawValues.tokenizedAssets, useFormGroupValuesToModel, TokenizedAssetDto, SubTypeFactory.createSubTypeInstance);
+            this.seedLockStatus = rawValues.seedLockStatus;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -90,6 +93,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
                 name: new FormControl(this.name),
                 balance: this.balance.$formGroup,
                 tokenizedAssets: new FormArray([]),
+                seedLockStatus: new FormControl(this.seedLockStatus),
             });
             // generate FormArray control elements
             this.fillFormArray<TokenizedAssetDto>('tokenizedAssets', this.tokenizedAssets, TokenizedAssetDto);
@@ -111,6 +115,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
         this.$formGroup.controls['name'].setValue(this.name);
         this.balance.setFormGroupValues();
         this.fillFormArray<TokenizedAssetDto>('tokenizedAssets', this.tokenizedAssets, TokenizedAssetDto);
+        this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
