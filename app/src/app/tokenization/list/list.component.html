@@ -11,9 +11,7 @@
         <mat-accordion multi>
             <mat-expansion-panel *ngFor="let issuerWalletSeed of issuerWalletSeeds; let i = index" [expanded]="i === 0">
                 <mat-expansion-panel-header>
-                    <mat-panel-title
-                        ><strong>{{ getSeedName(issuerWalletSeed) }}</strong></mat-panel-title
-                    >
+                    <mat-panel-title><strong>{{ getSeedName(issuerWalletSeed) }}</strong></mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="seed-content">
                     <div class="flx ai-c">
@@ -23,10 +21,12 @@
                                 {{ issuerWalletSeed.createdDt | date: 'dd.MM.yyyy HH:mm:ss' }}
                             </mat-chip>
                         </mat-chip-list>
-                        <button type="button" mat-mini-fab color="primary" matTooltip="Derive new wallet from this seed" (click)="deriveNewWallet(issuerWalletSeed.id)">
+                        <button type="button" mat-mini-fab color="primary" matTooltip="Derive new wallet from this seed"
+                            (click)="deriveNewWallet(issuerWalletSeed.id)">
                             <i class="fa fa-fw fa-share-alt"></i>
                         </button>
-                        <button type="button" mat-mini-fab color="primary" matTooltip="Create a new token" (click)="createNewToken(issuerWalletSeed.id)">
+                        <button type="button" mat-mini-fab color="primary" matTooltip="Create a new token"
+                            (click)="createNewToken(issuerWalletSeed.id)">
                             <i class="fa fa-fw fa-coins"></i>
                         </button>
                     </div>
@@ -35,7 +35,10 @@
                         <h2>Issuer wallets ({{ issuerWalletSeed.wallets.length }})</h2>
                         <mat-grid-list cols="2">
                             <mat-grid-tile *ngFor="let wallet of issuerWalletSeed.wallets">
-                                <app-issuer-wallet class="w-90" [wallet]="wallet" (showQrCodeClicked)="showAddressQrCode($event)"></app-issuer-wallet>
+                                <app-issuer-wallet class="w-90" [wallet]="wallet"
+                                    (showQrCodeClicked)="showAddressQrCode($event)"
+                                    (finalizeTokenCreationClicked)="showTokenFinalizingForm(issuerWalletSeed.id, wallet.id, $event)">
+                                </app-issuer-wallet>
                             </mat-grid-tile>
                         </mat-grid-list>
                     </ng-container>
@@ -64,8 +67,9 @@
             </div>
         </mat-dialog-content>
         <mat-dialog-actions class="ta-r">
-            <button mat-raised-button matDialogClose color="primary">Dismiss</button>
-            <button mat-raised-button [disabled]="pwdForm?.invalid" (click)="submitFinalizingTokenizedAssetCreation()">Submit</button>
+            <button mat-raised-button matDialogClose color="warn">Dismiss</button>
+            <button mat-raised-button [disabled]="pwdForm?.invalid" color="primary"
+                (click)="submitFinalizingTokenizedAssetCreation()">Submit</button>
         </mat-dialog-actions>
     </form>
 </ng-template>

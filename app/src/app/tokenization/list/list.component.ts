@@ -27,7 +27,7 @@ export class ListComponent implements OnInit {
         private customApi: CustomApiService,
         private router: Router,
         public dialog: MatDialog
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.credentials = new SimpleAccessCredentialsDto();
@@ -69,6 +69,12 @@ export class ListComponent implements OnInit {
         this.issuerWalletSeedId = issuerWalletSeedId;
         this.issuerWalletId = issuerWalletId;
         this.tokenizedAssetId = tokenizedAssetId;
+        this.dialog.open(ModalComponent, {
+            data: {
+                component: this.pwdDialog,
+            },
+            disableClose: false,
+        });
     }
 
     submitFinalizingTokenizedAssetCreation() {

@@ -7,6 +7,7 @@ import {
     IssuerWalletDto,
     IssuerWalletRoles,
     RequestFaucetFundingDto,
+    ReviewDecision,
     TokenizedAssetDto,
 } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
@@ -25,10 +26,13 @@ interface Balance {
 export class IssuerWalletComponent {
     @Input() wallet: IssuerWalletDto;
     @Output() showQrCodeClicked = new EventEmitter<string>();
+    @Output() finalizeTokenCreationClicked = new EventEmitter<string>();
 
-    tokenizedAssetColumns: string[] = ['name', 'unitName', 'totalSupply', 'decimals', 'action'];
+    tokenizedAssetColumns: string[] = ['name', 'unitName', 'review', 'action'];
     balanceColumns: string[] = ['amount', 'unitName'];
+
     IssuerWalletRoles = IssuerWalletRoles;
+    ReviewDecision = ReviewDecision;
 
     constructor(
         private assetTypeUtility: AssetTypeUtilityService,
@@ -78,6 +82,10 @@ export class IssuerWalletComponent {
 
     showAddressQrCode() {
         this.showQrCodeClicked.emit(this.wallet.publicAddress);
+    }
+
+    finalizeTokenCreation(token: TokenizedAssetDto) {
+        this.finalizeTokenCreationClicked.emit(token.id);
     }
 
     showToken(token: TokenizedAssetDto) {
