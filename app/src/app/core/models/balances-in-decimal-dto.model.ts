@@ -9,20 +9,17 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { DecimalBalanceAmount } from './decimal-balance-amount.model';
 
-export interface ICountryDto {
-    id?: string;
-    iso?: string;
-    isoCode3?: string;
-    name?: string;
+export interface IBalancesInDecimalDto {
+    nativeBalance?: DecimalBalanceAmount;
+    nonNativeBalances?: object;
 }
 
 
-export class CountryDto extends BaseModel implements ICountryDto  {
-    id: string;
-    iso: string;
-    isoCode3: string;
-    name: string;
+export class BalancesInDecimalDto extends BaseModel implements IBalancesInDecimalDto  {
+    nativeBalance: DecimalBalanceAmount;
+    nonNativeBalances: object;
 
     /**
      * constructor
@@ -31,6 +28,7 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.nativeBalance = new DecimalBalanceAmount(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -44,10 +42,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.id = rawValues.id;
-            this.iso = rawValues.iso;
-            this.isoCode3 = rawValues.isoCode3;
-            this.name = rawValues.name;
+            this.nativeBalance.setValues(rawValues.nativeBalance, useFormGroupValuesToModel);
+            this.nonNativeBalances = rawValues.nonNativeBalances;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -56,10 +52,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                id: new FormControl(this.id),
-                iso: new FormControl(this.iso),
-                isoCode3: new FormControl(this.isoCode3),
-                name: new FormControl(this.name),
+                nativeBalance: this.nativeBalance.$formGroup,
+                nonNativeBalances: new FormControl(this.nonNativeBalances),
             });
         }
         return this._formGroup;
@@ -69,10 +63,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['id'].setValue(this.id);
-        this.$formGroup.controls['iso'].setValue(this.iso);
-        this.$formGroup.controls['isoCode3'].setValue(this.isoCode3);
-        this.$formGroup.controls['name'].setValue(this.name);
+        this.nativeBalance.setFormGroupValues();
+        this.$formGroup.controls['nonNativeBalances'].setValue(this.nonNativeBalances);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

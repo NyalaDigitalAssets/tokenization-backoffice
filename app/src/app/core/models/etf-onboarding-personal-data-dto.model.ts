@@ -42,10 +42,12 @@ export interface IEtfOnboardingPersonalDataDto {
     knowledgeBonds?: boolean;
     knowledgeFunds?: boolean;
     knowledgeMercantile?: boolean;
+    knowledgeCrypto?: boolean;
     experienceStocks?: number;
     experienceBonds?: number;
     experienceFunds?: number;
     experienceMercantile?: number;
+    experienceCrypto?: number;
     refAccountFirstName?: string;
     refAccountLastName?: string;
     refAccountIBAN?: string;
@@ -87,10 +89,12 @@ export class EtfOnboardingPersonalDataDto extends BaseModel implements IEtfOnboa
     knowledgeBonds: boolean;
     knowledgeFunds: boolean;
     knowledgeMercantile: boolean;
+    knowledgeCrypto: boolean;
     experienceStocks: number;
     experienceBonds: number;
     experienceFunds: number;
     experienceMercantile: number;
+    experienceCrypto: number;
     refAccountFirstName: string;
     refAccountLastName: string;
     refAccountIBAN: string;
@@ -149,10 +153,12 @@ export class EtfOnboardingPersonalDataDto extends BaseModel implements IEtfOnboa
             this.knowledgeBonds = rawValues.knowledgeBonds;
             this.knowledgeFunds = rawValues.knowledgeFunds;
             this.knowledgeMercantile = rawValues.knowledgeMercantile;
+            this.knowledgeCrypto = rawValues.knowledgeCrypto;
             this.experienceStocks = rawValues.experienceStocks;
             this.experienceBonds = rawValues.experienceBonds;
             this.experienceFunds = rawValues.experienceFunds;
             this.experienceMercantile = rawValues.experienceMercantile;
+            this.experienceCrypto = rawValues.experienceCrypto;
             this.refAccountFirstName = rawValues.refAccountFirstName;
             this.refAccountLastName = rawValues.refAccountLastName;
             this.refAccountIBAN = rawValues.refAccountIBAN;
@@ -198,10 +204,12 @@ export class EtfOnboardingPersonalDataDto extends BaseModel implements IEtfOnboa
                 knowledgeBonds: new FormControl(this.knowledgeBonds),
                 knowledgeFunds: new FormControl(this.knowledgeFunds),
                 knowledgeMercantile: new FormControl(this.knowledgeMercantile),
+                knowledgeCrypto: new FormControl(this.knowledgeCrypto),
                 experienceStocks: new FormControl(this.experienceStocks),
                 experienceBonds: new FormControl(this.experienceBonds),
                 experienceFunds: new FormControl(this.experienceFunds),
                 experienceMercantile: new FormControl(this.experienceMercantile),
+                experienceCrypto: new FormControl(this.experienceCrypto),
                 refAccountFirstName: new FormControl(this.refAccountFirstName),
                 refAccountLastName: new FormControl(this.refAccountLastName),
                 refAccountIBAN: new FormControl(this.refAccountIBAN),
@@ -248,10 +256,12 @@ export class EtfOnboardingPersonalDataDto extends BaseModel implements IEtfOnboa
         this.$formGroup.controls['knowledgeBonds'].setValue(this.knowledgeBonds);
         this.$formGroup.controls['knowledgeFunds'].setValue(this.knowledgeFunds);
         this.$formGroup.controls['knowledgeMercantile'].setValue(this.knowledgeMercantile);
+        this.$formGroup.controls['knowledgeCrypto'].setValue(this.knowledgeCrypto);
         this.$formGroup.controls['experienceStocks'].setValue(this.experienceStocks);
         this.$formGroup.controls['experienceBonds'].setValue(this.experienceBonds);
         this.$formGroup.controls['experienceFunds'].setValue(this.experienceFunds);
         this.$formGroup.controls['experienceMercantile'].setValue(this.experienceMercantile);
+        this.$formGroup.controls['experienceCrypto'].setValue(this.experienceCrypto);
         this.$formGroup.controls['refAccountFirstName'].setValue(this.refAccountFirstName);
         this.$formGroup.controls['refAccountLastName'].setValue(this.refAccountLastName);
         this.$formGroup.controls['refAccountIBAN'].setValue(this.refAccountIBAN);

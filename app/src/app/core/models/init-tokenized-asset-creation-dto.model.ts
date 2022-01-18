@@ -9,9 +9,8 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
-export interface ICreateTokenizedAssetDto {
+export interface IInitTokenizedAssetCreationDto {
     name?: string;
     unitName?: string;
     totalSupply?: number;
@@ -20,12 +19,11 @@ export interface ICreateTokenizedAssetDto {
     enableClawback?: boolean;
     url?: string;
     metaData?: string;
-    credentials?: SimpleAccessCredentialsDto;
     distributorWalletId?: string;
 }
 
 
-export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokenizedAssetDto  {
+export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTokenizedAssetCreationDto  {
     name: string;
     unitName: string;
     totalSupply: number;
@@ -34,7 +32,6 @@ export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokeniz
     enableClawback: boolean;
     url: string;
     metaData: string;
-    credentials: SimpleAccessCredentialsDto;
     distributorWalletId: string;
 
     /**
@@ -44,7 +41,6 @@ export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokeniz
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -66,7 +62,6 @@ export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokeniz
             this.enableClawback = rawValues.enableClawback;
             this.url = rawValues.url;
             this.metaData = rawValues.metaData;
-            this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             this.distributorWalletId = rawValues.distributorWalletId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -84,7 +79,6 @@ export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokeniz
                 enableClawback: new FormControl(this.enableClawback),
                 url: new FormControl(this.url),
                 metaData: new FormControl(this.metaData),
-                credentials: this.credentials.$formGroup,
                 distributorWalletId: new FormControl(this.distributorWalletId),
             });
         }
@@ -103,7 +97,6 @@ export class CreateTokenizedAssetDto extends BaseModel implements ICreateTokeniz
         this.$formGroup.controls['enableClawback'].setValue(this.enableClawback);
         this.$formGroup.controls['url'].setValue(this.url);
         this.$formGroup.controls['metaData'].setValue(this.metaData);
-        this.credentials.setFormGroupValues();
         this.$formGroup.controls['distributorWalletId'].setValue(this.distributorWalletId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();

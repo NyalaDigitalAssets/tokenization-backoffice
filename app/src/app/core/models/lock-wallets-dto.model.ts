@@ -10,15 +10,13 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 
-export interface IBalanceDto {
-    nativeBalance?: number;
-    nonNativeBalances?: object;
+export interface ILockWalletsDto {
+    lock?: boolean;
 }
 
 
-export class BalanceDto extends BaseModel implements IBalanceDto  {
-    nativeBalance: number;
-    nonNativeBalances: object;
+export class LockWalletsDto extends BaseModel implements ILockWalletsDto  {
+    lock: boolean;
 
     /**
      * constructor
@@ -40,8 +38,7 @@ export class BalanceDto extends BaseModel implements IBalanceDto  {
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.nativeBalance = rawValues.nativeBalance;
-            this.nonNativeBalances = rawValues.nonNativeBalances;
+            this.lock = rawValues.lock;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -50,8 +47,7 @@ export class BalanceDto extends BaseModel implements IBalanceDto  {
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                nativeBalance: new FormControl(this.nativeBalance),
-                nonNativeBalances: new FormControl(this.nonNativeBalances),
+                lock: new FormControl(this.lock),
             });
         }
         return this._formGroup;
@@ -61,8 +57,7 @@ export class BalanceDto extends BaseModel implements IBalanceDto  {
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['nativeBalance'].setValue(this.nativeBalance);
-        this.$formGroup.controls['nonNativeBalances'].setValue(this.nonNativeBalances);
+        this.$formGroup.controls['lock'].setValue(this.lock);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

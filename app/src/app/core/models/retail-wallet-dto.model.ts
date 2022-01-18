@@ -10,15 +10,13 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { AssetTypes } from './enums';
-import { BalanceDto } from './balance-dto.model';
+import { BalancesInDecimalDto } from './balances-in-decimal-dto.model';
 
 export interface IRetailWalletDto {
     id?: string;
     assetType?: AssetTypes;
     publicAddress?: string;
-    balance?: BalanceDto;
-    reservedAmount?: number;
-    stakedAmount?: number;
+    balance?: BalancesInDecimalDto;
     seedLockStatus?: boolean;
     retailWalletSeedId?: string;
 }
@@ -28,9 +26,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     id: string;
     assetType: AssetTypes;
     publicAddress: string;
-    balance: BalanceDto;
-    reservedAmount: number;
-    stakedAmount: number;
+    balance: BalancesInDecimalDto;
     seedLockStatus: boolean;
     retailWalletSeedId: string;
 
@@ -41,7 +37,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
-        this.balance = new BalanceDto(); 
+        this.balance = new BalancesInDecimalDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -59,8 +55,6 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
             this.assetType = rawValues.assetType;
             this.publicAddress = rawValues.publicAddress;
             this.balance.setValues(rawValues.balance, useFormGroupValuesToModel);
-            this.reservedAmount = rawValues.reservedAmount;
-            this.stakedAmount = rawValues.stakedAmount;
             this.seedLockStatus = rawValues.seedLockStatus;
             this.retailWalletSeedId = rawValues.retailWalletSeedId;
             // set values in model properties for added formControls
@@ -75,8 +69,6 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
                 assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
                 publicAddress: new FormControl(this.publicAddress),
                 balance: this.balance.$formGroup,
-                reservedAmount: new FormControl(this.reservedAmount),
-                stakedAmount: new FormControl(this.stakedAmount),
                 seedLockStatus: new FormControl(this.seedLockStatus),
                 retailWalletSeedId: new FormControl(this.retailWalletSeedId),
             });
@@ -92,8 +84,6 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
         this.$formGroup.controls['assetType'].setValue(this.assetType);
         this.$formGroup.controls['publicAddress'].setValue(this.publicAddress);
         this.balance.setFormGroupValues();
-        this.$formGroup.controls['reservedAmount'].setValue(this.reservedAmount);
-        this.$formGroup.controls['stakedAmount'].setValue(this.stakedAmount);
         this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);
         this.$formGroup.controls['retailWalletSeedId'].setValue(this.retailWalletSeedId);
         // set formValues in added formControls

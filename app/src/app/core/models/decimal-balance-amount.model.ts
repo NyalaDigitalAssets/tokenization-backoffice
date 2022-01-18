@@ -10,13 +10,15 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 
-export interface ILockRetailWalletsDto {
-    lock?: boolean;
+export interface IDecimalBalanceAmount {
+    free?: number;
+    locked?: number;
 }
 
 
-export class LockRetailWalletsDto extends BaseModel implements ILockRetailWalletsDto  {
-    lock: boolean;
+export class DecimalBalanceAmount extends BaseModel implements IDecimalBalanceAmount  {
+    free: number;
+    locked: number;
 
     /**
      * constructor
@@ -38,7 +40,8 @@ export class LockRetailWalletsDto extends BaseModel implements ILockRetailWallet
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.lock = rawValues.lock;
+            this.free = rawValues.free;
+            this.locked = rawValues.locked;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -47,7 +50,8 @@ export class LockRetailWalletsDto extends BaseModel implements ILockRetailWallet
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                lock: new FormControl(this.lock),
+                free: new FormControl(this.free),
+                locked: new FormControl(this.locked),
             });
         }
         return this._formGroup;
@@ -57,7 +61,8 @@ export class LockRetailWalletsDto extends BaseModel implements ILockRetailWallet
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['lock'].setValue(this.lock);
+        this.$formGroup.controls['free'].setValue(this.free);
+        this.$formGroup.controls['locked'].setValue(this.locked);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

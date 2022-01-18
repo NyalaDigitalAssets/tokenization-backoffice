@@ -9,20 +9,17 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { RetailWalletDto } from './retail-wallet-dto.model';
 
-export interface ICountryDto {
-    id?: string;
-    iso?: string;
-    isoCode3?: string;
-    name?: string;
+export interface IRetailWalletDtoApiResponse {
+    errorMessageCodes?: Array<string>;
+    data?: RetailWalletDto;
 }
 
 
-export class CountryDto extends BaseModel implements ICountryDto  {
-    id: string;
-    iso: string;
-    isoCode3: string;
-    name: string;
+export class RetailWalletDtoApiResponse extends BaseModel implements IRetailWalletDtoApiResponse  {
+    errorMessageCodes: Array<string>;
+    data: RetailWalletDto;
 
     /**
      * constructor
@@ -31,6 +28,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.errorMessageCodes = new Array<string>(); 
+        this.data = new RetailWalletDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -44,10 +43,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.id = rawValues.id;
-            this.iso = rawValues.iso;
-            this.isoCode3 = rawValues.isoCode3;
-            this.name = rawValues.name;
+            this.fillModelArray<string>(this, 'errorMessageCodes', rawValues.errorMessageCodes, useFormGroupValuesToModel);
+            this.data.setValues(rawValues.data, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -56,11 +53,11 @@ export class CountryDto extends BaseModel implements ICountryDto  {
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                id: new FormControl(this.id),
-                iso: new FormControl(this.iso),
-                isoCode3: new FormControl(this.isoCode3),
-                name: new FormControl(this.name),
+                errorMessageCodes: new FormArray([]),
+                data: this.data.$formGroup,
             });
+            // generate FormArray control elements
+            this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
         }
         return this._formGroup;
     }
@@ -69,10 +66,8 @@ export class CountryDto extends BaseModel implements ICountryDto  {
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['id'].setValue(this.id);
-        this.$formGroup.controls['iso'].setValue(this.iso);
-        this.$formGroup.controls['isoCode3'].setValue(this.isoCode3);
-        this.$formGroup.controls['name'].setValue(this.name);
+        this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
+        this.data.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

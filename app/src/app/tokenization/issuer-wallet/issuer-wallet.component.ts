@@ -7,6 +7,7 @@ import {
     IssuerWalletDto,
     IssuerWalletRoles,
     RequestFaucetFundingDto,
+    ReviewDecision,
     TokenizedAssetDto,
 } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
@@ -25,26 +26,28 @@ interface Balance {
 export class IssuerWalletComponent {
     @Input() wallet: IssuerWalletDto;
     @Output() showQrCodeClicked = new EventEmitter<string>();
+    @Output() finalizeTokenCreationClicked = new EventEmitter<string>();
 
-    tokenizedAssetColumns: string[] = ['name', 'unitName', 'totalSupply', 'decimals', 'action'];
+    tokenizedAssetColumns: string[] = ['name', 'unitName', 'review', 'action'];
     balanceColumns: string[] = ['amount', 'unitName'];
+
     IssuerWalletRoles = IssuerWalletRoles;
+    ReviewDecision = ReviewDecision;
 
     constructor(
         private assetTypeUtility: AssetTypeUtilityService,
         private customApi: CustomApiService,
         private snackBar: MatSnackBar,
         private router: Router
-    ) {}
+    ) { }
 
     getIcon(): string {
         return this.assetTypeUtility.icon(this.wallet.assetType);
     }
 
     goToBlockchainExplorer() {
-        const url = `${this.assetTypeUtility.addressUrl(this.wallet.assetType)}/${
-            this.wallet.publicAddress
-        }`;
+        const url = `${this.assetTypeUtility.addressUrl(this.wallet.assetType)}/${this.wallet.publicAddress
+            }`;
         window.open(url, '_blank');
     }
 
@@ -81,6 +84,10 @@ export class IssuerWalletComponent {
         this.showQrCodeClicked.emit(this.wallet.publicAddress);
     }
 
+    finalizeTokenCreation(token: TokenizedAssetDto) {
+        this.finalizeTokenCreationClicked.emit(token.id);
+    }
+
     showToken(token: TokenizedAssetDto) {
         this.router.navigate([
             'tokenization',
@@ -96,7 +103,7 @@ export class IssuerWalletComponent {
         const balances: Balance[] = [];
 
         balances.push({
-            amount: this.wallet.balance.nativeBalance,
+            amount: this.wallet.balance.nativeBalance.free + this.wallet.balance.nativeBalance.locked,
             unitName: this.assetTypeUtility.unit(this.wallet.assetType),
         });
 

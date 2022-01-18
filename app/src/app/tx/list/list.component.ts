@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,7 +32,7 @@ class ExtendedResponse extends TransactionToShowDto {
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements AfterViewInit, OnInit {
+export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
     displayedColumns: string[] = [
         'select',
         'assetType',
@@ -84,7 +84,7 @@ export class ListComponent implements AfterViewInit, OnInit {
         private snackbar: MatSnackBar,
         private dialog: MatDialog,
         private assetTypeUtility: AssetTypeUtilityService
-    ) {}
+    ) { }
 
     ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
@@ -129,7 +129,7 @@ export class ListComponent implements AfterViewInit, OnInit {
                     });
                     this.applyFilters();
                 },
-                () => {},
+                () => { },
                 () => setTimeout(() => (this.isSyncing = false), 1000)
             );
     }

@@ -10,6 +10,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { AssetTypes } from './enums';
+import { ReviewDecision } from './enums';
 
 export interface ITokenizedAssetDto {
     id?: string;
@@ -25,6 +26,9 @@ export interface ITokenizedAssetDto {
     issuerAddress?: string;
     distributionAddress?: string;
     assetType?: AssetTypes;
+    reviewDecision?: ReviewDecision;
+    reviewedAt?: Date;
+    reviewer?: string;
 }
 
 
@@ -42,6 +46,9 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     issuerAddress: string;
     distributionAddress: string;
     assetType: AssetTypes;
+    reviewDecision: ReviewDecision;
+    reviewedAt: Date;
+    reviewer: string;
 
     /**
      * constructor
@@ -76,6 +83,9 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.issuerAddress = rawValues.issuerAddress;
             this.distributionAddress = rawValues.distributionAddress;
             this.assetType = rawValues.assetType;
+            this.reviewDecision = rawValues.reviewDecision;
+            this.reviewedAt = rawValues.reviewedAt;
+            this.reviewer = rawValues.reviewer;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -97,6 +107,9 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 issuerAddress: new FormControl(this.issuerAddress),
                 distributionAddress: new FormControl(this.distributionAddress),
                 assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                reviewDecision: new FormControl(this.reviewDecision, [enumValidator(ReviewDecision), ]),
+                reviewedAt: new FormControl(this.reviewedAt),
+                reviewer: new FormControl(this.reviewer),
             });
         }
         return this._formGroup;
@@ -119,6 +132,9 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);
         this.$formGroup.controls['distributionAddress'].setValue(this.distributionAddress);
         this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['reviewDecision'].setValue(this.reviewDecision);
+        this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
+        this.$formGroup.controls['reviewer'].setValue(this.reviewer);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

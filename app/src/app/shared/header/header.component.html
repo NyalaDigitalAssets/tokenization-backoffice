@@ -11,9 +11,11 @@
         <p *ngIf="content" [innerHTML]="content"></p>
     </mat-card-content>
     <mat-card-actions>
-        <div class="mg-b2 mg-x2">
+        <div class="flx mg-b2 mg-x2">
             <button mat-mini-fab color="accent" matTooltip="Back" type="button" (click)="goBack()" *ngIf="showBack"><app-fa-icon icon="fa-long-arrow-alt-left"></app-fa-icon></button>
-            <ng-content></ng-content>
+            <div class="ta-r mg-r2 w-100">
+                <ng-content></ng-content>
+            </div>
         </div>
     </mat-card-actions>
 </mat-card>

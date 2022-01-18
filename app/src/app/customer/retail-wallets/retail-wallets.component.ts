@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AssetTypes, LockRetailWalletsDto, RetailWalletDto, RetailWalletDtoListApiResponse } from '../../core/models';
+import { AssetTypes, LockWalletsDto, RetailWalletDto, RetailWalletDtoListApiResponse } from '../../core/models';
 import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
@@ -60,7 +60,7 @@ export class RetailWalletsComponent implements OnInit {
 
     lockWallet(lock: boolean) {
         this.disableLock = true;
-        const dto = new LockRetailWalletsDto();
+        const dto = new LockWalletsDto();
         dto.lock = lock;
         this.customApi.putRetailWalletLockRetailWallets(this.customerId, dto).subscribe((data) => {
             if (data?.data) {

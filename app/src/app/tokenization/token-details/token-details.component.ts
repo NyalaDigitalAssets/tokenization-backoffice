@@ -281,6 +281,9 @@ export class TokenDetailsComponent implements AfterViewInit {
             'unitName',
             'totalSupply',
             'decimals',
+            'reviewDecision',
+            'reviewer',
+            'reviewedAt',
             'metaData',
             'url',
         ];

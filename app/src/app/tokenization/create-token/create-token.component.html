@@ -72,23 +72,4 @@
             </div>
         </mat-card-content>
     </mat-card>
-    <mat-card class="mg-t10" *ngIf="model && formReady">
-        <mat-card-header class="ai-c">
-            <div mat-card-avatar>
-                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
-            </div>
-            <mat-card-title>
-                <small>Credentials</small>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="w-100">
-                <mat-form-field appearance="standard" class="pd-x10">
-                    <mat-label>Passphrase</mat-label>
-                    <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
-                    <mat-hint *ngIf="passphraseMessage" class="clr-dgr">{{ passphraseMessage }}</mat-hint>
-                </mat-form-field>
-            </div>
-        </mat-card-content>
-    </mat-card>
 </div>
