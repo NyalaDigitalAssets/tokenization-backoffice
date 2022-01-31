@@ -78,12 +78,14 @@ export class ListComponent implements OnInit {
     }
 
     submitFinalizingTokenizedAssetCreation() {
+        this.dialog.closeAll();
         this.customApi
             .putTokenizedAssetsCreateTokenizedAsset(
                 this.issuerWalletSeedId,
                 this.issuerWalletId,
                 this.tokenizedAssetId,
-                this.credentials
+                this.credentials,
+                true
             )
             .subscribe({
                 next: (tokenizedAsset) => this.loadIssuerWalletSeeds(),

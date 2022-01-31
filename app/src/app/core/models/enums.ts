@@ -146,10 +146,10 @@ export enum WealthManagementType {
 }
 
 export enum WealthManagementProductType {
-    AllWeather = 1,
-    ValueSave = 2,
-    AllWeatherGreen = 3,
-    ValueSaveGreen = 4,
+    Balance = 1,
+    Liqui = 2,
+    BalanceGreen = 3,
+    LiquiGreen = 4,
     Future = 5,
     CryptoCore = 6,
     CryptoETP = 7,

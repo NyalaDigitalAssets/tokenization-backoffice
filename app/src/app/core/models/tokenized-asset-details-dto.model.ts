@@ -31,6 +31,7 @@ export interface ITokenizedAssetDetailsDto {
     reviewDecision?: ReviewDecision;
     reviewedAt?: Date;
     reviewer?: string;
+    issuingMemo?: string;
     transfers?: Array<TokenizedAssetTransferDto>;
     optIns?: Array<TokenizedAssetOptInDto>;
 }
@@ -53,6 +54,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
     reviewDecision: ReviewDecision;
     reviewedAt: Date;
     reviewer: string;
+    issuingMemo: string;
     transfers: Array<TokenizedAssetTransferDto>;
     optIns: Array<TokenizedAssetOptInDto>;
 
@@ -94,6 +96,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
             this.reviewDecision = rawValues.reviewDecision;
             this.reviewedAt = rawValues.reviewedAt;
             this.reviewer = rawValues.reviewer;
+            this.issuingMemo = rawValues.issuingMemo;
             this.fillModelArray<TokenizedAssetTransferDto>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetTransferDto, SubTypeFactory.createSubTypeInstance);
             this.fillModelArray<TokenizedAssetOptInDto>(this, 'optIns', rawValues.optIns, useFormGroupValuesToModel, TokenizedAssetOptInDto, SubTypeFactory.createSubTypeInstance);
             // set values in model properties for added formControls
@@ -120,6 +123,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
                 reviewDecision: new FormControl(this.reviewDecision, [enumValidator(ReviewDecision), ]),
                 reviewedAt: new FormControl(this.reviewedAt),
                 reviewer: new FormControl(this.reviewer),
+                issuingMemo: new FormControl(this.issuingMemo),
                 transfers: new FormArray([]),
                 optIns: new FormArray([]),
             });
@@ -151,6 +155,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
         this.$formGroup.controls['reviewDecision'].setValue(this.reviewDecision);
         this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
         this.$formGroup.controls['reviewer'].setValue(this.reviewer);
+        this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
         this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         this.fillFormArray<TokenizedAssetOptInDto>('optIns', this.optIns, TokenizedAssetOptInDto);
         // set formValues in added formControls

@@ -19,6 +19,7 @@ export interface IInitTokenizedAssetCreationDto {
     enableClawback?: boolean;
     url?: string;
     metaData?: string;
+    issuingMemo?: string;
     distributorWalletId?: string;
 }
 
@@ -32,6 +33,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
     enableClawback: boolean;
     url: string;
     metaData: string;
+    issuingMemo: string;
     distributorWalletId: string;
 
     /**
@@ -62,6 +64,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
             this.enableClawback = rawValues.enableClawback;
             this.url = rawValues.url;
             this.metaData = rawValues.metaData;
+            this.issuingMemo = rawValues.issuingMemo;
             this.distributorWalletId = rawValues.distributorWalletId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -79,6 +82,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
                 enableClawback: new FormControl(this.enableClawback),
                 url: new FormControl(this.url),
                 metaData: new FormControl(this.metaData),
+                issuingMemo: new FormControl(this.issuingMemo),
                 distributorWalletId: new FormControl(this.distributorWalletId),
             });
         }
@@ -97,6 +101,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
         this.$formGroup.controls['enableClawback'].setValue(this.enableClawback);
         this.$formGroup.controls['url'].setValue(this.url);
         this.$formGroup.controls['metaData'].setValue(this.metaData);
+        this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
         this.$formGroup.controls['distributorWalletId'].setValue(this.distributorWalletId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
