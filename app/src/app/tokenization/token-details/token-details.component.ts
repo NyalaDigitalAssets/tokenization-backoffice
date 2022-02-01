@@ -66,6 +66,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     tokenizedAsset: ITokenizedAssetDetailsDtoExtend;
     model = new ToggleOptInAuthorizationDto();
     isOptInAuthorizeCall = false;
+    hasTomlSupport = false;
 
     OptInStatus = OptInStatus;
     TransactionActions = TransactionActions;
@@ -270,6 +271,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                 a.created > b.created ? -1 : 1
             );
             this.tokenDetails.data = this.getTokenDetails(response[1].data);
+            this.hasTomlSupport = this.tokenizedAsset.assetType === AssetTypes.XLM;
         });
     }
 

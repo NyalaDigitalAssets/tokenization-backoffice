@@ -2,22 +2,21 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { SimpleAccessCredentialsDto, TokenizedAssetBurnDto } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
-    selector: 'app-burn-tokens',
-    templateUrl: './burn-tokens.component.html',
-    styleUrls: ['./burn-tokens.component.scss'],
+    selector: 'app-toml-builder',
+    templateUrl: './toml-builder.component.html',
+    styleUrls: ['./toml-builder.component.scss'],
 })
-export class BurnTokensComponent implements OnInit {
+export class TomlBuilderComponent implements OnInit {
     @ViewChild('credForm') credForm;
     @ViewChild('singleForm') singleForm;
-
+    
     issuerWalletSeedId: string;
     issuerWalletId: string;
     tokenizedAssetId: string;
-    model: TokenizedAssetBurnDto;
+    model: any;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -31,9 +30,7 @@ export class BurnTokensComponent implements OnInit {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
             this.tokenizedAssetId = params.tokenizedAssetId;
-            this.model = new TokenizedAssetBurnDto({
-                credentials: new SimpleAccessCredentialsDto(),
-            });
+            this.model = {};
         });
     }
 
@@ -46,7 +43,7 @@ export class BurnTokensComponent implements OnInit {
                 this.model
             )
             .subscribe(() => {
-                this.snackbar.open(`${this.model.amount} tokens burned successfully!`, 'OK', {
+                this.snackbar.open(`.toml file submitted!`, 'OK', {
                     duration: 5000,
                     horizontalPosition: 'center',
                     verticalPosition: 'bottom',

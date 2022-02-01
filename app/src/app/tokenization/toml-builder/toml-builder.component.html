@@ -1,0 +1,50 @@
+<div class="mg-t10">
+    <app-header title="Burn Tokens" icon="fa-file-alt">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()" [disabled]="(credForm?.invalid || singleForm?.invalid)">
+            <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+    </app-header>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-file-alt"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Burn</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row">
+                    <form #singleForm="ngForm">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Amount</mat-label>
+                            <input matInput required type="number" [(ngModel)]="model.amount" name="model.amount" />
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <form #credForm="ngForm">
+                    <mat-form-field appearance="standard" class="pd-x10">
+                        <mat-label>Passphrase</mat-label>
+                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase"
+                            name="passphrase" />
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
