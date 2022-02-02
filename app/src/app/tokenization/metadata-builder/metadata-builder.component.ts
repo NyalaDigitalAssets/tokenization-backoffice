@@ -1,42 +1,45 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CreateMetadataFileDto, SimpleAccessCredentialsDto } from '../../core/models';
 
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
-    selector: 'app-toml-builder',
-    templateUrl: './toml-builder.component.html',
-    styleUrls: ['./toml-builder.component.scss'],
+    selector: 'app-metadata-builder',
+    templateUrl: './metadata-builder.component.html',
+    styleUrls: ['./metadata-builder.component.scss'],
 })
-export class TomlBuilderComponent implements OnInit {
+export class MetadataBuilderComponent implements OnInit {
     @ViewChild('credForm') credForm;
     @ViewChild('singleForm') singleForm;
-    
+
     issuerWalletSeedId: string;
     issuerWalletId: string;
     tokenizedAssetId: string;
-    model: any;
+    model: CreateMetadataFileDto;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private snackbar: MatSnackBar,
         private customApi: CustomApiService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.issuerWalletSeedId = params.seedId;
             this.issuerWalletId = params.issuerWalletId;
             this.tokenizedAssetId = params.tokenizedAssetId;
-            this.model = {};
+            this.model = new CreateMetadataFileDto({
+                credentials: new SimpleAccessCredentialsDto(),
+            });
         });
     }
 
     submit() {
         this.customApi
-            .postTokenizedAssetsBurnAsset(
+            .postTokenizedAssetsBuildAndSubmitMetadaFile(
                 this.issuerWalletSeedId,
                 this.issuerWalletId,
                 this.tokenizedAssetId,

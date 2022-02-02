@@ -3,7 +3,7 @@
         <button class="mg-r2" mat-mini-fab color="primary" matTooltip="Reload Details" (click)="loadTokenDetails()">
             <app-fa-icon icon="fa-sync"></app-fa-icon>
         </button>
-        <button class="mg-r2" mat-mini-fab color="accent" matTooltip="Build .toml File" (click)="loadTokenDetails()" *ngIf="hasTomlSupport">
+        <button class="mg-r2" mat-mini-fab color="accent" matTooltip="Build Meta Data File" (click)="buildMetaDataFile()" *ngIf="hasTomlSupport">
             <app-fa-icon icon="fa-file-alt"></app-fa-icon>
         </button>
         <button class="mg-r2" mat-mini-fab color="primary" matTooltip="Send Tokens" (click)="sendTokens()">

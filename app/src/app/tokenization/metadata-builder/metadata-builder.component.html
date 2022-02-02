@@ -1,0 +1,142 @@
+<div class="mg-t10">
+    <app-header title="Build Metadata" icon="fa-file-alt">
+        <button mat-mini-fab color="primary" matTooltip="Submit" (click)="submit()"
+            [disabled]="(credForm?.invalid || singleForm?.invalid)">
+            <app-fa-icon icon="fa-save"></app-fa-icon>
+        </button>
+    </app-header>
+
+    <form #singleForm="ngForm">
+        <mat-card class="mg-t10">
+            <mat-card-header class="ai-c">
+                <div mat-card-avatar>
+                    <app-fa-icon class="fa-2x" icon="fa-building"></app-fa-icon>
+                </div>
+                <mat-card-title>
+                    <small>Organization</small>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Name</mat-label>
+                        <input matInput required type="text" [(ngModel)]="model.documentation.name" name="name" />
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>DBA</mat-label>
+                        <input matInput type="text" [(ngModel)]="model.documentation.dba" name="dba" />
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput rows="4" [(ngModel)]="model.documentation.description"
+                            name="description"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput required rows="4" [(ngModel)]="model.documentation.address"
+                            name="address"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Email</mat-label>
+                        <input matInput required type="email" [(ngModel)]="model.documentation.email" name="email" />
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Phone</mat-label>
+                        <input matInput type="tel" [(ngModel)]="model.documentation.phoneNumber" name="phone" />
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Url</mat-label>
+                        <input matInput required type="url" [(ngModel)]="model.documentation.url" name="url" />
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Logo Url</mat-label>
+                        <input matInput required type="url" [(ngModel)]="model.documentation.logoUrl" name="logUrl" />
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="mg-t10" *ngIf="model">
+            <mat-card-header class="ai-c">
+                <div mat-card-avatar>
+                    <app-fa-icon class="fa-2x" icon="fa-coins"></app-fa-icon>
+                </div>
+                <mat-card-title>
+                    <small>Token</small>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput required rows="4" [(ngModel)]="model.currency.description"
+                            name="currency_description"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Image URL</mat-label>
+                        <input matInput type="url" [(ngModel)]="model.currency.imageUrl" name="imageUrl" />
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-users"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Principals</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row">
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <form #credForm="ngForm">
+                    <mat-form-field appearance="standard" class="pd-x10">
+                        <mat-label>Passphrase</mat-label>
+                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase"
+                            name="passphrase" />
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

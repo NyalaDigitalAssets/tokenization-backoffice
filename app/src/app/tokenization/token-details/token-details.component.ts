@@ -82,7 +82,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         private router: Router,
         private dialog: MatDialog,
         private ngxCsvParser: NgxCsvParser
-    ) {}
+    ) { }
 
     ngAfterViewInit() {
         this.optInDataSource.paginator = this.optInPaginator;
@@ -111,7 +111,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.router.navigate(['customer', customerId, 'retail-wallets']);
     }
 
-    isTokenBurnSupported () {
+    isTokenBurnSupported() {
         return this.tokenizedAsset?.assetType === AssetTypes.XLM;
     }
 
@@ -148,6 +148,18 @@ export class TokenDetailsComponent implements AfterViewInit {
             'tokens',
             this.tokenizedAssetId,
             'clawback',
+        ]);
+    }
+
+    buildMetaDataFile() {
+        this.router.navigate([
+            'tokenization',
+            this.issuerWalletSeedId,
+            'issuer-wallets',
+            this.issuerWalletId,
+            'tokens',
+            this.tokenizedAssetId,
+            'metadata',
         ]);
     }
 
@@ -227,17 +239,17 @@ export class TokenDetailsComponent implements AfterViewInit {
 
         const q = this.isOptInAuthorizeCall
             ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
-                  this.issuerWalletSeedId,
-                  this.issuerWalletId,
-                  this.tokenizedAssetId,
-                  this.model
-              )
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            )
             : this.customApi.postTokenizedAssetsRevokeOptIn(
-                  this.issuerWalletSeedId,
-                  this.issuerWalletId,
-                  this.tokenizedAssetId,
-                  this.model
-              );
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            );
 
         q.subscribe(() => {
             this.model = new ToggleOptInAuthorizationDto();

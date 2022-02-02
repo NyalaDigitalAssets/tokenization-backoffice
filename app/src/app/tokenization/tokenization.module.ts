@@ -15,7 +15,7 @@ import { LockIssuerWalletComponent } from './lock-issuer-wallet/lock-issuer-wall
 import { TransferTokensComponent } from './transfer-tokens/transfer-tokens.component';
 import { ClawbackTokensComponent } from './clawback-tokens/clawback-tokens.component';
 import { BurnTokensComponent } from './burn-tokens/burn-tokens.component';
-import { TomlBuilderComponent } from './toml-builder/toml-builder.component';
+import { MetadataBuilderComponent } from './metadata-builder/metadata-builder.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +29,7 @@ import { TomlBuilderComponent } from './toml-builder/toml-builder.component';
         TransferTokensComponent,
         ClawbackTokensComponent,
         BurnTokensComponent,
-        TomlBuilderComponent,
+        MetadataBuilderComponent,
     ],
     imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
 })
