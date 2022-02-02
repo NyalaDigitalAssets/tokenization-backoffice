@@ -113,8 +113,25 @@
         </mat-card-header>
         <mat-card-content>
             <div class="w-100">
-                <div class="row">
-                </div>
+                <mat-form-field appearance="standard" class="mg-l2">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="newPrincipal.name" name="new_principal_name" />
+                </mat-form-field>
+                <mat-form-field appearance="standard" class="mg-l2">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" [(ngModel)]="newPrincipal.email" name="new_principal_email" />
+                </mat-form-field>
+                <button type="button" mat-icon-button color="primary" (click)="addPrincipal()">
+                    <app-fa-icon icon="fa-plus"></app-fa-icon>
+                </button>
+            </div>
+            <div class="w-100 mg-t5">
+                <mat-list>
+                    <mat-list-item class="animate__animated animate__fadeInDown" *ngFor="let principal of model.principals">
+                        <b>{{ principal.name }}</b>
+                        <span>({{ principal.email }})</span>
+                    </mat-list-item>
+                </mat-list>
             </div>
         </mat-card-content>
     </mat-card>

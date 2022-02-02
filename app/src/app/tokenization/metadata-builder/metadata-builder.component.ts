@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateMetadataFileDto, SimpleAccessCredentialsDto } from '../../core/models';
+import { CreateMetadataFileDto, MetadataPrincipal, SimpleAccessCredentialsDto } from '../../core/models';
 
 import { CustomApiService } from '../../core/services/ganymede.service';
 
@@ -18,6 +18,7 @@ export class MetadataBuilderComponent implements OnInit {
     issuerWalletId: string;
     tokenizedAssetId: string;
     model: CreateMetadataFileDto;
+    newPrincipal = new MetadataPrincipal();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -35,6 +36,11 @@ export class MetadataBuilderComponent implements OnInit {
                 credentials: new SimpleAccessCredentialsDto(),
             });
         });
+    }
+
+    addPrincipal() {
+        this.model.principals.push(this.newPrincipal);
+        this.newPrincipal = new MetadataPrincipal();
     }
 
     submit() {
