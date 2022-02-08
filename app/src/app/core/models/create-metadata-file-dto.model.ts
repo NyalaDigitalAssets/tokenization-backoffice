@@ -19,6 +19,8 @@ export interface ICreateMetadataFileDto {
     principals?: Array<MetadataPrincipal>;
     currency?: MetadataCurrency;
     subDomain?: string;
+    orgLogoBytes?: string;
+    tokenLogoBytes?: string;
     credentials?: SimpleAccessCredentialsDto;
 }
 
@@ -28,6 +30,8 @@ export class CreateMetadataFileDto extends BaseModel implements ICreateMetadataF
     principals: Array<MetadataPrincipal>;
     currency: MetadataCurrency;
     subDomain: string;
+    orgLogoBytes: string;
+    tokenLogoBytes: string;
     credentials: SimpleAccessCredentialsDto;
 
     /**
@@ -58,6 +62,8 @@ export class CreateMetadataFileDto extends BaseModel implements ICreateMetadataF
             this.fillModelArray<MetadataPrincipal>(this, 'principals', rawValues.principals, useFormGroupValuesToModel, MetadataPrincipal, SubTypeFactory.createSubTypeInstance);
             this.currency.setValues(rawValues.currency, useFormGroupValuesToModel);
             this.subDomain = rawValues.subDomain;
+            this.orgLogoBytes = rawValues.orgLogoBytes;
+            this.tokenLogoBytes = rawValues.tokenLogoBytes;
             this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
@@ -71,6 +77,8 @@ export class CreateMetadataFileDto extends BaseModel implements ICreateMetadataF
                 principals: new FormArray([]),
                 currency: this.currency.$formGroup,
                 subDomain: new FormControl(this.subDomain),
+                orgLogoBytes: new FormControl(this.orgLogoBytes),
+                tokenLogoBytes: new FormControl(this.tokenLogoBytes),
                 credentials: this.credentials.$formGroup,
             });
             // generate FormArray control elements
@@ -87,6 +95,8 @@ export class CreateMetadataFileDto extends BaseModel implements ICreateMetadataF
         this.fillFormArray<MetadataPrincipal>('principals', this.principals, MetadataPrincipal);
         this.currency.setFormGroupValues();
         this.$formGroup.controls['subDomain'].setValue(this.subDomain);
+        this.$formGroup.controls['orgLogoBytes'].setValue(this.orgLogoBytes);
+        this.$formGroup.controls['tokenLogoBytes'].setValue(this.tokenLogoBytes);
         this.credentials.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();

@@ -61,6 +61,7 @@ export * from './metadata-organization-documentation.model';
 export * from './metadata-principal.model';
 export * from './metadata-currency.model';
 export * from './create-metadata-file-dto.model';
+export * from './missing-models-container.model';
 export * from './retail-wallet-dto.model';
 export * from './retail-wallet-dto-list-api-response.model';
 export * from './retail-wallet-recovery-kit-file-dto.model';

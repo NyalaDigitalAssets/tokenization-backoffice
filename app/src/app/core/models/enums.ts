@@ -48,6 +48,7 @@ export enum AssetTypes {
     ADA = 27,
     SOL = 28,
     BCH = 29,
+    MATIC = 30,
     EUR = 1001,
     USD = 1002,
 }
