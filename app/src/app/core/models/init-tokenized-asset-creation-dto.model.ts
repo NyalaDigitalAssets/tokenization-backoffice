@@ -18,7 +18,6 @@ export interface IInitTokenizedAssetCreationDto {
     enableFreeze?: boolean;
     enableClawback?: boolean;
     url?: string;
-    metaData?: string;
     issuingMemo?: string;
     distributorWalletId?: string;
 }
@@ -32,7 +31,6 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
     enableFreeze: boolean;
     enableClawback: boolean;
     url: string;
-    metaData: string;
     issuingMemo: string;
     distributorWalletId: string;
 
@@ -63,7 +61,6 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
             this.enableFreeze = rawValues.enableFreeze;
             this.enableClawback = rawValues.enableClawback;
             this.url = rawValues.url;
-            this.metaData = rawValues.metaData;
             this.issuingMemo = rawValues.issuingMemo;
             this.distributorWalletId = rawValues.distributorWalletId;
             // set values in model properties for added formControls
@@ -81,7 +78,6 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
                 enableFreeze: new FormControl(this.enableFreeze),
                 enableClawback: new FormControl(this.enableClawback),
                 url: new FormControl(this.url),
-                metaData: new FormControl(this.metaData),
                 issuingMemo: new FormControl(this.issuingMemo),
                 distributorWalletId: new FormControl(this.distributorWalletId),
             });
@@ -100,7 +96,6 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
         this.$formGroup.controls['enableFreeze'].setValue(this.enableFreeze);
         this.$formGroup.controls['enableClawback'].setValue(this.enableClawback);
         this.$formGroup.controls['url'].setValue(this.url);
-        this.$formGroup.controls['metaData'].setValue(this.metaData);
         this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
         this.$formGroup.controls['distributorWalletId'].setValue(this.distributorWalletId);
         // set formValues in added formControls
