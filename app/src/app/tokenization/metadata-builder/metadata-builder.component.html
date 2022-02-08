@@ -68,11 +68,10 @@
                     </mat-form-field>
                 </div>
 
-                <div class="w-100">
-                    <mat-form-field appearance="standard">
-                        <mat-label>Logo Url</mat-label>
-                        <input matInput required type="url" [(ngModel)]="model.documentation.logoUrl" name="logUrl" />
-                    </mat-form-field>
+                <div class="mg-y3 w-100">
+                    <app-dropzone buttonText="Organization Logo" accept=".png" (fileSelected)="logoSelected($event)"
+                        (fileRemoved)="logoRemoved()"></app-dropzone>
+                    <small>Should be a square aspect ratio transparent PNG, ideally of size 128x128.</small>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -88,16 +87,22 @@
             <mat-card-content>
                 <div class="w-100">
                     <mat-form-field appearance="standard">
+                        <mat-label>Regulatory Id</mat-label>
+                        <textarea matInput required rows="4" [(ngModel)]="model.subDomain"
+                            name="subDomain"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="w-100">
+                    <mat-form-field appearance="standard">
                         <mat-label>Description</mat-label>
                         <textarea matInput required rows="4" [(ngModel)]="model.currency.description"
                             name="currency_description"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="w-100">
-                    <mat-form-field appearance="standard">
-                        <mat-label>Image URL</mat-label>
-                        <input matInput type="url" [(ngModel)]="model.currency.imageUrl" name="imageUrl" />
-                    </mat-form-field>
+                <div class="mg-y3 w-100">
+                    <app-dropzone buttonText="Token Icon Image" accept=".png"
+                        (fileSelected)="tokenImageSelected($event)" (fileRemoved)="tokenImageRemoved()"></app-dropzone>
+                    <small>Should be a square aspect ratio transparent PNG, ideally of size 128x128.</small>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -127,7 +132,8 @@
             </div>
             <div class="w-100 mg-t5">
                 <mat-list>
-                    <mat-list-item class="animate__animated animate__fadeInDown" *ngFor="let principal of model.principals">
+                    <mat-list-item class="animate__animated animate__fadeInDown"
+                        *ngFor="let principal of model.principals">
                         <b>{{ principal.name }}</b>
                         <span>({{ principal.email }})</span>
                     </mat-list-item>

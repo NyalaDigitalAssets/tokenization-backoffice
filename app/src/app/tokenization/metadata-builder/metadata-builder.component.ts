@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateMetadataFileDto, MetadataPrincipal, SimpleAccessCredentialsDto } from '../../core/models';
 
-import { CustomApiService } from '../../core/services/ganymede.service';
+import { CreateMetadataFileDto, MetadataPrincipal, SimpleAccessCredentialsDto } from '../../core/models';
+import { ApiService } from '../../core/services/api.service';
 
 @Component({
     selector: 'app-metadata-builder',
@@ -19,12 +19,14 @@ export class MetadataBuilderComponent implements OnInit {
     tokenizedAssetId: string;
     model: CreateMetadataFileDto;
     newPrincipal = new MetadataPrincipal();
+    orgLogoImg: any;
+    tokenLogoImg: any;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private snackbar: MatSnackBar,
-        private customApi: CustomApiService
+        private api: ApiService
     ) { }
 
     ngOnInit(): void {
@@ -43,16 +45,41 @@ export class MetadataBuilderComponent implements OnInit {
         this.newPrincipal = new MetadataPrincipal();
     }
 
+    logoSelected(file: any) {
+        this.orgLogoImg = file;
+    }
+
+    logoRemoved() {
+        this.orgLogoImg = undefined;
+    }
+
+    tokenImageSelected(file: any) {
+        this.tokenLogoImg = file;
+    }
+
+    tokenImageRemoved() {
+        this.tokenLogoImg = undefined;
+    }
+
+
     submit() {
-        this.customApi
-            .postTokenizedAssetsBuildAndSubmitMetadaFile(
-                this.issuerWalletSeedId,
-                this.issuerWalletId,
-                this.tokenizedAssetId,
-                this.model
-            )
+
+        const formData = new FormData();
+
+        if (!this.orgLogoImg) {
+            this.snackbar.open('Organization Logo is required!', 'Ok', { duration: 3000 });
+        }
+
+        formData.set('orgImageFile', this.orgLogoImg, 'org.png');
+        formData.set('metaDataFormData', JSON.stringify(this.model));
+
+        if (this.tokenLogoImg) {
+            formData.set('tokenImageFile', this.tokenLogoImg, 'token.png');
+        }
+
+        this.api.post(`/api/external/v1/issuer-wallet-seeds/${this.issuerWalletSeedId}/issuer-wallets/${this.issuerWalletId}/tokenized-assets/${this.tokenizedAssetId}/metadata`, formData)
             .subscribe(() => {
-                this.snackbar.open(`.toml file submitted!`, 'OK', {
+                this.snackbar.open(`Metadata file submitted!`, 'OK', {
                     duration: 5000,
                     horizontalPosition: 'center',
                     verticalPosition: 'bottom',

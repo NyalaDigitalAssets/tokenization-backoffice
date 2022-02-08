@@ -151,7 +151,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         ]);
     }
 
-    buildMetaDataFile() {
+    buildMetadataFile() {
         this.router.navigate([
             'tokenization',
             this.issuerWalletSeedId,
