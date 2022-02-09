@@ -10,29 +10,27 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 
-export interface IInitTokenizedAssetCreationDto {
+export interface IMetadataOrganizationDocumentation {
     name?: string;
-    unitName?: string;
-    totalSupply?: number;
-    decimals?: number;
-    enableFreeze?: boolean;
-    enableClawback?: boolean;
+    dba?: string;
     url?: string;
-    issuingMemo?: string;
-    distributorWalletId?: string;
+    logoUrl?: string;
+    description?: string;
+    address?: string;
+    phoneNumber?: string;
+    email?: string;
 }
 
 
-export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTokenizedAssetCreationDto  {
+export class MetadataOrganizationDocumentation extends BaseModel implements IMetadataOrganizationDocumentation  {
     name: string;
-    unitName: string;
-    totalSupply: number;
-    decimals: number;
-    enableFreeze: boolean;
-    enableClawback: boolean;
+    dba: string;
     url: string;
-    issuingMemo: string;
-    distributorWalletId: string;
+    logoUrl: string;
+    description: string;
+    address: string;
+    phoneNumber: string;
+    email: string;
 
     /**
      * constructor
@@ -55,14 +53,13 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.name = rawValues.name;
-            this.unitName = rawValues.unitName;
-            this.totalSupply = rawValues.totalSupply;
-            this.decimals = rawValues.decimals;
-            this.enableFreeze = rawValues.enableFreeze;
-            this.enableClawback = rawValues.enableClawback;
+            this.dba = rawValues.dba;
             this.url = rawValues.url;
-            this.issuingMemo = rawValues.issuingMemo;
-            this.distributorWalletId = rawValues.distributorWalletId;
+            this.logoUrl = rawValues.logoUrl;
+            this.description = rawValues.description;
+            this.address = rawValues.address;
+            this.phoneNumber = rawValues.phoneNumber;
+            this.email = rawValues.email;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -72,14 +69,13 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
                 name: new FormControl(this.name),
-                unitName: new FormControl(this.unitName),
-                totalSupply: new FormControl(this.totalSupply),
-                decimals: new FormControl(this.decimals),
-                enableFreeze: new FormControl(this.enableFreeze),
-                enableClawback: new FormControl(this.enableClawback),
+                dba: new FormControl(this.dba),
                 url: new FormControl(this.url),
-                issuingMemo: new FormControl(this.issuingMemo),
-                distributorWalletId: new FormControl(this.distributorWalletId),
+                logoUrl: new FormControl(this.logoUrl),
+                description: new FormControl(this.description),
+                address: new FormControl(this.address),
+                phoneNumber: new FormControl(this.phoneNumber),
+                email: new FormControl(this.email),
             });
         }
         return this._formGroup;
@@ -90,14 +86,13 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
     */
     setFormGroupValues() {
         this.$formGroup.controls['name'].setValue(this.name);
-        this.$formGroup.controls['unitName'].setValue(this.unitName);
-        this.$formGroup.controls['totalSupply'].setValue(this.totalSupply);
-        this.$formGroup.controls['decimals'].setValue(this.decimals);
-        this.$formGroup.controls['enableFreeze'].setValue(this.enableFreeze);
-        this.$formGroup.controls['enableClawback'].setValue(this.enableClawback);
+        this.$formGroup.controls['dba'].setValue(this.dba);
         this.$formGroup.controls['url'].setValue(this.url);
-        this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
-        this.$formGroup.controls['distributorWalletId'].setValue(this.distributorWalletId);
+        this.$formGroup.controls['logoUrl'].setValue(this.logoUrl);
+        this.$formGroup.controls['description'].setValue(this.description);
+        this.$formGroup.controls['address'].setValue(this.address);
+        this.$formGroup.controls['phoneNumber'].setValue(this.phoneNumber);
+        this.$formGroup.controls['email'].setValue(this.email);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

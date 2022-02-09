@@ -29,6 +29,7 @@ export interface ITokenizedAssetDto {
     reviewDecision?: ReviewDecision;
     reviewedAt?: Date;
     reviewer?: string;
+    issuingMemo?: string;
 }
 
 
@@ -49,6 +50,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     reviewDecision: ReviewDecision;
     reviewedAt: Date;
     reviewer: string;
+    issuingMemo: string;
 
     /**
      * constructor
@@ -86,6 +88,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.reviewDecision = rawValues.reviewDecision;
             this.reviewedAt = rawValues.reviewedAt;
             this.reviewer = rawValues.reviewer;
+            this.issuingMemo = rawValues.issuingMemo;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -110,6 +113,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 reviewDecision: new FormControl(this.reviewDecision, [enumValidator(ReviewDecision), ]),
                 reviewedAt: new FormControl(this.reviewedAt),
                 reviewer: new FormControl(this.reviewer),
+                issuingMemo: new FormControl(this.issuingMemo),
             });
         }
         return this._formGroup;
@@ -135,6 +139,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['reviewDecision'].setValue(this.reviewDecision);
         this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
         this.$formGroup.controls['reviewer'].setValue(this.reviewer);
+        this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

@@ -9,6 +9,7 @@ import { DeriveWalletComponent } from './derive-wallet/derive-wallet.component';
 import { ListComponent } from './list/list.component';
 import { LockIssuerWalletComponent } from './lock-issuer-wallet/lock-issuer-wallet.component';
 import { TokenDetailsComponent } from './token-details/token-details.component';
+import { MetadataBuilderComponent } from './metadata-builder/metadata-builder.component';
 import { TransferTokensComponent } from './transfer-tokens/transfer-tokens.component';
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
         path: ':seedId/issuer-wallets/:issuerWalletId/tokens/:tokenizedAssetId/burn',
         component: BurnTokensComponent,
     },
+    {
+        path: ':seedId/issuer-wallets/:issuerWalletId/tokens/:tokenizedAssetId/metadata',
+        component: MetadataBuilderComponent,
+    }
 ];
 
 @NgModule({

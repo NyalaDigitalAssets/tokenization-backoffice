@@ -15,6 +15,7 @@ import { LockIssuerWalletComponent } from './lock-issuer-wallet/lock-issuer-wall
 import { TransferTokensComponent } from './transfer-tokens/transfer-tokens.component';
 import { ClawbackTokensComponent } from './clawback-tokens/clawback-tokens.component';
 import { BurnTokensComponent } from './burn-tokens/burn-tokens.component';
+import { MetadataBuilderComponent } from './metadata-builder/metadata-builder.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { BurnTokensComponent } from './burn-tokens/burn-tokens.component';
         TransferTokensComponent,
         ClawbackTokensComponent,
         BurnTokensComponent,
+        MetadataBuilderComponent,
     ],
     imports: [CoreModule, SharedModule, CommonModule, FormsModule, TokenizationRoutingModule],
 })

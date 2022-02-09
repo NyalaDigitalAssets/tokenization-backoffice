@@ -11,13 +11,13 @@ import { CustomApiService } from '../../core/services/ganymede.service';
     styleUrls: ['./burn-tokens.component.scss'],
 })
 export class BurnTokensComponent implements OnInit {
+    @ViewChild('credForm') credForm;
+    @ViewChild('singleForm') singleForm;
+
     issuerWalletSeedId: string;
     issuerWalletId: string;
     tokenizedAssetId: string;
     model: TokenizedAssetBurnDto;
-
-    @ViewChild('credForm') credForm;
-    @ViewChild('singleForm') singleForm;
 
     constructor(
         private activatedRoute: ActivatedRoute,
