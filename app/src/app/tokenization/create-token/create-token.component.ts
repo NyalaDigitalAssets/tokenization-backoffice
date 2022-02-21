@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-    AssetTypes,
-    InitTokenizedAssetCreationDto,
-    IssuerWalletDto,
-    IssuerWalletRoles,
-} from '../../core/models';
+import { InitTokenizedAssetCreationDto, IssuerWalletDto, IssuerWalletRoles } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -20,10 +15,7 @@ export class CreateTokenComponent implements OnInit {
     model = new InitTokenizedAssetCreationDto();
     issuerWallets: IssuerWalletDto[];
     formReady: boolean;
-
-    AssetTypes = AssetTypes;
     IssuerWalletRoles = IssuerWalletRoles;
-    allowedAssetTypes = [AssetTypes.ALGO, AssetTypes.XLM];
 
     constructor(
         private customApi: CustomApiService,
@@ -51,7 +43,7 @@ export class CreateTokenComponent implements OnInit {
 
         return this.issuerWallets.filter(
             (iw) =>
-                iw.role === IssuerWalletRoles.Distributor && iw.assetType === issuerWallet.assetType
+                iw.role === IssuerWalletRoles.Distributor && iw.blockchain === issuerWallet.blockchain
         );
     }
 

@@ -9,7 +9,7 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 import { WalletTypes } from './enums';
 import { TransactionActions } from './enums';
 import { TxStatus } from './enums';
@@ -17,7 +17,7 @@ import { TxStatus } from './enums';
 export interface ITransactionToShowDto {
     id?: string;
     institutionId?: string;
-    assetType?: AssetTypes;
+    blockchain?: Blockchains;
     sourceWalletType?: WalletTypes;
     action?: TransactionActions;
     txBody?: string;
@@ -26,13 +26,15 @@ export interface ITransactionToShowDto {
     retryCounter?: number;
     txId?: string;
     created?: Date;
+    cryptoAssetName?: string;
+    cryptoAssetSymbol?: string;
 }
 
 
 export class TransactionToShowDto extends BaseModel implements ITransactionToShowDto  {
     id: string;
     institutionId: string;
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     sourceWalletType: WalletTypes;
     action: TransactionActions;
     txBody: string;
@@ -41,6 +43,8 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
     retryCounter: number;
     txId: string;
     created: Date;
+    cryptoAssetName: string;
+    cryptoAssetSymbol: string;
 
     /**
      * constructor
@@ -64,7 +68,7 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.id = rawValues.id;
             this.institutionId = rawValues.institutionId;
-            this.assetType = rawValues.assetType;
+            this.blockchain = rawValues.blockchain;
             this.sourceWalletType = rawValues.sourceWalletType;
             this.action = rawValues.action;
             this.txBody = rawValues.txBody;
@@ -73,6 +77,8 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
             this.retryCounter = rawValues.retryCounter;
             this.txId = rawValues.txId;
             this.created = rawValues.created;
+            this.cryptoAssetName = rawValues.cryptoAssetName;
+            this.cryptoAssetSymbol = rawValues.cryptoAssetSymbol;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -83,7 +89,7 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
                 institutionId: new FormControl(this.institutionId),
-                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
                 sourceWalletType: new FormControl(this.sourceWalletType, [enumValidator(WalletTypes), ]),
                 action: new FormControl(this.action, [enumValidator(TransactionActions), ]),
                 txBody: new FormControl(this.txBody),
@@ -92,6 +98,8 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
                 retryCounter: new FormControl(this.retryCounter),
                 txId: new FormControl(this.txId),
                 created: new FormControl(this.created),
+                cryptoAssetName: new FormControl(this.cryptoAssetName),
+                cryptoAssetSymbol: new FormControl(this.cryptoAssetSymbol),
             });
         }
         return this._formGroup;
@@ -103,7 +111,7 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
     setFormGroupValues() {
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['institutionId'].setValue(this.institutionId);
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['sourceWalletType'].setValue(this.sourceWalletType);
         this.$formGroup.controls['action'].setValue(this.action);
         this.$formGroup.controls['txBody'].setValue(this.txBody);
@@ -112,6 +120,8 @@ export class TransactionToShowDto extends BaseModel implements ITransactionToSho
         this.$formGroup.controls['retryCounter'].setValue(this.retryCounter);
         this.$formGroup.controls['txId'].setValue(this.txId);
         this.$formGroup.controls['created'].setValue(this.created);
+        this.$formGroup.controls['cryptoAssetName'].setValue(this.cryptoAssetName);
+        this.$formGroup.controls['cryptoAssetSymbol'].setValue(this.cryptoAssetSymbol);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

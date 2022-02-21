@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
-import { AssetTypes, IssuerWalletSeedDto, SimpleAccessCredentialsDto } from '../../core/models';
+import { IssuerWalletSeedDto, SimpleAccessCredentialsDto } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
+import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
     selector: 'app-list',
@@ -20,7 +20,6 @@ export class ListComponent implements OnInit {
     issuerWalletId: string;
     tokenizedAssetId: string;
     issuerWalletSeeds: IssuerWalletSeedDto[];
-    AssetTypes = AssetTypes;
     credentials: SimpleAccessCredentialsDto;
 
     constructor(

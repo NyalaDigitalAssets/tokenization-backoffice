@@ -16,10 +16,10 @@
         <mat-card-content>
             <div class="w-100">
                 <mat-form-field appearance="standard" class="pd-x10">
-                    <mat-label>AssetType</mat-label>
-                    <mat-select [(ngModel)]="model.assetType" name="assetType">
-                        <mat-option *ngFor="let assetType of allowedAssetTypes" [value]="assetType">
-                            {{ AssetTypes[assetType] }}
+                    <mat-label>Blockchain</mat-label>
+                    <mat-select [(ngModel)]="model.blockchain" name="blockchain">
+                        <mat-option *ngFor="let blockchain of allowedBlockchains" [value]="blockchain">
+                            {{ Blockchains[blockchain] }}
                         </mat-option>
                     </mat-select></mat-form-field
                 >

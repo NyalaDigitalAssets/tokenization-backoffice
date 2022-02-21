@@ -9,7 +9,7 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 import { ReviewDecision } from './enums';
 
 export interface ITokenizedAssetDto {
@@ -25,7 +25,7 @@ export interface ITokenizedAssetDto {
     metaData?: string;
     issuerAddress?: string;
     distributionAddress?: string;
-    assetType?: AssetTypes;
+    blockchain?: Blockchains;
     reviewDecision?: ReviewDecision;
     reviewedAt?: Date;
     reviewer?: string;
@@ -46,7 +46,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     metaData: string;
     issuerAddress: string;
     distributionAddress: string;
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     reviewDecision: ReviewDecision;
     reviewedAt: Date;
     reviewer: string;
@@ -84,7 +84,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.metaData = rawValues.metaData;
             this.issuerAddress = rawValues.issuerAddress;
             this.distributionAddress = rawValues.distributionAddress;
-            this.assetType = rawValues.assetType;
+            this.blockchain = rawValues.blockchain;
             this.reviewDecision = rawValues.reviewDecision;
             this.reviewedAt = rawValues.reviewedAt;
             this.reviewer = rawValues.reviewer;
@@ -109,7 +109,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 metaData: new FormControl(this.metaData),
                 issuerAddress: new FormControl(this.issuerAddress),
                 distributionAddress: new FormControl(this.distributionAddress),
-                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
                 reviewDecision: new FormControl(this.reviewDecision, [enumValidator(ReviewDecision), ]),
                 reviewedAt: new FormControl(this.reviewedAt),
                 reviewer: new FormControl(this.reviewer),
@@ -135,7 +135,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['metaData'].setValue(this.metaData);
         this.$formGroup.controls['issuerAddress'].setValue(this.issuerAddress);
         this.$formGroup.controls['distributionAddress'].setValue(this.distributionAddress);
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['reviewDecision'].setValue(this.reviewDecision);
         this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
         this.$formGroup.controls['reviewer'].setValue(this.reviewer);

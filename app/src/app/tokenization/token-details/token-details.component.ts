@@ -8,7 +8,7 @@ import { NgxCsvParser } from 'ngx-csv-parser';
 import { forkJoin } from 'rxjs';
 
 import {
-    AssetTypes,
+    Blockchains,
     CustomerRetailWalletDto,
     ITokenizedAssetDetailsDto,
     OptInStatus,
@@ -19,7 +19,7 @@ import {
     TokenizedAssetTransferDto,
     TransactionActions,
 } from '../../core/models';
-import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { BlockchainUtilityService } from '../../core/services/blockchain-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 interface KeyValue {
@@ -78,11 +78,11 @@ export class TokenDetailsComponent implements AfterViewInit {
     constructor(
         private customApi: CustomApiService,
         private activatedRoute: ActivatedRoute,
-        private assetTypeUtility: AssetTypeUtilityService,
+        private blockchainUtility: BlockchainUtilityService,
         private router: Router,
         private dialog: MatDialog,
         private ngxCsvParser: NgxCsvParser
-    ) { }
+    ) {}
 
     ngAfterViewInit() {
         this.optInDataSource.paginator = this.optInPaginator;
@@ -98,12 +98,12 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     showTxInBlockchainExplorer(txId: string) {
-        const url = `${this.assetTypeUtility.txUrl(AssetTypes.XLM)}/${txId}`;
+        const url = this.blockchainUtility.txUrl(this.tokenizedAsset.blockchain, txId);
         window.open(url, '_blank');
     }
 
     showAddressInBlockchainExplorer(address: string) {
-        const url = `${this.assetTypeUtility.addressUrl(AssetTypes.XLM)}/${address}`;
+        const url = this.blockchainUtility.addressUrl(this.tokenizedAsset.blockchain, address);
         window.open(url, '_blank');
     }
 
@@ -112,7 +112,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     isTokenBurnSupported() {
-        return this.tokenizedAsset?.assetType === AssetTypes.XLM;
+        return this.tokenizedAsset?.blockchain === Blockchains.Stellar;
     }
 
     sendTokens() {
@@ -239,17 +239,17 @@ export class TokenDetailsComponent implements AfterViewInit {
 
         const q = this.isOptInAuthorizeCall
             ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
-                this.issuerWalletSeedId,
-                this.issuerWalletId,
-                this.tokenizedAssetId,
-                this.model
-            )
+                  this.issuerWalletSeedId,
+                  this.issuerWalletId,
+                  this.tokenizedAssetId,
+                  this.model
+              )
             : this.customApi.postTokenizedAssetsRevokeOptIn(
-                this.issuerWalletSeedId,
-                this.issuerWalletId,
-                this.tokenizedAssetId,
-                this.model
-            );
+                  this.issuerWalletSeedId,
+                  this.issuerWalletId,
+                  this.tokenizedAssetId,
+                  this.model
+              );
 
         q.subscribe(() => {
             this.model = new ToggleOptInAuthorizationDto();
@@ -266,7 +266,7 @@ export class TokenDetailsComponent implements AfterViewInit {
             this.customApi.getTokenizedAssetsGetTokenizedAssetDetails(
                 this.issuerWalletSeedId,
                 this.issuerWalletId,
-                this.tokenizedAssetId,
+                this.tokenizedAssetId
             ),
         ]).subscribe((response) => {
             const customers = response[0].data;
@@ -283,7 +283,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                 a.created > b.created ? -1 : 1
             );
             this.tokenDetails.data = this.getTokenDetails(response[1].data);
-            this.hasTomlSupport = this.tokenizedAsset.assetType === AssetTypes.XLM;
+            this.hasTomlSupport = this.tokenizedAsset.blockchain === Blockchains.Stellar;
         });
     }
 

@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { ApiService } from './services/api.service';
-import { AssetTypeUtilityService } from './services/asset-types-utility.service';
+import { BlockchainUtilityService } from './services/blockchain-utility.service';
 import { ClipboardService } from './services/clipboard.service';
 import { CustomApiService } from './services/ganymede.service';
 import { LoadingService } from './services/loading.service';
@@ -13,7 +13,7 @@ import { LoadingService } from './services/loading.service';
     ApiService,
     CustomApiService,
     ClipboardService,
-    AssetTypeUtilityService,
+    BlockchainUtilityService,
     LoadingService,
   ],
   imports: [CommonModule, HttpClientModule],

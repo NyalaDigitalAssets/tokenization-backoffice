@@ -9,12 +9,12 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 import { IssuerWalletRoles } from './enums';
 
 export interface IDeriveIssuerWalletFromSeedDto {
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     accountIndex: number;
     credentials?: SimpleAccessCredentialsDto;
     role: IssuerWalletRoles;
@@ -22,7 +22,7 @@ export interface IDeriveIssuerWalletFromSeedDto {
 
 
 export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveIssuerWalletFromSeedDto  {
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     accountIndex: number;
     credentials: SimpleAccessCredentialsDto;
     role: IssuerWalletRoles;
@@ -48,7 +48,7 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.assetType = rawValues.assetType;
+            this.blockchain = rawValues.blockchain;
             this.accountIndex = rawValues.accountIndex;
             this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             this.role = rawValues.role;
@@ -60,7 +60,7 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                assetType: new FormControl(this.assetType, [Validators.required, enumValidator(AssetTypes), ]),
+                blockchain: new FormControl(this.blockchain, [Validators.required, enumValidator(Blockchains), ]),
                 accountIndex: new FormControl(this.accountIndex, [Validators.required, minValueValidator(0), maxValueValidator(1024), ]),
                 credentials: this.credentials.$formGroup,
                 role: new FormControl(this.role, [Validators.required, enumValidator(IssuerWalletRoles), ]),
@@ -73,7 +73,7 @@ export class DeriveIssuerWalletFromSeedDto extends BaseModel implements IDeriveI
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['accountIndex'].setValue(this.accountIndex);
         this.credentials.setFormGroupValues();
         this.$formGroup.controls['role'].setValue(this.role);
