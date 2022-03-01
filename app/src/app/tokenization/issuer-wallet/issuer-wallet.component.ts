@@ -10,7 +10,7 @@ import {
     ReviewDecision,
     TokenizedAssetDto,
 } from '../../core/models';
-import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { BlockchainUtilityService } from '../../core/services/blockchain-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 interface Balance {
@@ -35,19 +35,21 @@ export class IssuerWalletComponent {
     ReviewDecision = ReviewDecision;
 
     constructor(
-        private assetTypeUtility: AssetTypeUtilityService,
+        private blockchainUtility: BlockchainUtilityService,
         private customApi: CustomApiService,
         private snackBar: MatSnackBar,
         private router: Router
-    ) { }
+    ) {}
 
     getIcon(): string {
-        return this.assetTypeUtility.icon(this.wallet.assetType);
+        return this.blockchainUtility.icon(this.wallet.blockchain);
     }
 
     goToBlockchainExplorer() {
-        const url = `${this.assetTypeUtility.addressUrl(this.wallet.assetType)}/${this.wallet.publicAddress
-            }`;
+        const url = this.blockchainUtility.addressUrl(
+            this.wallet.blockchain,
+            this.wallet.publicAddress
+        );
         window.open(url, '_blank');
     }
 
@@ -103,8 +105,9 @@ export class IssuerWalletComponent {
         const balances: Balance[] = [];
 
         balances.push({
-            amount: this.wallet.balance.nativeBalance.free + this.wallet.balance.nativeBalance.locked,
-            unitName: this.assetTypeUtility.unit(this.wallet.assetType),
+            amount:
+                this.wallet.balance.nativeBalance.free + this.wallet.balance.nativeBalance.locked,
+            unitName: this.blockchainUtility.unit(this.wallet.blockchain),
         });
 
         if (this.wallet.balance.nonNativeBalances) {

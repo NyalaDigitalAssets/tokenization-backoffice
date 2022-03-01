@@ -58,8 +58,8 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="assetType">
-                    <th mat-header-cell *matHeaderCellDef>Asset</th>
+                <ng-container matColumnDef="blockchain">
+                    <th mat-header-cell *matHeaderCellDef>Blockchain</th>
                     <td mat-cell *matCellDef="let element">
                         <app-svg-icon [svg]="element.icon"></app-svg-icon>
                     </td>
@@ -75,7 +75,7 @@
                 <ng-container matColumnDef="txId">
                     <th mat-header-cell *matHeaderCellDef>Tx Id</th>
                     <td mat-cell *matCellDef="let element">
-                        <a class="link" (click)="showTxInBlockchainExplorer(element.assetType, element.txId)">
+                        <a class="link" (click)="showTxInBlockchainExplorer(element.blockchain, element.txId)">
                             <div class="elipsis">{{ element.txId }}</div>
                         </a>
                     </td>

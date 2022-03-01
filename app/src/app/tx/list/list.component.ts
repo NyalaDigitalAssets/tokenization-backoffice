@@ -8,14 +8,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { interval, Subscription } from 'rxjs';
 
 import {
-    AssetTypes,
+    Blockchains,
     CancelTransactionsDto,
     TransactionActions,
     TransactionToShowDto,
     TxStatus,
     WalletTypes,
 } from '../../core/models';
-import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { BlockchainUtilityService } from '../../core/services/blockchain-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 interface TimeValue {
@@ -35,7 +35,7 @@ class ExtendedResponse extends TransactionToShowDto {
 export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
     displayedColumns: string[] = [
         'select',
-        'assetType',
+        'blockchain',
         'srcWallet',
         'action',
         'txId',
@@ -51,7 +51,6 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
 
     selection = new SelectionModel<ExtendedResponse>(true, []);
 
-    AssetTypes = AssetTypes;
     WalletTypes = WalletTypes;
     TransactionActions = TransactionActions;
     TxStatus = TxStatus;
@@ -83,8 +82,8 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
         private customApi: CustomApiService,
         private snackbar: MatSnackBar,
         private dialog: MatDialog,
-        private assetTypeUtility: AssetTypeUtilityService
-    ) { }
+        private blockchainUtility: BlockchainUtilityService
+    ) {}
 
     ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
@@ -125,11 +124,11 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
                 (response) => {
                     this.loadedTxData = response.data;
                     this.loadedTxData.forEach((x) => {
-                        x.icon = this.assetTypeUtility.icon(x.assetType);
+                        x.icon = this.blockchainUtility.icon(x.blockchain);
                     });
                     this.applyFilters();
                 },
-                () => { },
+                () => {},
                 () => setTimeout(() => (this.isSyncing = false), 1000)
             );
     }
@@ -146,11 +145,11 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
         data.filter((x) => selectedIds.includes(x.id)).forEach((x) => this.selection.select(x));
         this.dataSource.data = data;
     }
-    getAssetIcon(assetType: AssetTypes) {
-        return this.assetTypeUtility.icon(assetType);
+    getAssetIcon(blockchain: Blockchains) {
+        return this.blockchainUtility.icon(blockchain);
     }
-    showTxInBlockchainExplorer(assetType: AssetTypes, txId: string) {
-        const url = `${this.assetTypeUtility.txUrl(assetType)}/${txId}`;
+    showTxInBlockchainExplorer(blockchain: Blockchains, txId: string) {
+        const url = this.blockchainUtility.txUrl(blockchain, txId);
         window.open(url, '_blank');
     }
 

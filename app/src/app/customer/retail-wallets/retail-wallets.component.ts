@@ -2,8 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AssetTypes, LockWalletsDto, RetailWalletDto, RetailWalletDtoListApiResponse } from '../../core/models';
-import { AssetTypeUtilityService } from '../../core/services/asset-types-utility.service';
+import { Blockchains, LockWalletsDto, RetailWalletDto, RetailWalletDtoListApiResponse } from '../../core/models';
+import { BlockchainUtilityService } from '../../core/services/blockchain-utility.service';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { CustomApiService } from '../../core/services/ganymede.service';
     ],
 })
 export class RetailWalletsComponent implements OnInit {
-    displayedColumns: string[] = ['assetType', 'publicAddress', 'nativeBalance', 'lockstatus'];
+    displayedColumns: string[] = ['blockchain', 'publicAddress', 'nativeBalance', 'lockstatus'];
     innerTableColums: string[] = ['token', 'balance'];
     customerId: string;
     wallets: RetailWalletDtoListApiResponse;
@@ -27,12 +27,9 @@ export class RetailWalletsComponent implements OnInit {
     isLocked = false;
     disableLock = false;
 
-    AssetTypes = AssetTypes;
-
-
     constructor(
         private customApi: CustomApiService,
-        private assetTypeUtility: AssetTypeUtilityService,
+        private blockchainUtility: BlockchainUtilityService,
         private route: ActivatedRoute,
     ) {}
 
@@ -69,11 +66,11 @@ export class RetailWalletsComponent implements OnInit {
         });
     }
 
-    getIcon(assetType: AssetTypes): string {
-        return this.assetTypeUtility.icon(assetType);
+    getIcon(blockchain: Blockchains): string {
+        return this.blockchainUtility.icon(blockchain);
     }
 
-    getUnit(assetType: AssetTypes): string {
-        return this.assetTypeUtility.unit(assetType);
+    getUnit(blockchain: Blockchains): string {
+        return this.blockchainUtility.unit(blockchain);
     }
 }

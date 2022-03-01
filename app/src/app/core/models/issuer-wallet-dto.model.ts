@@ -10,7 +10,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { IssuerWalletRoles } from './enums';
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 import { BalancesInDecimalDto } from './balances-in-decimal-dto.model';
 import { TokenizedAssetDto } from './tokenized-asset-dto.model';
 
@@ -19,7 +19,7 @@ export interface IIssuerWalletDto {
     issuerWalletSeedId?: string;
     role?: IssuerWalletRoles;
     created?: Date;
-    assetType?: AssetTypes;
+    blockchain?: Blockchains;
     publicAddress?: string;
     accountIndex?: number;
     name?: string;
@@ -34,7 +34,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
     issuerWalletSeedId: string;
     role: IssuerWalletRoles;
     created: Date;
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     publicAddress: string;
     accountIndex: number;
     name: string;
@@ -68,7 +68,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
             this.issuerWalletSeedId = rawValues.issuerWalletSeedId;
             this.role = rawValues.role;
             this.created = rawValues.created;
-            this.assetType = rawValues.assetType;
+            this.blockchain = rawValues.blockchain;
             this.publicAddress = rawValues.publicAddress;
             this.accountIndex = rawValues.accountIndex;
             this.name = rawValues.name;
@@ -87,7 +87,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
                 issuerWalletSeedId: new FormControl(this.issuerWalletSeedId),
                 role: new FormControl(this.role, [enumValidator(IssuerWalletRoles), ]),
                 created: new FormControl(this.created),
-                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
                 publicAddress: new FormControl(this.publicAddress),
                 accountIndex: new FormControl(this.accountIndex),
                 name: new FormControl(this.name),
@@ -109,7 +109,7 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
         this.$formGroup.controls['issuerWalletSeedId'].setValue(this.issuerWalletSeedId);
         this.$formGroup.controls['role'].setValue(this.role);
         this.$formGroup.controls['created'].setValue(this.created);
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['publicAddress'].setValue(this.publicAddress);
         this.$formGroup.controls['accountIndex'].setValue(this.accountIndex);
         this.$formGroup.controls['name'].setValue(this.name);

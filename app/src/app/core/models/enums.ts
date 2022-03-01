@@ -18,39 +18,22 @@ export enum RetailWalletAccessLevels {
     Full = 2,
 }
 
-export enum AssetTypes {
+export enum Blockchains {
     NotSet = 0,
-    BTC = 1,
-    ETH = 2,
-    XLM = 3,
-    XTZ = 4,
-    LINK = 5,
-    CRO = 6,
-    OMG = 7,
-    BAT = 8,
-    COMP = 9,
-    DAI = 10,
-    SNX = 11,
-    EOS = 12,
-    LTC = 13,
-    AAVE = 14,
-    DOT = 16,
-    KSM = 17,
-    ALGO = 18,
-    CRV = 19,
-    YFI = 20,
-    ATOM = 21,
-    MANA = 22,
-    POLYX = 23,
-    LUNA = 24,
-    XRP = 25,
-    BNB = 26,
-    ADA = 27,
-    SOL = 28,
-    BCH = 29,
-    MATIC = 30,
-    EUR = 1001,
-    USD = 1002,
+    Bitcoin = 1,
+    Ethereum = 2,
+    Stellar = 3,
+    Litecoin = 4,
+    Polkadot = 5,
+    Kusama = 6,
+    Algorand = 7,
+    Cosmos = 8,
+    Terra = 9,
+    Polymesh = 10,
+    Binance = 11,
+    Solana = 12,
+    Cardano = 13,
+    Polygon = 14,
 }
 
 export enum BulkResultItemStatus {
@@ -308,7 +291,7 @@ export class AllEnums {
 
     AccountTypes = AccountTypes;
     RetailWalletAccessLevels = RetailWalletAccessLevels;
-    AssetTypes = AssetTypes;
+    Blockchains = Blockchains;
     BulkResultItemStatus = BulkResultItemStatus;
     FaucetFundingResult = FaucetFundingResult;
     IssuerWalletRoles = IssuerWalletRoles;

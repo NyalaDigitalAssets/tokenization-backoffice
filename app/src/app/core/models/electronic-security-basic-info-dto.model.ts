@@ -9,12 +9,12 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 
 export interface IElectronicSecurityBasicInfoDto {
     name?: string;
     issuerWalletPubKey?: string;
-    assetType?: AssetTypes;
+    assetType?: Blockchains;
     total?: number;
 }
 
@@ -22,7 +22,7 @@ export interface IElectronicSecurityBasicInfoDto {
 export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectronicSecurityBasicInfoDto  {
     name: string;
     issuerWalletPubKey: string;
-    assetType: AssetTypes;
+    assetType: Blockchains;
     total: number;
 
     /**
@@ -59,7 +59,7 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
             this._formGroup = new FormGroup({
                 name: new FormControl(this.name),
                 issuerWalletPubKey: new FormControl(this.issuerWalletPubKey),
-                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                assetType: new FormControl(this.assetType, [enumValidator(Blockchains), ]),
                 total: new FormControl(this.total),
             });
         }

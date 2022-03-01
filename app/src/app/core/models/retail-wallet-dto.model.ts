@@ -9,12 +9,12 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
-import { AssetTypes } from './enums';
+import { Blockchains } from './enums';
 import { BalancesInDecimalDto } from './balances-in-decimal-dto.model';
 
 export interface IRetailWalletDto {
     id?: string;
-    assetType?: AssetTypes;
+    blockchain?: Blockchains;
     publicAddress?: string;
     balance?: BalancesInDecimalDto;
     seedLockStatus?: boolean;
@@ -24,7 +24,7 @@ export interface IRetailWalletDto {
 
 export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     id: string;
-    assetType: AssetTypes;
+    blockchain: Blockchains;
     publicAddress: string;
     balance: BalancesInDecimalDto;
     seedLockStatus: boolean;
@@ -52,7 +52,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.id = rawValues.id;
-            this.assetType = rawValues.assetType;
+            this.blockchain = rawValues.blockchain;
             this.publicAddress = rawValues.publicAddress;
             this.balance.setValues(rawValues.balance, useFormGroupValuesToModel);
             this.seedLockStatus = rawValues.seedLockStatus;
@@ -66,7 +66,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
                 id: new FormControl(this.id),
-                assetType: new FormControl(this.assetType, [enumValidator(AssetTypes), ]),
+                blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
                 publicAddress: new FormControl(this.publicAddress),
                 balance: this.balance.$formGroup,
                 seedLockStatus: new FormControl(this.seedLockStatus),
@@ -81,7 +81,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     */
     setFormGroupValues() {
         this.$formGroup.controls['id'].setValue(this.id);
-        this.$formGroup.controls['assetType'].setValue(this.assetType);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['publicAddress'].setValue(this.publicAddress);
         this.balance.setFormGroupValues();
         this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);

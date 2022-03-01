@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AssetTypes, IssuerWalletRoles } from '../../core/models';
+import { IssuerWalletRoles, SimpleAccessCredentialsDto } from '../../core/models';
 import { CustomApiService } from '../../core/services/ganymede.service';
 
 @Component({
@@ -13,10 +13,7 @@ export class LockIssuerWalletComponent implements OnInit {
     seedId: string;
     issuerWalletId: string;
     passphrase: string;
-
-    AssetTypes = AssetTypes;
     IssuerWalletRoles = IssuerWalletRoles;
-    allowedAssetTypes = [AssetTypes.ALGO, AssetTypes.XLM];
 
     constructor(
         private customApi: CustomApiService,
@@ -32,5 +29,14 @@ export class LockIssuerWalletComponent implements OnInit {
     }
 
     submit() {
+        this.customApi
+            .postTokenizedAssetsLockIssuerWallet(
+                this.seedId,
+                this.issuerWalletId,
+                new SimpleAccessCredentialsDto({ passphrase: this.passphrase })
+            )
+            .subscribe({
+                next: () => this.router.navigate(['tokenization']),
+            });
     }
 }

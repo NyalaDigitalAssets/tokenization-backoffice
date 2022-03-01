@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {
-  AssetTypes,
+  Blockchains,
   DeriveIssuerWalletFromSeedDto,
   IssuerWalletRoles,
   SimpleAccessCredentialsDto,
@@ -19,9 +19,9 @@ export class DeriveWalletComponent implements OnInit {
   model = new DeriveIssuerWalletFromSeedDto();
   passphraseMessage: string;
 
-  AssetTypes = AssetTypes;
+  Blockchains = Blockchains;
   IssuerWalletRoles = IssuerWalletRoles;
-  allowedAssetTypes = [AssetTypes.ALGO, AssetTypes.XLM];
+  allowedBlockchains = [Blockchains.Algorand, Blockchains.Stellar];
 
   constructor(
     private customApi: CustomApiService,
