@@ -9,18 +9,18 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { TokenizedAssetToExternalRetailWallet } from './tokenized-asset-to-external-retail-wallet.model';
+import { SimpleAccessCredentialsDto } from './simple-access-credentials-dto.model';
 
-export interface IElectronicSecurityBasicInfoDto {
-    name?: string;
-    issuerWalletPubKey?: string;
-    total?: number;
+export interface IIssuerWalletFungibleAssetTransferDto {
+    transfers?: Array<TokenizedAssetToExternalRetailWallet>;
+    credentials?: SimpleAccessCredentialsDto;
 }
 
 
-export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectronicSecurityBasicInfoDto  {
-    name: string;
-    issuerWalletPubKey: string;
-    total: number;
+export class IssuerWalletFungibleAssetTransferDto extends BaseModel implements IIssuerWalletFungibleAssetTransferDto  {
+    transfers: Array<TokenizedAssetToExternalRetailWallet>;
+    credentials: SimpleAccessCredentialsDto;
 
     /**
      * constructor
@@ -29,6 +29,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.transfers = new Array<TokenizedAssetToExternalRetailWallet>(); 
+        this.credentials = new SimpleAccessCredentialsDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -42,9 +44,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.name = rawValues.name;
-            this.issuerWalletPubKey = rawValues.issuerWalletPubKey;
-            this.total = rawValues.total;
+            this.fillModelArray<TokenizedAssetToExternalRetailWallet>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetToExternalRetailWallet, SubTypeFactory.createSubTypeInstance);
+            this.credentials.setValues(rawValues.credentials, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -53,10 +54,11 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                name: new FormControl(this.name),
-                issuerWalletPubKey: new FormControl(this.issuerWalletPubKey),
-                total: new FormControl(this.total),
+                transfers: new FormArray([]),
+                credentials: this.credentials.$formGroup,
             });
+            // generate FormArray control elements
+            this.fillFormArray<TokenizedAssetToExternalRetailWallet>('transfers', this.transfers, TokenizedAssetToExternalRetailWallet);
         }
         return this._formGroup;
     }
@@ -65,9 +67,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['name'].setValue(this.name);
-        this.$formGroup.controls['issuerWalletPubKey'].setValue(this.issuerWalletPubKey);
-        this.$formGroup.controls['total'].setValue(this.total);
+        this.fillFormArray<TokenizedAssetToExternalRetailWallet>('transfers', this.transfers, TokenizedAssetToExternalRetailWallet);
+        this.credentials.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

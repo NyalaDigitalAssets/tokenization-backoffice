@@ -18,24 +18,6 @@ export enum RetailWalletAccessLevels {
     Full = 2,
 }
 
-export enum Blockchains {
-    NotSet = 0,
-    Bitcoin = 1,
-    Ethereum = 2,
-    Stellar = 3,
-    Litecoin = 4,
-    Polkadot = 5,
-    Kusama = 6,
-    Algorand = 7,
-    Cosmos = 8,
-    Terra = 9,
-    Polymesh = 10,
-    Binance = 11,
-    Solana = 12,
-    Cardano = 13,
-    Polygon = 14,
-}
-
 export enum BulkResultItemStatus {
     NotSet = 0,
     Ok = 1,
@@ -52,6 +34,25 @@ export enum FaucetFundingResult {
 export enum IssuerWalletRoles {
     Issuer = 1,
     Distributor = 2,
+}
+
+export enum Blockchains {
+    NotSet = 0,
+    Bitcoin = 1,
+    Ethereum = 2,
+    Stellar = 3,
+    Litecoin = 4,
+    Polkadot = 5,
+    Kusama = 6,
+    Algorand = 7,
+    Cosmos = 8,
+    Terra = 9,
+    Polymesh = 10,
+    Binance = 11,
+    Solana = 12,
+    Cardano = 13,
+    Polygon = 14,
+    Avalanche = 15,
 }
 
 export enum ReviewDecision {
@@ -83,6 +84,8 @@ export enum TransactionActions {
     Stake = 9,
     Unstake = 10,
     WithdrawRewards = 11,
+    IssueFungibleAsset = 12,
+    TxFungibleAsset = 13,
 }
 
 export enum OptInStatus {
@@ -291,10 +294,10 @@ export class AllEnums {
 
     AccountTypes = AccountTypes;
     RetailWalletAccessLevels = RetailWalletAccessLevels;
-    Blockchains = Blockchains;
     BulkResultItemStatus = BulkResultItemStatus;
     FaucetFundingResult = FaucetFundingResult;
     IssuerWalletRoles = IssuerWalletRoles;
+    Blockchains = Blockchains;
     ReviewDecision = ReviewDecision;
     WalletTransactionStatus = WalletTransactionStatus;
     TransactionActions = TransactionActions;

@@ -9,18 +9,21 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { Blockchains } from './enums';
 
-export interface IElectronicSecurityBasicInfoDto {
+export interface IExternalRetailWalletDto {
+    id?: string;
+    blockchain?: Blockchains;
+    publicAddress?: string;
     name?: string;
-    issuerWalletPubKey?: string;
-    total?: number;
 }
 
 
-export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectronicSecurityBasicInfoDto  {
+export class ExternalRetailWalletDto extends BaseModel implements IExternalRetailWalletDto  {
+    id: string;
+    blockchain: Blockchains;
+    publicAddress: string;
     name: string;
-    issuerWalletPubKey: string;
-    total: number;
 
     /**
      * constructor
@@ -42,9 +45,10 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
+            this.id = rawValues.id;
+            this.blockchain = rawValues.blockchain;
+            this.publicAddress = rawValues.publicAddress;
             this.name = rawValues.name;
-            this.issuerWalletPubKey = rawValues.issuerWalletPubKey;
-            this.total = rawValues.total;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -53,9 +57,10 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
+                id: new FormControl(this.id),
+                blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
+                publicAddress: new FormControl(this.publicAddress),
                 name: new FormControl(this.name),
-                issuerWalletPubKey: new FormControl(this.issuerWalletPubKey),
-                total: new FormControl(this.total),
             });
         }
         return this._formGroup;
@@ -65,9 +70,10 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
+        this.$formGroup.controls['id'].setValue(this.id);
+        this.$formGroup.controls['blockchain'].setValue(this.blockchain);
+        this.$formGroup.controls['publicAddress'].setValue(this.publicAddress);
         this.$formGroup.controls['name'].setValue(this.name);
-        this.$formGroup.controls['issuerWalletPubKey'].setValue(this.issuerWalletPubKey);
-        this.$formGroup.controls['total'].setValue(this.total);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

@@ -26,6 +26,8 @@ export interface IIssuerWalletDto {
     balance?: BalancesInDecimalDto;
     tokenizedAssets?: Array<TokenizedAssetDto>;
     seedLockStatus?: boolean;
+    nativeCryptoAssetSymbol?: string;
+    nativeCryptoAssetId?: string;
 }
 
 
@@ -41,6 +43,8 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
     balance: BalancesInDecimalDto;
     tokenizedAssets: Array<TokenizedAssetDto>;
     seedLockStatus: boolean;
+    nativeCryptoAssetSymbol: string;
+    nativeCryptoAssetId: string;
 
     /**
      * constructor
@@ -75,6 +79,8 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
             this.balance.setValues(rawValues.balance, useFormGroupValuesToModel);
             this.fillModelArray<TokenizedAssetDto>(this, 'tokenizedAssets', rawValues.tokenizedAssets, useFormGroupValuesToModel, TokenizedAssetDto, SubTypeFactory.createSubTypeInstance);
             this.seedLockStatus = rawValues.seedLockStatus;
+            this.nativeCryptoAssetSymbol = rawValues.nativeCryptoAssetSymbol;
+            this.nativeCryptoAssetId = rawValues.nativeCryptoAssetId;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -94,6 +100,8 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
                 balance: this.balance.$formGroup,
                 tokenizedAssets: new FormArray([]),
                 seedLockStatus: new FormControl(this.seedLockStatus),
+                nativeCryptoAssetSymbol: new FormControl(this.nativeCryptoAssetSymbol),
+                nativeCryptoAssetId: new FormControl(this.nativeCryptoAssetId),
             });
             // generate FormArray control elements
             this.fillFormArray<TokenizedAssetDto>('tokenizedAssets', this.tokenizedAssets, TokenizedAssetDto);
@@ -116,6 +124,8 @@ export class IssuerWalletDto extends BaseModel implements IIssuerWalletDto  {
         this.balance.setFormGroupValues();
         this.fillFormArray<TokenizedAssetDto>('tokenizedAssets', this.tokenizedAssets, TokenizedAssetDto);
         this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);
+        this.$formGroup.controls['nativeCryptoAssetSymbol'].setValue(this.nativeCryptoAssetSymbol);
+        this.$formGroup.controls['nativeCryptoAssetId'].setValue(this.nativeCryptoAssetId);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
