@@ -30,6 +30,7 @@ export interface ITokenizedAssetDto {
     reviewedAt?: Date;
     reviewer?: string;
     issuingMemo?: string;
+    isFungible?: boolean;
 }
 
 
@@ -51,6 +52,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
     reviewedAt: Date;
     reviewer: string;
     issuingMemo: string;
+    isFungible: boolean;
 
     /**
      * constructor
@@ -89,6 +91,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
             this.reviewedAt = rawValues.reviewedAt;
             this.reviewer = rawValues.reviewer;
             this.issuingMemo = rawValues.issuingMemo;
+            this.isFungible = rawValues.isFungible;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -114,6 +117,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
                 reviewedAt: new FormControl(this.reviewedAt),
                 reviewer: new FormControl(this.reviewer),
                 issuingMemo: new FormControl(this.issuingMemo),
+                isFungible: new FormControl(this.isFungible),
             });
         }
         return this._formGroup;
@@ -140,6 +144,7 @@ export class TokenizedAssetDto extends BaseModel implements ITokenizedAssetDto  
         this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
         this.$formGroup.controls['reviewer'].setValue(this.reviewer);
         this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
+        this.$formGroup.controls['isFungible'].setValue(this.isFungible);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

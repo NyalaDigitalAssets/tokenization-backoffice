@@ -32,6 +32,7 @@ export interface ITokenizedAssetDetailsDto {
     reviewedAt?: Date;
     reviewer?: string;
     issuingMemo?: string;
+    isFungible?: boolean;
     transfers?: Array<TokenizedAssetTransferDto>;
     optIns?: Array<TokenizedAssetOptInDto>;
     metaDataUrl?: string;
@@ -56,6 +57,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
     reviewedAt: Date;
     reviewer: string;
     issuingMemo: string;
+    isFungible: boolean;
     transfers: Array<TokenizedAssetTransferDto>;
     optIns: Array<TokenizedAssetOptInDto>;
     metaDataUrl: string;
@@ -99,6 +101,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
             this.reviewedAt = rawValues.reviewedAt;
             this.reviewer = rawValues.reviewer;
             this.issuingMemo = rawValues.issuingMemo;
+            this.isFungible = rawValues.isFungible;
             this.fillModelArray<TokenizedAssetTransferDto>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetTransferDto, SubTypeFactory.createSubTypeInstance);
             this.fillModelArray<TokenizedAssetOptInDto>(this, 'optIns', rawValues.optIns, useFormGroupValuesToModel, TokenizedAssetOptInDto, SubTypeFactory.createSubTypeInstance);
             this.metaDataUrl = rawValues.metaDataUrl;
@@ -127,6 +130,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
                 reviewedAt: new FormControl(this.reviewedAt),
                 reviewer: new FormControl(this.reviewer),
                 issuingMemo: new FormControl(this.issuingMemo),
+                isFungible: new FormControl(this.isFungible),
                 transfers: new FormArray([]),
                 optIns: new FormArray([]),
                 metaDataUrl: new FormControl(this.metaDataUrl),
@@ -160,6 +164,7 @@ export class TokenizedAssetDetailsDto extends BaseModel implements ITokenizedAss
         this.$formGroup.controls['reviewedAt'].setValue(this.reviewedAt);
         this.$formGroup.controls['reviewer'].setValue(this.reviewer);
         this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
+        this.$formGroup.controls['isFungible'].setValue(this.isFungible);
         this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         this.fillFormArray<TokenizedAssetOptInDto>('optIns', this.optIns, TokenizedAssetOptInDto);
         this.$formGroup.controls['metaDataUrl'].setValue(this.metaDataUrl);

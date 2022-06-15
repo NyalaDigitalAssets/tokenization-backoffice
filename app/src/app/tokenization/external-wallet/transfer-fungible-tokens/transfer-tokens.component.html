@@ -1,0 +1,58 @@
+<div class="mg-t10">
+    <app-header title="Transfer Tokens" icon="fa-paper-plane">
+        <button mat-mini-fab color="primary" matTooltip="Initiate transfer" (click)="submit()" [disabled]="credForm?.invalid || !model || !model.transfers">
+            <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
+        </button>
+    </app-header>
+    <mat-card class="mg-t10">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-crosshairs"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Target</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row pd-5">
+                    <mat-form-field appearance="standard" class="mg-x1 pd-x10">
+                        <mat-label>Issuer Wallet Id</mat-label>
+                        <input type="text" [(ngModel)]="issuerWalletId" required="required" matInput placeholder="Prefix">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" class="mg-x1 pd-x10">
+                        <mat-label>Asset Id</mat-label>
+                        <input type="text" [(ngModel)]="tokenizedAssetId" required="required" matInput placeholder="Prefix">
+                    </mat-form-field>
+                </div>
+                <div class="row pd-5">
+                    <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv" (fileSelected)="csvInputChange($event)" (fileRemoved)="resetFields()"></app-dropzone>
+                </div>
+                <div *ngIf="model && model.transfers && model.transfers.length > 0">
+                    <p>Number of selected wallets to transfer to: {{ model.transfers.length }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mg-t10" *ngIf="model">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-key"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>Credentials</small>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <form #credForm="ngForm">
+                    <mat-form-field appearance="standard" class="pd-x10">
+                        <mat-label>Passphrase</mat-label>
+                        <input matInput required type="password" [(ngModel)]="model.credentials.passphrase" name="passphrase" />
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

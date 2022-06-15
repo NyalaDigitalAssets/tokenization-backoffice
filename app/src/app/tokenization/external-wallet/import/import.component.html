@@ -1,0 +1,53 @@
+<div class="mg-t10">
+    <app-header title="Import External Wallets" [content]="headerContent" icon="fa-pallet">
+        <button mat-mini-fab color="primary" matTooltip="Submit" [disabled]="submitted" (click)="submit()">
+            <app-fa-icon icon="fa-paper-plane"></app-fa-icon>
+        </button>
+    </app-header>
+
+    <mat-card class="mg-t10" *ngIf="model && !submitted">
+        <mat-card-header class="ai-c">
+            <div mat-card-avatar>
+                <app-fa-icon class="fa-2x" icon="fa-user-friends"></app-fa-icon>
+            </div>
+            <mat-card-title>
+                <small>External Retail Wallets</small>
+            </mat-card-title>
+            <span class="tb-spacer"></span>
+            <mat-card-actions>
+                <button class="mg-x1" mat-mini-fab
+                    matTooltip="Download a template CSV file to enter the public addresses of the wallets."
+                    type="button" (click)="downloadCSVTemplate()">
+                    <app-fa-icon icon="fa-download"></app-fa-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="w-100">
+                <div class="row pd-5">
+                    <mat-form-field appearance="standard" class="mg-x1 pd-x10">
+                        <mat-label>Wallets prefix</mat-label>
+                        <input type="text" [(ngModel)]="walletsPrefix" required="required" matInput placeholder="Prefix">
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" class="mg-x1 pd-x10">
+                        <mat-label>Blockchain</mat-label>
+                        <mat-select [(ngModel)]="selectedBlockchain" name="blockchain" required="required">
+                            <mat-option *ngFor="let blockchain of allowedBlockchains" [value]="blockchain">
+                                {{ Blockchains[blockchain] }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="w-100">
+                <div class="row pd-5">
+                    <app-dropzone buttonText="Spreadsheet File (CSV)" accept=".csv"
+                        (fileSelected)="loadExternalRetailWallets($event)" (fileRemoved)="reset()"></app-dropzone>
+                </div>
+                <div *ngIf="model.wallets && model.wallets.length > 0">
+                    <p>Number of selected wallets: {{ model.wallets.length }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

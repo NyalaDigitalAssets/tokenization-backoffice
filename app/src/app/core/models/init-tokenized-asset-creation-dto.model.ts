@@ -20,6 +20,7 @@ export interface IInitTokenizedAssetCreationDto {
     url?: string;
     issuingMemo?: string;
     distributorWalletId?: string;
+    isFungible?: boolean;
 }
 
 
@@ -33,6 +34,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
     url: string;
     issuingMemo: string;
     distributorWalletId: string;
+    isFungible: boolean;
 
     /**
      * constructor
@@ -63,6 +65,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
             this.url = rawValues.url;
             this.issuingMemo = rawValues.issuingMemo;
             this.distributorWalletId = rawValues.distributorWalletId;
+            this.isFungible = rawValues.isFungible;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -80,6 +83,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
                 url: new FormControl(this.url),
                 issuingMemo: new FormControl(this.issuingMemo),
                 distributorWalletId: new FormControl(this.distributorWalletId),
+                isFungible: new FormControl(this.isFungible),
             });
         }
         return this._formGroup;
@@ -98,6 +102,7 @@ export class InitTokenizedAssetCreationDto extends BaseModel implements IInitTok
         this.$formGroup.controls['url'].setValue(this.url);
         this.$formGroup.controls['issuingMemo'].setValue(this.issuingMemo);
         this.$formGroup.controls['distributorWalletId'].setValue(this.distributorWalletId);
+        this.$formGroup.controls['isFungible'].setValue(this.isFungible);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

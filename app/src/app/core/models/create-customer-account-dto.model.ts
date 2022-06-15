@@ -13,7 +13,7 @@ import { AccountTypes } from './enums';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
 
 export interface ICreateCustomerAccountDto {
-    salutation: string;
+    salutation?: string;
     title?: string;
     firstname: string;
     lastname: string;
@@ -92,7 +92,7 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                salutation: new FormControl(this.salutation, [Validators.required, Validators.minLength(0), Validators.maxLength(16), ]),
+                salutation: new FormControl(this.salutation),
                 title: new FormControl(this.title, [Validators.minLength(0), Validators.maxLength(64), ]),
                 firstname: new FormControl(this.firstname, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
                 lastname: new FormControl(this.lastname, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),

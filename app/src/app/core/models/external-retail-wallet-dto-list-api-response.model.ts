@@ -9,18 +9,17 @@ import { BaseModel } from './base-model';
 import { SubTypeFactory } from './sub-type-factory';
 
 
+import { ExternalRetailWalletDto } from './external-retail-wallet-dto.model';
 
-export interface IElectronicSecurityBasicInfoDto {
-    name?: string;
-    issuerWalletPubKey?: string;
-    total?: number;
+export interface IExternalRetailWalletDtoListApiResponse {
+    errorMessageCodes?: Array<string>;
+    data?: Array<ExternalRetailWalletDto>;
 }
 
 
-export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectronicSecurityBasicInfoDto  {
-    name: string;
-    issuerWalletPubKey: string;
-    total: number;
+export class ExternalRetailWalletDtoListApiResponse extends BaseModel implements IExternalRetailWalletDtoListApiResponse  {
+    errorMessageCodes: Array<string>;
+    data: Array<ExternalRetailWalletDto>;
 
     /**
      * constructor
@@ -29,6 +28,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.errorMessageCodes = new Array<string>(); 
+        this.data = new Array<ExternalRetailWalletDto>(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -42,9 +43,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     setValues(values: any, useFormGroupValuesToModel = false): void {
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
-            this.name = rawValues.name;
-            this.issuerWalletPubKey = rawValues.issuerWalletPubKey;
-            this.total = rawValues.total;
+            this.fillModelArray<string>(this, 'errorMessageCodes', rawValues.errorMessageCodes, useFormGroupValuesToModel);
+            this.fillModelArray<ExternalRetailWalletDto>(this, 'data', rawValues.data, useFormGroupValuesToModel, ExternalRetailWalletDto, SubTypeFactory.createSubTypeInstance);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -53,10 +53,13 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
     protected getFormGroup(): FormGroup {
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
-                name: new FormControl(this.name),
-                issuerWalletPubKey: new FormControl(this.issuerWalletPubKey),
-                total: new FormControl(this.total),
+                errorMessageCodes: new FormArray([]),
+                data: new FormArray([]),
             });
+            // generate FormArray control elements
+            this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
+            // generate FormArray control elements
+            this.fillFormArray<ExternalRetailWalletDto>('data', this.data, ExternalRetailWalletDto);
         }
         return this._formGroup;
     }
@@ -65,9 +68,8 @@ export class ElectronicSecurityBasicInfoDto extends BaseModel implements IElectr
      * set the FormGroup values to the model values.
     */
     setFormGroupValues() {
-        this.$formGroup.controls['name'].setValue(this.name);
-        this.$formGroup.controls['issuerWalletPubKey'].setValue(this.issuerWalletPubKey);
-        this.$formGroup.controls['total'].setValue(this.total);
+        this.fillFormArray<string>('errorMessageCodes', this.errorMessageCodes);
+        this.fillFormArray<ExternalRetailWalletDto>('data', this.data, ExternalRetailWalletDto);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
