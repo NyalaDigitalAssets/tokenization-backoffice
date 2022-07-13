@@ -1,5 +1,5 @@
 # Ganymede.Backoffice
-##### Containerized Angular+Node application communicating with the Bloxxon (Ganymede.API) in a convenient way.
+##### Containerized Angular+Node application communicating with the Nyala (Ganymede.API) in a convenient way.
 
 ## Setup Process
 
