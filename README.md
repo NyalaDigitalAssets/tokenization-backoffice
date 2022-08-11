@@ -1,8 +1,9 @@
 # Ganymede.Backoffice
 ##### Containerized Angular+Node application communicating with the Nyala (Ganymede.API) in a convenient way.
 
-## Dependencies
-- Node.js 16.13.1 <> Does not work above node version during dev. Use 16.13.1. 
+## Notes
+- Does not work above node version 16.13.1. Use Node.js 16.13.1
+- Work fine with docker-compose
 ## Setup Process
 
 1. Clone repository
