@@ -1,12 +1,12 @@
 # base node image for running app, no SDK, just runtime
-FROM node:16 AS base
+FROM node:16.13.1 AS base
 WORKDIR /app
 
 # Install all software, kernel updates
 RUN apt update && apt upgrade -y
 
 # SDK image for compiling
-FROM node:16 AS build
+FROM node:16.13.1 AS build
 WORKDIR /build
 COPY . .
 
