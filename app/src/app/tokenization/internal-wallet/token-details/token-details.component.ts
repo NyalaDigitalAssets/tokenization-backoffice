@@ -187,7 +187,7 @@ export class TokenDetailsComponent implements AfterViewInit {
 
     csvInputChange(fileInputEvent: any) {
         this.ngxCsvParser
-            .parse(fileInputEvent, { header: false, delimiter: ',' })
+            .parse(fileInputEvent, { header: true, delimiter: ',' })
             .pipe()
             .subscribe(
                 (result: Array<any>) => {
@@ -210,8 +210,9 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     downloadSelectionCustomerCSV() {
-        const rows = this.tokenizedAsset.optIns.map((o) => `${o.id},${o.customerName}`);
-        const data = rows.join('\r\n');
+        const header =  'OptIn Id,Customer Id,Wallet Id,Customer Name,Amount of Tokens';
+        const rows = this.tokenizedAsset.optIns.map((o) => `${o.id},${o.customerId},${o.retailWalletId},${o.customerName}`);
+        const data = header + '\r\n' + rows.join('\r\n');
         const a = document.createElement('a');
         a.download = 'opt-in-selection.csv';
         a.href = `data:text/csv;charset=UTF-8,\ufeff${data}`;
