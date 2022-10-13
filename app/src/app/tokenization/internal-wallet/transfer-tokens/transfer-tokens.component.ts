@@ -77,18 +77,20 @@ export class TransferTokensComponent implements OnInit {
         this.selectedFile = fileInputEvent;
         this.selectedFileName = this.selectedFile.name;
         this.ngxCsvParser
-            .parse(this.selectedFile, { header: false, delimiter: ',' })
+            .parse(this.selectedFile, { header: true, delimiter: ',' })
             .pipe()
             .subscribe(
                 (result: Array<any>) => {
                     this.model.transfers = new Array<TokenizedAssetToRetailWallet>();
-                    for (let i = 0; i < result.length; i++)
+                    for (let i = 0; i < result.length; i++){
+                        debugger;
                         this.model.transfers.push(
                             new TokenizedAssetToRetailWallet({
-                                retailWalletId: result[i][0],
-                                amount: parseFloat(result[i][1]),
+                                retailWalletId: result[i]['Wallet Id'],
+                                amount: parseFloat(result[i]['Amount of Tokens']),
                             })
                         );
+                    }
                 },
                 (error: NgxCSVParserError) => {
                     console.error('Error', error);
