@@ -195,7 +195,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                         o.isSelected = false;
                     });
                     result.forEach((row) => {
-                        const optInId = row[0];
+                        const optInId = row['OptIn Id'];
                         const optIn = this.tokenizedAsset.optIns.find((o) => o.id === optInId);
                         if (optIn) {
                             optIn.isSelected = true;
