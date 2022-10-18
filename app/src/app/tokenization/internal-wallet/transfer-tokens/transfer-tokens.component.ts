@@ -77,7 +77,7 @@ export class TransferTokensComponent implements OnInit {
         this.selectedFile = fileInputEvent;
         this.selectedFileName = this.selectedFile.name;
         this.ngxCsvParser
-            .parse(this.selectedFile, { header: true, delimiter: ',' })
+            .parse(this.selectedFile, { header: true, delimiter: ';' })
             .pipe()
             .subscribe(
                 (result: Array<any>) => {

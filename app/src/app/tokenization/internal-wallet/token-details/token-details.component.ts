@@ -185,9 +185,9 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.checkSelections();
     }
 
-    csvInputChange(fileInputEvent: any) {
+    csvInputChange(fileInputEvent: any) {        
         this.ngxCsvParser
-            .parse(fileInputEvent, { header: true, delimiter: ',' })
+            .parse(fileInputEvent, { header: true, delimiter: ';' })
             .pipe()
             .subscribe(
                 (result: Array<any>) => {
@@ -195,7 +195,7 @@ export class TokenDetailsComponent implements AfterViewInit {
                         o.isSelected = false;
                     });
                     result.forEach((row) => {
-                        const optInId = row['OptIn Id'];
+                        const optInId = row[0];
                         const optIn = this.tokenizedAsset.optIns.find((o) => o.id === optInId);
                         if (optIn) {
                             optIn.isSelected = true;
@@ -210,8 +210,8 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     downloadSelectionCustomerCSV() {
-        const header =  'OptIn Id,Customer Id,Wallet Id,Customer Name,Amount of Tokens';
-        const rows = this.tokenizedAsset.optIns.map((o) => `${o.id},${o.customerId},${o.retailWalletId},${o.customerName}`);
+        const header =  'OptIn Id;Customer Id;Wallet Id;Customer Name;Amount of Tokens';
+        const rows = this.tokenizedAsset.optIns.map((o) => `${o.id};${o.customerId};${o.retailWalletId};${o.customerName}`);
         const data = header + '\r\n' + rows.join('\r\n');
         const a = document.createElement('a');
         a.download = 'opt-in-selection.csv';
