@@ -98,7 +98,7 @@
                         <div [ngSwitch]="element.status" [matTooltip]="TxStatus[element.status]">
                             <mat-progress-bar *ngSwitchCase="TxStatus.New" mode="indeterminate"></mat-progress-bar>
                             <mat-progress-bar *ngSwitchCase="TxStatus.Retrying" mode="indeterminate"></mat-progress-bar>
-                            <app-fa-icon *ngSwitchCase="TxStatus.Succesful" class="clr-scs" icon="fa-check"></app-fa-icon>
+                            <app-fa-icon *ngSwitchCase="TxStatus.Successful" class="clr-scs" icon="fa-check"></app-fa-icon>
                             <app-fa-icon *ngSwitchCase="TxStatus.Failed" class="clr-dgr" icon="fa-times"></app-fa-icon>
                             <app-fa-icon *ngSwitchCase="TxStatus.Canceled" class="clr-wrn" icon="fa-minus-circle"></app-fa-icon>
                             <span *ngSwitchDefault>TxStatus[element.status]</span>

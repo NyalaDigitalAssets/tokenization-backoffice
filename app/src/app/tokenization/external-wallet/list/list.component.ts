@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
     }
 
     getExternalRetailWallets() {
-        this.customApi.getExternalRetailWalletExternalRetailWallet().subscribe(res => {
+        this.customApi.getExternalRetailWalletGetExternalRetailWallet().subscribe(res => {
             this.erwDatasource.data = res.data;
         })
     }

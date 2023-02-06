@@ -18,11 +18,11 @@ import {
     CreateIssuerWalletSeedDto,
     IssuerWalletSeedDtoApiResponse,
     DeriveIssuerWalletFromSeedDto,
-    SimpleAccessCredentialsDto,
     IssuerWalletRecoveryKitFileDtoApiResponse,
     EmptyResult,
     IssuerWalletDtoListApiResponse,
     InitTokenizedAssetCreationDto,
+    SimpleAccessCredentialsDto,
     TokenizedAssetDtoApiResponse,
     TokenizedAssetDetailsDtoApiResponse,
     IssuerWalletTokenizedAssetTransferDto,
@@ -32,12 +32,12 @@ import {
     TokenizedAssetBurnDto,
     MissingModelsContainer,
     RetailWalletDtoListApiResponse,
-    RetailWalletRecoveryKitFileDtoApiResponse,
     RetailWalletDtoApiResponse,
     RetailWalletOptInDto,
     LockWalletsDto,
     RetailWalletSeedRecoveryDtoApiResponse,
     ResetRetailWalletAccessCredentialsDto,
+    RetailWalletRecoveryKitFileDtoApiResponse,
     ExternalRetailWalletDtoListApiResponse,
     ImportExternalRetailWalletDto,
     AuthenticatedInstitutionDtoApiResponse,
@@ -45,22 +45,6 @@ import {
     TransactionToShowDtoListApiResponse,
     CancelTransactionsDto,
     Int32ApiResponse,
-    WalletBasicInfoDtoApiResponse,
-    DeleteWalletDto,
-    StringApiResponse,
-    BulkCreateWalletDto,
-    ExternalWalletDto,
-    ExternalWalletResponseDtoApiResponse,
-    WalletPasswordRecoveryDto,
-    FileResponseDtoApiResponse,
-    CreateEtfOnboardingDto,
-    WealthManagementOverviewDtoApiResponse,
-    EtfDtoApiResponse,
-    DepotPaymentSummaryDtoApiResponse,
-    CancelPendingDepotPaymentDto,
-    CreateDepotDepositDto,
-    CreateDepotWithdrawalDto,
-    SepaTransactionDtoIEnumerableApiResponse,
 } from '../models';
 
 @Injectable({
@@ -81,7 +65,7 @@ export class CustomApiService {
     getIssuerWalletGetIssuerWalletSeeds = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletSeedDtoListApiResponse> => this.apiService.get<IssuerWalletSeedDtoListApiResponse>(queryParams ? `/api/external/v1/issuer-wallet-seeds?${queryParams}` : `/api/external/v1/issuer-wallet-seeds`, showLoading, handleErrorGlobally);
     postIssuerWalletCreateIssuerWalletSeed = (data: CreateIssuerWalletSeedDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletSeedDtoApiResponse> => this.apiService.post<CreateIssuerWalletSeedDto, IssuerWalletSeedDtoApiResponse>(`/api/external/v1/issuer-wallet-seeds`, data, showLoading, handleErrorGlobally);
     putIssuerWalletDeriveNewIssuerWallet = (issuerwalletseedid: string, data: DeriveIssuerWalletFromSeedDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<GuidApiResponse> => this.apiService.put<DeriveIssuerWalletFromSeedDto, GuidApiResponse>(`/api/external/v1/issuer-wallet-seeds/${issuerwalletseedid}`, data, showLoading, handleErrorGlobally);
-    deleteIssuerWalletDeleteIssuerWalletSeed = (issuerseedwalletid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletRecoveryKitFileDtoApiResponse> => this.apiService.delete<IssuerWalletRecoveryKitFileDtoApiResponse>(`/api/external/v1/issuer-wallet-seeds/${issuerseedwalletid}`, showLoading, handleErrorGlobally);
+    deleteIssuerWalletDeleteIssuerWalletSeed = (issuerseedwalletid: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletRecoveryKitFileDtoApiResponse> => this.apiService.delete<IssuerWalletRecoveryKitFileDtoApiResponse>(`/api/external/v1/issuer-wallet-seeds/${issuerseedwalletid}`, showLoading, handleErrorGlobally);
     postIssuerWalletInitiateIssuerWalletPassphraseRecovery = (issuerwalletseedid: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<EmptyResult> => this.apiService.post<any, EmptyResult>(`/api/external/v1/issuer-wallet-seeds/${issuerwalletseedid}/recovery`, {}, showLoading, handleErrorGlobally);
     getIssuerWalletGetIssuerWallets = (issuerwalletseedid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<IssuerWalletDtoListApiResponse> => this.apiService.get<IssuerWalletDtoListApiResponse>(queryParams ? `/api/external/v1/issuer-wallet-seeds/{issuer-wallet-seed-id}/issuer-wallets?${queryParams}` : `/api/external/v1/issuer-wallet-seeds/${issuerwalletseedid}/issuer-wallets`, showLoading, handleErrorGlobally);
     postTokenizedAssetsInitializeTokenizedAssetCreation = (issuerwalletseedid: string, issuerwalletid: string, data: InitTokenizedAssetCreationDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<GuidApiResponse> => this.apiService.post<InitTokenizedAssetCreationDto, GuidApiResponse>(`/api/external/v1/issuer-wallet-seeds/${issuerwalletseedid}/issuer-wallets/${issuerwalletid}/tokenzid-assets`, data, showLoading, handleErrorGlobally);
@@ -98,33 +82,18 @@ export class CustomApiService {
     getIssuerWalletMissingModels = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<MissingModelsContainer> => this.apiService.get<MissingModelsContainer>(queryParams ? `/api/external/v1/model?${queryParams}` : `/api/external/v1/model`, showLoading, handleErrorGlobally);
     getRetailWalletGetRetailWalletsDetails = (customerid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoListApiResponse> => this.apiService.get<RetailWalletDtoListApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/retail-wallets?${queryParams}` : `/api/external/v1/customers/${customerid}/retail-wallets`, showLoading, handleErrorGlobally);
     postRetailWalletInitiateRetailWallet = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoListApiResponse> => this.apiService.post<SimpleAccessCredentialsDto, RetailWalletDtoListApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets`, data, showLoading, handleErrorGlobally);
-    deleteRetailWalletDeleteRetailWallets = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletRecoveryKitFileDtoApiResponse> => this.apiService.delete<RetailWalletRecoveryKitFileDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets`, showLoading, handleErrorGlobally);
     putRetailWalletDeriveRetailWallet = (customerid: string, blockchain: number, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletDtoApiResponse> => this.apiService.put<SimpleAccessCredentialsDto, RetailWalletDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/${blockchain}`, data, showLoading, handleErrorGlobally);
     postRetailWalletOptInWithRetailWallet = (customerid: string, retailwalletid: string, data: RetailWalletOptInDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<RetailWalletOptInDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/${retailwalletid}/opt-in`, data, showLoading, handleErrorGlobally);
     putRetailWalletLockRetailWallets = (customerid: string, data: LockWalletsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.put<LockWalletsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/lock`, data, showLoading, handleErrorGlobally);
     postRetailWalletCheckRetailWalletPassphrase = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<SimpleAccessCredentialsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/check-passphrase`, data, showLoading, handleErrorGlobally);
     postRetailWalletInitiateRetailWalletPassphraseRecovery = (customerid: string, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletSeedRecoveryDtoApiResponse> => this.apiService.post<any, RetailWalletSeedRecoveryDtoApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/recovery`, {}, showLoading, handleErrorGlobally);
     putRetailWalletRecoverRetailWalletSeedAccess = (customerid: string, data: ResetRetailWalletAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.put<ResetRetailWalletAccessCredentialsDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/retail-wallets/recovery`, data, showLoading, handleErrorGlobally);
-    getExternalRetailWalletExternalRetailWallet = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<ExternalRetailWalletDtoListApiResponse> => this.apiService.get<ExternalRetailWalletDtoListApiResponse>(queryParams ? `/api/external/v1/retail-wallets/external?${queryParams}` : `/api/external/v1/retail-wallets/external`, showLoading, handleErrorGlobally);
-    postExternalRetailWalletExternalRetailWallet = (data: ImportExternalRetailWalletDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<ImportExternalRetailWalletDto, BooleanApiResponse>(`/api/external/v1/retail-wallets/external`, data, showLoading, handleErrorGlobally);
+    postRetailWalletDeleteRetailWallets = (customerid: string, data: SimpleAccessCredentialsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<RetailWalletRecoveryKitFileDtoApiResponse> => this.apiService.post<SimpleAccessCredentialsDto, RetailWalletRecoveryKitFileDtoApiResponse>(`/api/external/v1/customers/${customerid}/delete-retail-wallets`, data, showLoading, handleErrorGlobally);
+    getExternalRetailWalletGetExternalRetailWallet = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<ExternalRetailWalletDtoListApiResponse> => this.apiService.get<ExternalRetailWalletDtoListApiResponse>(queryParams ? `/api/external/v1/retail-wallets/external?${queryParams}` : `/api/external/v1/retail-wallets/external`, showLoading, handleErrorGlobally);
+    postExternalRetailWalletCreateExternalRetailWallet = (data: ImportExternalRetailWalletDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<ImportExternalRetailWalletDto, BooleanApiResponse>(`/api/external/v1/retail-wallets/external`, data, showLoading, handleErrorGlobally);
     getStatusGet = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<any> => this.apiService.get<any>(queryParams ? `/api/external/v1/status?${queryParams}` : `/api/external/v1/status`, showLoading, handleErrorGlobally);
     getStatusGetAuth = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<AuthenticatedInstitutionDtoApiResponse> => this.apiService.get<AuthenticatedInstitutionDtoApiResponse>(queryParams ? `/api/external/v1/status/auth?${queryParams}` : `/api/external/v1/status/auth`, showLoading, handleErrorGlobally);
     postTradingCreateTradeOrder = (data: ExtTradeOrderDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<ExtTradeOrderDto, BooleanApiResponse>(`/api/ext/v1/create-trade-order`, data, showLoading, handleErrorGlobally);
     getTransactionGetTransactions = (days: number, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<TransactionToShowDtoListApiResponse> => this.apiService.get<TransactionToShowDtoListApiResponse>(queryParams ? `/api/external/v1/transactions/${days}?${queryParams}` : `/api/external/v1/transactions/${days}`, showLoading, handleErrorGlobally);
     postTransactionCancelTransactions = (data: CancelTransactionsDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<Int32ApiResponse> => this.apiService.post<CancelTransactionsDto, Int32ApiResponse>(`/api/external/v1/cancel-transactions`, data, showLoading, handleErrorGlobally);
-    getDepricatedGetWalletBasicInfo = (customerid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<WalletBasicInfoDtoApiResponse> => this.apiService.get<WalletBasicInfoDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wallets?${queryParams}` : `/api/external/v1/customers/${customerid}/wallets`, showLoading, handleErrorGlobally);
-    putDepricatedDeleteWallet = (customerid: string, data: DeleteWalletDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<StringApiResponse> => this.apiService.put<DeleteWalletDto, StringApiResponse>(`/api/external/v1/customers/${customerid}/wallets/delete`, data, showLoading, handleErrorGlobally);
-    postDepricatedBulkCreateWallet = (data: BulkCreateWalletDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BulkResultDtoApiResponse> => this.apiService.post<BulkCreateWalletDto, BulkResultDtoApiResponse>(`/api/external/v1/wallets`, data, showLoading, handleErrorGlobally);
-    postDepricatedCreateExternalWallet = (customerid: string, data: ExternalWalletDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<ExternalWalletResponseDtoApiResponse> => this.apiService.post<ExternalWalletDto, ExternalWalletResponseDtoApiResponse>(`/api/external/v1/customers/${customerid}/wallets/external`, data, showLoading, handleErrorGlobally);
-    putDepricatedRecoverWalletPassword = (customerid: string, data: WalletPasswordRecoveryDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<StringApiResponse> => this.apiService.put<WalletPasswordRecoveryDto, StringApiResponse>(`/api/external/v1/customers/${customerid}/wallets/recoverpassword`, data, showLoading, handleErrorGlobally);
-    getDepricatedGetWalletRecoveryKit = (customerid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<FileResponseDtoApiResponse> => this.apiService.get<FileResponseDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wallets/recovery-kit?${queryParams}` : `/api/external/v1/customers/${customerid}/wallets/recovery-kit`, showLoading, handleErrorGlobally);
-    postWealthManagementCreateWealthManagementOnboarding = (customerid: string, data: CreateEtfOnboardingDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<GuidApiResponse> => this.apiService.post<CreateEtfOnboardingDto, GuidApiResponse>(`/api/external/v1/customers/${customerid}/wealth-management/onboardings`, data, showLoading, handleErrorGlobally);
-    getWealthManagementGetWealthManagementOverview = (customerid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<WealthManagementOverviewDtoApiResponse> => this.apiService.get<WealthManagementOverviewDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wealth-management?${queryParams}` : `/api/external/v1/customers/${customerid}/wealth-management`, showLoading, handleErrorGlobally);
-    getWealthManagementGetWealthManagementDepot = (customerid: string, depotid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<EtfDtoApiResponse> => this.apiService.get<EtfDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wealth-management/depots/{depot-id}?${queryParams}` : `/api/external/v1/customers/${customerid}/wealth-management/depots/${depotid}`, showLoading, handleErrorGlobally);
-    getWealthManagementGetDepotPayments = (customerid: string, depotid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<DepotPaymentSummaryDtoApiResponse> => this.apiService.get<DepotPaymentSummaryDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wealth-management/depots/{depot-id}/payments?${queryParams}` : `/api/external/v1/customers/${customerid}/wealth-management/depots/${depotid}/payments`, showLoading, handleErrorGlobally);
-    patchWealthManagementCancelPendingDepotPayment = (customerid: string, depotid: string, data: CancelPendingDepotPaymentDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.patch<CancelPendingDepotPaymentDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/wealth-management/depots/${depotid}/payments`, data, showLoading, handleErrorGlobally);
-    postWealthManagementCreateDepotDeposit = (customerid: string, depotid: string, data: CreateDepotDepositDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<CreateDepotDepositDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/wealth-management/depots/${depotid}/payments/deposits`, data, showLoading, handleErrorGlobally);
-    postWealthManagementCreateDepotWithdrawal = (customerid: string, depotid: string, data: CreateDepotWithdrawalDto, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<BooleanApiResponse> => this.apiService.post<CreateDepotWithdrawalDto, BooleanApiResponse>(`/api/external/v1/customers/${customerid}/wealth-management/depots/${depotid}/payments/withdrawals`, data, showLoading, handleErrorGlobally);
-    getWealthManagementGetWealthManagementDocument = (customerid: string, documentid: string, queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<FileResponseDtoApiResponse> => this.apiService.get<FileResponseDtoApiResponse>(queryParams ? `/api/external/v1/customers/{customer-id}/wealth-management/documents/{document-id}?${queryParams}` : `/api/external/v1/customers/${customerid}/wealth-management/documents/${documentid}`, showLoading, handleErrorGlobally);
-    getWealthManagementGetWealthManagementSepaTransactions = (queryParams: string = null, showLoading: boolean = true, handleErrorGlobally: boolean = true): Observable<SepaTransactionDtoIEnumerableApiResponse> => this.apiService.get<SepaTransactionDtoIEnumerableApiResponse>(queryParams ? `/api/external/v1/sepa-transactions?${queryParams}` : `/api/external/v1/sepa-transactions`, showLoading, handleErrorGlobally);
 }

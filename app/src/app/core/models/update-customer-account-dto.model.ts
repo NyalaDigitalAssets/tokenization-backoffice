@@ -11,6 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 import { AccountTypes } from './enums';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
+import { GenderTypes } from './enums';
 
 export interface IUpdateCustomerAccountDto {
     salutation?: string;
@@ -26,6 +27,8 @@ export interface IUpdateCustomerAccountDto {
     town: string;
     countryIso: string;
     company?: CustomerCompanyDetailDto;
+    nationalityIso?: string;
+    gender?: GenderTypes;
 }
 
 
@@ -43,6 +46,8 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
     town: string;
     countryIso: string;
     company: CustomerCompanyDetailDto;
+    nationalityIso: string;
+    gender: GenderTypes;
 
     /**
      * constructor
@@ -78,6 +83,8 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
             this.town = rawValues.town;
             this.countryIso = rawValues.countryIso;
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
+            this.nationalityIso = rawValues.nationalityIso;
+            this.gender = rawValues.gender;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -99,6 +106,8 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
                 town: new FormControl(this.town, [Validators.required, Validators.maxLength(100), ]),
                 countryIso: new FormControl(this.countryIso, [Validators.required, Validators.minLength(2), Validators.maxLength(2), ]),
                 company: this.company.$formGroup,
+                nationalityIso: new FormControl(this.nationalityIso),
+                gender: new FormControl(this.gender, [enumValidator(GenderTypes), ]),
             });
         }
         return this._formGroup;
@@ -121,6 +130,8 @@ export class UpdateCustomerAccountDto extends BaseModel implements IUpdateCustom
         this.$formGroup.controls['town'].setValue(this.town);
         this.$formGroup.controls['countryIso'].setValue(this.countryIso);
         this.company.setFormGroupValues();
+        this.$formGroup.controls['nationalityIso'].setValue(this.nationalityIso);
+        this.$formGroup.controls['gender'].setValue(this.gender);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

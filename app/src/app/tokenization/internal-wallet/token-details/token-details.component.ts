@@ -82,7 +82,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         private router: Router,
         private dialog: MatDialog,
         private ngxCsvParser: NgxCsvParser
-    ) {}
+    ) { }
 
     ngAfterViewInit() {
         this.optInDataSource.paginator = this.optInPaginator;
@@ -117,7 +117,7 @@ export class TokenDetailsComponent implements AfterViewInit {
 
     sendTokens() {
         this.router.navigate([
-            'tokenization', 
+            'tokenization',
             'internal',
             this.issuerWalletSeedId,
             'issuer-wallets',
@@ -185,7 +185,7 @@ export class TokenDetailsComponent implements AfterViewInit {
         this.checkSelections();
     }
 
-    csvInputChange(fileInputEvent: any) {        
+    csvInputChange(fileInputEvent: any) {
         this.ngxCsvParser
             .parse(fileInputEvent, { header: true, delimiter: ';' })
             .pipe()
@@ -210,7 +210,7 @@ export class TokenDetailsComponent implements AfterViewInit {
     }
 
     downloadSelectionCustomerCSV() {
-        const header =  'OptIn Id;Customer Id;Wallet Id;Customer Name;Amount of Tokens';
+        const header = 'OptIn Id;Customer Id;Wallet Id;Customer Name;Amount of Tokens';
         const rows = this.tokenizedAsset.optIns.map((o) => `${o.id};${o.customerId};${o.retailWalletId};${o.customerName}`);
         const data = header + '\r\n' + rows.join('\r\n');
         const a = document.createElement('a');
@@ -244,17 +244,17 @@ export class TokenDetailsComponent implements AfterViewInit {
 
         const q = this.isOptInAuthorizeCall
             ? this.customApi.postTokenizedAssetsAuthorizeOptIn(
-                  this.issuerWalletSeedId,
-                  this.issuerWalletId,
-                  this.tokenizedAssetId,
-                  this.model
-              )
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            )
             : this.customApi.postTokenizedAssetsRevokeOptIn(
-                  this.issuerWalletSeedId,
-                  this.issuerWalletId,
-                  this.tokenizedAssetId,
-                  this.model
-              );
+                this.issuerWalletSeedId,
+                this.issuerWalletId,
+                this.tokenizedAssetId,
+                this.model
+            );
 
         q.subscribe(() => {
             this.model = new ToggleOptInAuthorizationDto();
@@ -277,11 +277,13 @@ export class TokenDetailsComponent implements AfterViewInit {
             const customers = response[0].data;
             this.tokenizedAsset = response[1].data;
             this.tokenizedAsset.optIns.forEach((o) => {
-                const customer = customers.find((c) => c.id == o.customerId);
-                o.customerName = customer
-                    ? `${customer.firstname} ${customer.lastname}`
-                    : 'ERROR: Unknown';
-                o.walletAccess = customer.walletAccess;
+                if (o.customerId) {
+                    const customer = customers.find((c) => c.id == o.customerId);
+                    o.customerName = customer
+                        ? `${customer.firstname} ${customer.lastname}`
+                        : 'ERROR: Unknown';
+                    o.walletAccess = customer.walletAccess;
+                }
             });
             this.optInDataSource.data = this.tokenizedAsset.optIns;
             this.transferDataSource.data = this.tokenizedAsset.transfers.sort((a, b) =>

@@ -11,6 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 import { AccountTypes } from './enums';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
+import { GenderTypes } from './enums';
 
 export interface ICreateCustomerAccountDto {
     salutation?: string;
@@ -26,6 +27,8 @@ export interface ICreateCustomerAccountDto {
     town: string;
     countryIso: string;
     company?: CustomerCompanyDetailDto;
+    nationalityIso?: string;
+    gender?: GenderTypes;
     id?: string;
     email: string;
 }
@@ -45,6 +48,8 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
     town: string;
     countryIso: string;
     company: CustomerCompanyDetailDto;
+    nationalityIso: string;
+    gender: GenderTypes;
     id: string;
     email: string;
 
@@ -82,6 +87,8 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
             this.town = rawValues.town;
             this.countryIso = rawValues.countryIso;
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
+            this.nationalityIso = rawValues.nationalityIso;
+            this.gender = rawValues.gender;
             this.id = rawValues.id;
             this.email = rawValues.email;
             // set values in model properties for added formControls
@@ -105,6 +112,8 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
                 town: new FormControl(this.town, [Validators.required, Validators.maxLength(100), ]),
                 countryIso: new FormControl(this.countryIso, [Validators.required, Validators.minLength(2), Validators.maxLength(2), ]),
                 company: this.company.$formGroup,
+                nationalityIso: new FormControl(this.nationalityIso),
+                gender: new FormControl(this.gender, [enumValidator(GenderTypes), ]),
                 id: new FormControl(this.id),
                 email: new FormControl(this.email, [Validators.required, Validators.minLength(0), Validators.maxLength(64), ]),
             });
@@ -129,6 +138,8 @@ export class CreateCustomerAccountDto extends BaseModel implements ICreateCustom
         this.$formGroup.controls['town'].setValue(this.town);
         this.$formGroup.controls['countryIso'].setValue(this.countryIso);
         this.company.setFormGroupValues();
+        this.$formGroup.controls['nationalityIso'].setValue(this.nationalityIso);
+        this.$formGroup.controls['gender'].setValue(this.gender);
         this.$formGroup.controls['id'].setValue(this.id);
         this.$formGroup.controls['email'].setValue(this.email);
         // set formValues in added formControls

@@ -13,13 +13,19 @@ import { DecimalBalanceAmount } from './decimal-balance-amount.model';
 
 export interface IBalancesInDecimalDto {
     nativeBalance?: DecimalBalanceAmount;
+    nativeFreeDecimalBalanceString?: string;
+    nativeLockedDecimalBalanceString?: string;
     nonNativeBalances?: object;
+    nonNativeBalancesString?: object;
 }
 
 
 export class BalancesInDecimalDto extends BaseModel implements IBalancesInDecimalDto  {
     nativeBalance: DecimalBalanceAmount;
+    nativeFreeDecimalBalanceString: string;
+    nativeLockedDecimalBalanceString: string;
     nonNativeBalances: object;
+    nonNativeBalancesString: object;
 
     /**
      * constructor
@@ -43,7 +49,10 @@ export class BalancesInDecimalDto extends BaseModel implements IBalancesInDecima
         if (values) {
             const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
             this.nativeBalance.setValues(rawValues.nativeBalance, useFormGroupValuesToModel);
+            this.nativeFreeDecimalBalanceString = rawValues.nativeFreeDecimalBalanceString;
+            this.nativeLockedDecimalBalanceString = rawValues.nativeLockedDecimalBalanceString;
             this.nonNativeBalances = rawValues.nonNativeBalances;
+            this.nonNativeBalancesString = rawValues.nonNativeBalancesString;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -53,7 +62,10 @@ export class BalancesInDecimalDto extends BaseModel implements IBalancesInDecima
         if (!this._formGroup) {
             this._formGroup = new FormGroup({
                 nativeBalance: this.nativeBalance.$formGroup,
+                nativeFreeDecimalBalanceString: new FormControl(this.nativeFreeDecimalBalanceString),
+                nativeLockedDecimalBalanceString: new FormControl(this.nativeLockedDecimalBalanceString),
                 nonNativeBalances: new FormControl(this.nonNativeBalances),
+                nonNativeBalancesString: new FormControl(this.nonNativeBalancesString),
             });
         }
         return this._formGroup;
@@ -64,7 +76,10 @@ export class BalancesInDecimalDto extends BaseModel implements IBalancesInDecima
     */
     setFormGroupValues() {
         this.nativeBalance.setFormGroupValues();
+        this.$formGroup.controls['nativeFreeDecimalBalanceString'].setValue(this.nativeFreeDecimalBalanceString);
+        this.$formGroup.controls['nativeLockedDecimalBalanceString'].setValue(this.nativeLockedDecimalBalanceString);
         this.$formGroup.controls['nonNativeBalances'].setValue(this.nonNativeBalances);
+        this.$formGroup.controls['nonNativeBalancesString'].setValue(this.nonNativeBalancesString);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

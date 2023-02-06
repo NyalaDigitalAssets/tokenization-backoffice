@@ -11,6 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 import { Blockchains } from './enums';
 import { BalancesInDecimalDto } from './balances-in-decimal-dto.model';
+import { TokenizedAssetTransferDto } from './tokenized-asset-transfer-dto.model';
 
 export interface IRetailWalletDto {
     id?: string;
@@ -19,6 +20,9 @@ export interface IRetailWalletDto {
     balance?: BalancesInDecimalDto;
     seedLockStatus?: boolean;
     retailWalletSeedId?: string;
+    accountId?: string;
+    created?: Date;
+    transfers?: Array<TokenizedAssetTransferDto>;
 }
 
 
@@ -29,6 +33,9 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     balance: BalancesInDecimalDto;
     seedLockStatus: boolean;
     retailWalletSeedId: string;
+    accountId: string;
+    created: Date;
+    transfers: Array<TokenizedAssetTransferDto>;
 
     /**
      * constructor
@@ -38,6 +45,7 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
         this.balance = new BalancesInDecimalDto(); 
+        this.transfers = new Array<TokenizedAssetTransferDto>(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -57,6 +65,9 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
             this.balance.setValues(rawValues.balance, useFormGroupValuesToModel);
             this.seedLockStatus = rawValues.seedLockStatus;
             this.retailWalletSeedId = rawValues.retailWalletSeedId;
+            this.accountId = rawValues.accountId;
+            this.created = rawValues.created;
+            this.fillModelArray<TokenizedAssetTransferDto>(this, 'transfers', rawValues.transfers, useFormGroupValuesToModel, TokenizedAssetTransferDto, SubTypeFactory.createSubTypeInstance);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -71,7 +82,12 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
                 balance: this.balance.$formGroup,
                 seedLockStatus: new FormControl(this.seedLockStatus),
                 retailWalletSeedId: new FormControl(this.retailWalletSeedId),
+                accountId: new FormControl(this.accountId),
+                created: new FormControl(this.created),
+                transfers: new FormArray([]),
             });
+            // generate FormArray control elements
+            this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         }
         return this._formGroup;
     }
@@ -86,6 +102,9 @@ export class RetailWalletDto extends BaseModel implements IRetailWalletDto  {
         this.balance.setFormGroupValues();
         this.$formGroup.controls['seedLockStatus'].setValue(this.seedLockStatus);
         this.$formGroup.controls['retailWalletSeedId'].setValue(this.retailWalletSeedId);
+        this.$formGroup.controls['accountId'].setValue(this.accountId);
+        this.$formGroup.controls['created'].setValue(this.created);
+        this.fillFormArray<TokenizedAssetTransferDto>('transfers', this.transfers, TokenizedAssetTransferDto);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
