@@ -11,6 +11,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 import { KycAddressDto } from './kyc-address-dto.model';
 import { CustomerCompanyDetailDto } from './customer-company-detail-dto.model';
+import { GenderTypes } from './enums';
 
 export interface IKycDataDto {
     title?: string;
@@ -27,6 +28,8 @@ export interface IKycDataDto {
     eulaAgreed: boolean;
     address: KycAddressDto;
     company?: CustomerCompanyDetailDto;
+    nationalityIso?: string;
+    gender?: GenderTypes;
 }
 
 
@@ -45,6 +48,8 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
     eulaAgreed: boolean;
     address: KycAddressDto;
     company: CustomerCompanyDetailDto;
+    nationalityIso: string;
+    gender: GenderTypes;
 
     /**
      * constructor
@@ -82,6 +87,8 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
             this.eulaAgreed = rawValues.eulaAgreed;
             this.address.setValues(rawValues.address, useFormGroupValuesToModel);
             this.company.setValues(rawValues.company, useFormGroupValuesToModel);
+            this.nationalityIso = rawValues.nationalityIso;
+            this.gender = rawValues.gender;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -104,6 +111,8 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
                 eulaAgreed: new FormControl(this.eulaAgreed, [Validators.required, ]),
                 address: this.address.$formGroup,
                 company: this.company.$formGroup,
+                nationalityIso: new FormControl(this.nationalityIso),
+                gender: new FormControl(this.gender, [enumValidator(GenderTypes), ]),
             });
         }
         return this._formGroup;
@@ -127,6 +136,8 @@ export class KycDataDto extends BaseModel implements IKycDataDto  {
         this.$formGroup.controls['eulaAgreed'].setValue(this.eulaAgreed);
         this.address.setFormGroupValues();
         this.company.setFormGroupValues();
+        this.$formGroup.controls['nationalityIso'].setValue(this.nationalityIso);
+        this.$formGroup.controls['gender'].setValue(this.gender);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

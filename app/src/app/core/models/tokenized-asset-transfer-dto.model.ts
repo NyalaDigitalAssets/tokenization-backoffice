@@ -10,6 +10,7 @@ import { SubTypeFactory } from './sub-type-factory';
 
 
 import { WalletTransactionStatus } from './enums';
+import { TokenizedAssetDto } from './tokenized-asset-dto.model';
 
 export interface ITokenizedAssetTransferDto {
     id?: string;
@@ -20,6 +21,7 @@ export interface ITokenizedAssetTransferDto {
     fromAddress?: string;
     toAddress?: string;
     amount?: string;
+    tokenizedAsset?: TokenizedAssetDto;
 }
 
 
@@ -32,6 +34,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
     fromAddress: string;
     toAddress: string;
     amount: string;
+    tokenizedAsset: TokenizedAssetDto;
 
     /**
      * constructor
@@ -40,6 +43,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
     */
     constructor(values?: any, useFormGroupValuesToModel = false) {
         super();
+        this.tokenizedAsset = new TokenizedAssetDto(); 
 
         if (values) {
             this.setValues(values, useFormGroupValuesToModel);
@@ -61,6 +65,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
             this.fromAddress = rawValues.fromAddress;
             this.toAddress = rawValues.toAddress;
             this.amount = rawValues.amount;
+            this.tokenizedAsset.setValues(rawValues.tokenizedAsset, useFormGroupValuesToModel);
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -77,6 +82,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
                 fromAddress: new FormControl(this.fromAddress),
                 toAddress: new FormControl(this.toAddress),
                 amount: new FormControl(this.amount),
+                tokenizedAsset: this.tokenizedAsset.$formGroup,
             });
         }
         return this._formGroup;
@@ -94,6 +100,7 @@ export class TokenizedAssetTransferDto extends BaseModel implements ITokenizedAs
         this.$formGroup.controls['fromAddress'].setValue(this.fromAddress);
         this.$formGroup.controls['toAddress'].setValue(this.toAddress);
         this.$formGroup.controls['amount'].setValue(this.amount);
+        this.tokenizedAsset.setFormGroupValues();
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

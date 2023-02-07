@@ -18,6 +18,13 @@ export enum RetailWalletAccessLevels {
     Full = 2,
 }
 
+export enum GenderTypes {
+    NotSet = 0,
+    Male = 1,
+    Female = 2,
+    Other = 3,
+}
+
 export enum BulkResultItemStatus {
     NotSet = 0,
     Ok = 1,
@@ -70,6 +77,7 @@ export enum WalletTransactionStatus {
     Successful = 5,
     Failed = 6,
     TimedOut = 7,
+    FailedOnBlockChain = 8,
 }
 
 export enum TransactionActions {
@@ -96,12 +104,11 @@ export enum OptInStatus {
     Approved = 4,
     Revoked = 5,
     AuthorizationFailed = 6,
+    Pending = 7,
 }
 
 export enum Products {
-    ETFWealthManagement = 100,
     RetailWallet = 101,
-    CryptoWealthManagement = 102,
     Tokenization = 103,
 }
 
@@ -114,153 +121,10 @@ export enum WalletTypes {
 
 export enum TxStatus {
     New = 1,
-    Succesful = 2,
+    Successful = 2,
     Canceled = -3,
     Failed = -2,
     Retrying = -1,
-}
-
-export enum WalletType {
-    NotSet = 0,
-    Standard = 1,
-    Issuer = 2,
-    External = 3,
-}
-
-export enum WealthManagementType {
-    Core = 0,
-    Crypto = 1,
-}
-
-export enum WealthManagementProductType {
-    Balance = 1,
-    Liqui = 2,
-    BalanceGreen = 3,
-    LiquiGreen = 4,
-    Future = 5,
-    CryptoCore = 6,
-    CryptoETP = 7,
-    N11 = 8,
-    Unknown = -1,
-}
-
-export enum WealthManagementPurposeType {
-    NotSet = 0,
-    SavingMoney = 1,
-    IncreasingWealth = 2,
-    FutureAssetGrowth = 3,
-}
-
-export enum WealthManagementHorizonType {
-    NotSet = 0,
-    Small = 1,
-    Medium = 2,
-    Large = 3,
-}
-
-export enum WealthManagementOnboardingGender {
-    Male = 1,
-    Female = 2,
-    Unknown = 3,
-}
-
-export enum AccountMaritalStatus {
-    NotSet = 0,
-    Single = 1,
-    Married = 2,
-    CivilPartnership = 3,
-}
-
-export enum EmploymentType {
-    NotSet = 0,
-    Employee = 1,
-    SelfEmployed = 2,
-    Retired = 3,
-    Private = 4,
-}
-
-export enum EducationType {
-    NotSet = 0,
-    Hochschulabschluss = 1,
-    AbgeschlosseneAusbildung = 2,
-    Abitur = 3,
-    Fachhochschulreife = 4,
-    MittlererSchulabschluss = 5,
-    Hauptschulabschluss = 6,
-    KeinSchulabschluss = 7,
-}
-
-export enum IndustryType {
-    NotSet = 0,
-    AgricultureForestryHunting = 1,
-    Mining = 2,
-    Glassware = 3,
-    VanParts = 4,
-    EnergySupply = 5,
-    WaterSupply = 6,
-    Construction = 7,
-    MotorVehicles = 8,
-    RetailTrade = 9,
-    Warehousing = 10,
-    Gastronomy = 11,
-    InformationServices = 12,
-    PropertyAndHousing = 13,
-    ScientificActivities = 14,
-    ProvisionBusinessEconomicServicesAndIndividuals = 15,
-    PublicAdministration = 16,
-    EducationAndTeaching = 17,
-    Healthcare = 18,
-    CreativeArtisticEntertainingActivities = 19,
-    SportsEntertainmentRecreation = 20,
-    EconomicallyDependentPrivateIndividuals = 21,
-}
-
-export enum WealthManagementInitialDebitType {
-    NotSet = 0,
-    Immediate = 1,
-    InOneWeek = 2,
-}
-
-export enum PartnerBankType {
-    BaaderBank = 100,
-    Comdirect = 200,
-    Dab = 300,
-    Fondsdepot = 400,
-    VBank = 500,
-    NotSet = -100,
-}
-
-export enum EtfRole {
-    Owner = 1,
-    CoOwner = 2,
-    AuthorisedPerson = 3,
-}
-
-export enum SepaExportTransactionStatus {
-    Pending = 100,
-    Submitted = 200,
-    Processed = 300,
-    Cancelled = 400,
-}
-
-export enum EtfPayoutRequestStatus {
-    CreatedByAdmin = 100,
-    RequestedByCustomer = 200,
-}
-
-export enum WealthManagementPaymentType {
-    Deposit = 1,
-    RecurringDeposit = 2,
-    Withdrawal = 3,
-}
-
-export enum SepaExportTransactionType {
-    PayIn = 1,
-    PayInRecurring = 2,
-    PayOut = 3,
-    PayOutRecurring = 4,
-    Fee = 5,
-    InitialPayIn = 6,
 }
 
 
@@ -294,6 +158,7 @@ export class AllEnums {
 
     AccountTypes = AccountTypes;
     RetailWalletAccessLevels = RetailWalletAccessLevels;
+    GenderTypes = GenderTypes;
     BulkResultItemStatus = BulkResultItemStatus;
     FaucetFundingResult = FaucetFundingResult;
     IssuerWalletRoles = IssuerWalletRoles;
@@ -305,21 +170,4 @@ export class AllEnums {
     Products = Products;
     WalletTypes = WalletTypes;
     TxStatus = TxStatus;
-    WalletType = WalletType;
-    WealthManagementType = WealthManagementType;
-    WealthManagementProductType = WealthManagementProductType;
-    WealthManagementPurposeType = WealthManagementPurposeType;
-    WealthManagementHorizonType = WealthManagementHorizonType;
-    WealthManagementOnboardingGender = WealthManagementOnboardingGender;
-    AccountMaritalStatus = AccountMaritalStatus;
-    EmploymentType = EmploymentType;
-    EducationType = EducationType;
-    IndustryType = IndustryType;
-    WealthManagementInitialDebitType = WealthManagementInitialDebitType;
-    PartnerBankType = PartnerBankType;
-    EtfRole = EtfRole;
-    SepaExportTransactionStatus = SepaExportTransactionStatus;
-    EtfPayoutRequestStatus = EtfPayoutRequestStatus;
-    WealthManagementPaymentType = WealthManagementPaymentType;
-    SepaExportTransactionType = SepaExportTransactionType;
 }

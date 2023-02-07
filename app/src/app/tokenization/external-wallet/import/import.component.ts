@@ -70,7 +70,7 @@ export class ImportComponent implements OnInit {
         a.click();
     }
     submit() {
-        this.customApi.postExternalRetailWalletExternalRetailWallet(this.model).subscribe(
+        this.customApi.postExternalRetailWalletCreateExternalRetailWallet(this.model).subscribe(
             (results) => {
                 this.submitted = true;
                 this.snackBar.open('Imported!', '', {

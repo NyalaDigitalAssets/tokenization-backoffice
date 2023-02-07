@@ -12,6 +12,7 @@ import { SubTypeFactory } from './sub-type-factory';
 import { AccountTypes } from './enums';
 import { RetailWalletAccessLevels } from './enums';
 import { CustomerAddressDto } from './customer-address-dto.model';
+import { GenderTypes } from './enums';
 
 export interface ICustomerAccountDto {
     id?: string;
@@ -27,6 +28,9 @@ export interface ICustomerAccountDto {
     phoneNumber?: string;
     walletAccess?: RetailWalletAccessLevels;
     address?: CustomerAddressDto;
+    nationalityId?: string;
+    nationalityIso?: string;
+    gender?: GenderTypes;
 }
 
 
@@ -44,6 +48,9 @@ export class CustomerAccountDto extends BaseModel implements ICustomerAccountDto
     phoneNumber: string;
     walletAccess: RetailWalletAccessLevels;
     address: CustomerAddressDto;
+    nationalityId: string;
+    nationalityIso: string;
+    gender: GenderTypes;
 
     /**
      * constructor
@@ -79,6 +86,9 @@ export class CustomerAccountDto extends BaseModel implements ICustomerAccountDto
             this.phoneNumber = rawValues.phoneNumber;
             this.walletAccess = rawValues.walletAccess;
             this.address.setValues(rawValues.address, useFormGroupValuesToModel);
+            this.nationalityId = rawValues.nationalityId;
+            this.nationalityIso = rawValues.nationalityIso;
+            this.gender = rawValues.gender;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -100,6 +110,9 @@ export class CustomerAccountDto extends BaseModel implements ICustomerAccountDto
                 phoneNumber: new FormControl(this.phoneNumber),
                 walletAccess: new FormControl(this.walletAccess, [enumValidator(RetailWalletAccessLevels), ]),
                 address: this.address.$formGroup,
+                nationalityId: new FormControl(this.nationalityId),
+                nationalityIso: new FormControl(this.nationalityIso),
+                gender: new FormControl(this.gender, [enumValidator(GenderTypes), ]),
             });
         }
         return this._formGroup;
@@ -122,6 +135,9 @@ export class CustomerAccountDto extends BaseModel implements ICustomerAccountDto
         this.$formGroup.controls['phoneNumber'].setValue(this.phoneNumber);
         this.$formGroup.controls['walletAccess'].setValue(this.walletAccess);
         this.address.setFormGroupValues();
+        this.$formGroup.controls['nationalityId'].setValue(this.nationalityId);
+        this.$formGroup.controls['nationalityIso'].setValue(this.nationalityIso);
+        this.$formGroup.controls['gender'].setValue(this.gender);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }

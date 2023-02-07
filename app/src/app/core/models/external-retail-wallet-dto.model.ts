@@ -16,6 +16,7 @@ export interface IExternalRetailWalletDto {
     blockchain?: Blockchains;
     publicAddress?: string;
     name?: string;
+    created?: Date;
 }
 
 
@@ -24,6 +25,7 @@ export class ExternalRetailWalletDto extends BaseModel implements IExternalRetai
     blockchain: Blockchains;
     publicAddress: string;
     name: string;
+    created: Date;
 
     /**
      * constructor
@@ -49,6 +51,7 @@ export class ExternalRetailWalletDto extends BaseModel implements IExternalRetai
             this.blockchain = rawValues.blockchain;
             this.publicAddress = rawValues.publicAddress;
             this.name = rawValues.name;
+            this.created = rawValues.created;
             // set values in model properties for added formControls
             super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
         }
@@ -61,6 +64,7 @@ export class ExternalRetailWalletDto extends BaseModel implements IExternalRetai
                 blockchain: new FormControl(this.blockchain, [enumValidator(Blockchains), ]),
                 publicAddress: new FormControl(this.publicAddress),
                 name: new FormControl(this.name),
+                created: new FormControl(this.created),
             });
         }
         return this._formGroup;
@@ -74,6 +78,7 @@ export class ExternalRetailWalletDto extends BaseModel implements IExternalRetai
         this.$formGroup.controls['blockchain'].setValue(this.blockchain);
         this.$formGroup.controls['publicAddress'].setValue(this.publicAddress);
         this.$formGroup.controls['name'].setValue(this.name);
+        this.$formGroup.controls['created'].setValue(this.created);
         // set formValues in added formControls
         super.setFormGroupValuesInAddedFormControls();
     }
