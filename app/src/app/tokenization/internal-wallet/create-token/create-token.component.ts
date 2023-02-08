@@ -48,6 +48,8 @@ export class CreateTokenComponent implements OnInit {
     }
 
     submit() {
+        this.model.enableClawback = true;
+        this.model.enableFreeze = true;
         this.customApi
             .postTokenizedAssetsInitializeTokenizedAssetCreation(
                 this.seedId,
