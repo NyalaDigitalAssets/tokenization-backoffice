@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { InitTokenizedAssetCreationDto, IssuerWalletDto, IssuerWalletRoles } from '../../../core/models';
+import { Blockchains, InitTokenizedAssetCreationDto, IssuerWalletDto, IssuerWalletRoles } from '../../../core/models';
 import { CustomApiService } from '../../../core/services/ganymede.service';
 
 @Component({
@@ -16,20 +16,32 @@ export class CreateTokenComponent implements OnInit {
     issuerWallets: IssuerWalletDto[];
     formReady: boolean;
     IssuerWalletRoles = IssuerWalletRoles;
+    showFungibleField = false;
 
     constructor(
         private customApi: CustomApiService,
         private activatedRoute: ActivatedRoute,
         private router: Router
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.seedId = params.seedId;
             this.loadWallets();
         });
+        this.model.enableClawback = true;
+        this.model.enableFreeze = true;
     }
-
+    issuerWalletChange() {
+        var selectedWallet = this.issuerWallets.filter((iw) => iw.role === IssuerWalletRoles.Issuer && iw.id === this.issuerWalletId)[0];
+        if (selectedWallet.blockchain === Blockchains.Algorand) {
+            this.model.isFungible = true;
+            this.showFungibleField = true;
+        } else {
+            this.model.isFungible = false;
+            this.showFungibleField = false;
+        }
+    }
     getIssuerWallets(): IssuerWalletDto[] {
         return this.issuerWallets.filter((iw) => iw.role === IssuerWalletRoles.Issuer);
     }
@@ -48,8 +60,6 @@ export class CreateTokenComponent implements OnInit {
     }
 
     submit() {
-        this.model.enableClawback = true;
-        this.model.enableFreeze = true;
         this.customApi
             .postTokenizedAssetsInitializeTokenizedAssetCreation(
                 this.seedId,
