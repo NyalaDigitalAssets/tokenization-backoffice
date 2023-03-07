@@ -27,6 +27,7 @@ export class SVGLibraryService {
                 'dot',
                 'ksm',
                 'algo',
+                'matic'
             ],
         }
     ];
